@@ -3,21 +3,6 @@ package com.automates.automate;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-
-import com.automates.automate.adapter.NavDrawerListAdapter;
-import com.automates.automate.model.NavDrawerItem;
-import java.util.ArrayList;
-
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -31,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.automates.automate.adapter.NavDrawerListAdapter;
+import com.automates.automate.model.NavDrawerItem;
  
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;

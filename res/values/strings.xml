@@ -20,12 +20,12 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_home</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_photos</item>
-        <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_pages</item>
-        <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_routines</item>
+        <item>@drawable/ic_locations</item>
+        <item>@drawable/ic_actionset</item>
+        <item>@drawable/ic_log</item>
+        <item>@drawable/ic_settings</item>
+        <item>@drawable/ic_help</item>
     </array>
     
     <!-- Content Description -->
