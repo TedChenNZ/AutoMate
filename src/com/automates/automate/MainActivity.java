@@ -70,18 +70,18 @@ public class MainActivity extends Activity {
         navDrawerItems = new ArrayList<NavDrawerItem>();
  
         // adding nav drawer items to array
-        // Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
+        // Routines
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, "22"));
+        // Locations
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-        // Pages
+        // Action Sets
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "50+"));
+        // Log
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        // Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+        // Help
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
          
  
         // Recycle the typed array
@@ -176,22 +176,22 @@ public class MainActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
         case 0:
-            fragment = new HomeFragment();
+            fragment = new RoutinesFragment();
             break;
         case 1:
-            fragment = new FindPeopleFragment();
+            fragment = new LocationsFragment();
             break;
         case 2:
-            fragment = new PhotosFragment();
+            fragment = new ActionSetFragment();
             break;
         case 3:
-            fragment = new CommunityFragment();
+            fragment = new LogFragment();
             break;
         case 4:
-            fragment = new PagesFragment();
+            fragment = new SettingsFragment();
             break;
         case 5:
-            fragment = new WhatsHotFragment();
+            fragment = new HelpFragment();
             break;
  
         default:
