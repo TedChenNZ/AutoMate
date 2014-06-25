@@ -1,8 +1,10 @@
 package com.automates.automate;
 
-import com.automates.automate.routines.actions.SoundProfiles;
+import com.automates.automate.routines.settings.SoundProfiles;
+import com.automates.automate.routines.settings.Wifi;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -41,9 +43,11 @@ public class RoutinesFragment extends Fragment {
     }
 	
 	public void testButton(View v) {
+		Context context = this.getActivity();
 //		SoundProfiles.setSoundProfile(this.getActivity(), SoundProfiles.NORMAL_NO_VIBRATE);
-		int m = SoundProfiles.getMode(this.getActivity());
-		testText.setText(Integer.toString(m));
+//		int m = SoundProfiles.getMode(this.getActivity());
+//		testText.setText(Integer.toString(m));
+		Wifi.setWifiEnabled(context, true);
 	}
 	
 

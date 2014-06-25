@@ -1,0 +1,19 @@
+package com.automates.automate.routines.settings;
+
+import android.content.Context;
+import android.net.wifi.WifiManager;
+
+public class Wifi {
+	public Wifi() {}
+	
+	public static void setWifiEnabled(Context context, boolean enabled) {
+		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE); 
+		wifiManager.setWifiEnabled(enabled);
+	}
+	
+	public static boolean getWifiEnabled(Context context) {
+		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE); 
+		return wifiManager.isWifiEnabled();
+	}
+
+}
