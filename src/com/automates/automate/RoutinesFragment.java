@@ -1,8 +1,6 @@
 package com.automates.automate;
 
-import com.automates.automate.routines.settings.SoundProfiles;
-import com.automates.automate.routines.settings.Wifi;
-
+import com.automates.automate.routines.settings.*;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -47,7 +45,9 @@ public class RoutinesFragment extends Fragment {
 //		SoundProfiles.setSoundProfile(this.getActivity(), SoundProfiles.NORMAL_NO_VIBRATE);
 //		int m = SoundProfiles.getMode(this.getActivity());
 //		testText.setText(Integer.toString(m));
-		Wifi.setWifiEnabled(context, true);
+		Data.setDataEnabled(context, true);
+		
+		testText.setText(Boolean.toString(Data.getDataEnabled(context)));
 	}
 	
 
