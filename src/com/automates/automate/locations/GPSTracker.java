@@ -1,5 +1,7 @@
 package com.automates.automate.locations;
 
+import com.automates.automate.PhoneState;
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -185,8 +187,11 @@ public class GPSTracker extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
     	String l = "Latitude: " + getLatitude() + " | Longitude: " + getLongitude();
     	Log.d(TAG, l);
-    	Toast.makeText(getApplicationContext(), l,
-    			   Toast.LENGTH_LONG).show();
+//    	Toast.makeText(getApplicationContext(), l,
+//    			   Toast.LENGTH_LONG).show();
+    	PhoneState.update(mContext);
+    	PhoneState.logLocation();
+    	
     }
  
     @Override
