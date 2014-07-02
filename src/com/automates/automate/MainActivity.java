@@ -39,8 +39,6 @@ public class MainActivity extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     
-    private GPSTracker gps;
-    
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +111,13 @@ public class MainActivity extends Activity {
             // on first time display view for first nav item
             displayView(0);
         }
-        // Start GPS service
-        gps = new GPSTracker(this);
+        
+        
+        // Initialize Phone State (includes GPS service)
+        PhoneState.update(this);
+        
+        
+        
         
     }
  
