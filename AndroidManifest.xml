@@ -19,7 +19,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"> </uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	
 	
     
     
@@ -51,6 +54,12 @@
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
 	    </intent-filter>
 	    </receiver>
+	    
+         <service android:name="com.automates.automate.locations.LocationService" 
+	     	android:enabled="true" 
+		    android:exported="false"
+		    android:label="LocationService" 
+		 />
     
     </application>
 </manifest>
