@@ -12,8 +12,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
- 
-public class SQLiteDBManager extends SQLiteOpenHelper {
+
+/**
+ * This class manages the CRUD operations for the SQLite Database stored on the phone, it's a specific implementation for these patterns.
+ * @author Dhanish
+ *
+ */
+public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
  
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -59,13 +64,13 @@ public class SQLiteDBManager extends SQLiteOpenHelper {
     //---------------------------------------------------------------------
  
     /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
+     * CRUD operations (create "add", read "get", update, delete) pattern + get all patterns + delete all patterns
      */
  
-    // Books table name
+    // Patterns table name
     private static final String TABLE_PATTERNS = "patterns";
  
-    // Books Table Columns names
+    // Patterns Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_ACTIONCATEGORY = "actionCategory";
     private static final String KEY_ACTION = "action";
@@ -189,8 +194,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper {
         return patterns;
     }
  
-     // Updating single book
-    public int updateBook(Pattern pattern) {
+     // Updating single pattern
+    public int updatePattern(Pattern pattern) {
  
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -217,12 +222,13 @@ public class SQLiteDBManager extends SQLiteOpenHelper {
         // 4. close
         db.close();
  
+        Log.d("updatePattern", values.toString());
         return i;
  
     }
  
-    // Deleting single book
-    public void deleteBook(Pattern pattern) {
+    // Deleting single pattern
+    public void deletePattern(Pattern pattern) {
  
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -235,7 +241,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper {
         // 3. close
         db.close();
  
-        Log.d("deleteBook", pattern.toString());
+        Log.d("deletePattern", pattern.toString());
  
     }
 }

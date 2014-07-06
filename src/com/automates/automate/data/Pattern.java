@@ -1,6 +1,11 @@
 package com.automates.automate.data;
 
 import java.lang.reflect.Field;
+/**
+ * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
+ * @author Dhanish
+ *
+ */
 
 public class Pattern {
 
@@ -33,8 +38,23 @@ public class Pattern {
         this.statusCode = statusCode;
     }
  
-//getters & setters
- 
+    /**
+     * Used to check if the unique values of a pattern match with another 
+     * @param p The pattern to be compared against.
+     * @return a boolean indicating the match.
+     */
+    public boolean compare(Pattern p){
+	if(p.getActionCategory() == this.getActionCategory() &&
+		p.getAction() == this.getAction() &&
+		p.getTime() == this.getTime()){
+	    return true;
+	}
+	return false;
+    }
+
+    /**
+     * Overridden toString method that prints out each field in the Pattern class.
+     */
     @Override
     public String toString() {
 	  StringBuilder result = new StringBuilder();
@@ -64,6 +84,8 @@ public class Pattern {
 
 	  return result.toString();
     }
+    
+  //getters & setters
 
     public String getActionCategory() {
 	return this.actionCategory;
