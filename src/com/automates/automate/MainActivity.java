@@ -1,6 +1,7 @@
 package com.automates.automate;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -18,8 +19,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
+import com.automates.automate.data.Pattern;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.model.NavDrawerItem;
+import com.automates.automate.sqlite.SQLiteDBManager;
  
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -44,7 +47,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
- 
+        
+        Random rando = new Random();
+        SQLiteDBManager db = new SQLiteDBManager(this);
+        Pattern example = new Pattern("wifi", "on", 15, rando.nextInt(), "wed", "home", "on", "data", 2.22, 0);
+        db.addPattern(example);
+//        db.getAllPatterns();
+        
         mTitle = mDrawerTitle = getTitle();
  
         // load slide menu items
