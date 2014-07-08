@@ -22,6 +22,7 @@ public final class PhoneState {
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
 	private static int soundProfile;
+	private static Time time;
 
 	private static PhoneState instance = null;
 	private PhoneState() {
@@ -42,6 +43,10 @@ public final class PhoneState {
 		dataEnabled = Data.getDataEnabled(context);
 		GPSTracker gps = new GPSTracker(context); 
 		location = gps.getLocation();
+		if (time == null) {
+			time = new Time();
+		}
+		time.setToNow();
 	}
 	
 	public static String checkConnectivityIntent() {
@@ -66,36 +71,46 @@ public final class PhoneState {
 		return null;
 	}
 	
-	public static String getTrigger(Intent intent) {
-		String trigger = "";
+	public static String getEvent(Intent intent) {
+		String event = "";
 		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
-			trigger = "Ringer";
+			event = "Ringer";
 		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-			trigger = "Bootup";
+			event = "Bootup";
 		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
-			trigger = "Wifi";
+			event = "Wifi";
 		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-			trigger = checkConnectivityIntent();
-			if (trigger == null) {
+			event = checkConnectivityIntent();
+			if (event == null) {
 				return null;
 			} else {
-//				Log.d(TAG, trigger);
+//				Log.d(TAG, event);
 			}
 		}
-		Log.d(TAG, "Trigger: " + trigger);
-		return trigger;
+		Log.d(TAG, "Event: " + event);
+		return event;
 	}
 	
-	public static void logIntent(Intent intent) {
+	public static String getEventAction(String event) {
+		String action = "";
+		if (event.equals("Wifi")) {
+			action = String.valueOf(wifiEnabled);
+		} else if (event.equals("Data")) {
+			action = String.valueOf(dataEnabled);
+		} else if (event.equals("Ringer")) {
+			action = String.valueOf(soundProfile);
+		}
+		return action;
+	}
+	
+	public static void logIntent(String event) {
 		String s = "";
-		String trigger = getTrigger(intent);
-		if (trigger != null) {
+		if (event != null) {
 
-			Time now = new Time();
-			now.setToNow();
-			String time = now.format("%H%M%S");
 			
-			s = trigger + "|" + time + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
+			String t = time.format("%H%M%S");
+			
+			s = event + "|" + t + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
 			Logger.appendLog(s);
 		}
 	}
@@ -109,7 +124,9 @@ public final class PhoneState {
 //	}
 
 
-	
+	public static String getSetLocation() {
+		return location.toString();
+	}
 
 	// Getters
 	public static Location getLocation() {
@@ -124,5 +141,7 @@ public final class PhoneState {
 	public static int getSoundProfile() {
 		return soundProfile;
 	}
-
+	public static Time getTime() {
+		return time;
+	}
 }

@@ -6,23 +6,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
+import com.automates.automate.data.Pattern;
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";
 	@Override
     public void onReceive(Context context, Intent intent) {
-//		boolean isWifiConnected = false;
-//        boolean isMobileConnected = false;
-//        int soundProfile = 0;
-//        isWifiConnected = Wifi.getWifiEnabled(context);
-//        isMobileConnected = Data.getDataEnabled(context);
-//        soundProfile = SoundProfiles.getMode(context);
-//        Log.d("IntentReceiver", "wifi: " + isWifiConnected);
-//        Log.d("IntentReceiver", "mobile: " + isMobileConnected);
-//        Log.d("IntentReceiver", "sound: " + soundProfile);
         Log.d(TAG, intent.getAction());
         PhoneState.update(context);
-        PhoneState.logIntent(intent);
+        String event = PhoneState.getEvent(intent);
+        String eventAction = PhoneState.getEventAction(event);
+        
+//        Pattern p = new Pattern(event, eventAction, PhoneState.getTime(), PhoneState.getSetLocation());
+        
+        PhoneState.logIntent(event);
 
 	}
 
