@@ -14,11 +14,13 @@ public class IntentReceiver extends BroadcastReceiver {
         Log.d(TAG, intent.getAction());
         PhoneState.update(context);
         String event = PhoneState.getEvent(intent);
-        String eventAction = PhoneState.getEventAction(event);
-        
-//        Pattern p = new Pattern(event, eventAction, PhoneState.getTime(), PhoneState.getSetLocation());
-        
-        PhoneState.logIntent(event);
+        if (event != null) {
+	        String eventAction = PhoneState.getEventAction(event);
+	        
+	//        Pattern p = new Pattern(event, eventAction, PhoneState.getTime(), PhoneState.getSetLocation());
+	        
+	        PhoneState.logIntent(event);
+        }
 
 	}
 

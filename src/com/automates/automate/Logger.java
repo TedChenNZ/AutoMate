@@ -12,7 +12,7 @@ import android.util.Log;
 
 public final class Logger {
 	private static final String TAG = "Logger";
-	private static final String filename = Environment.getExternalStorageDirectory().toString() + "/log.file";
+	private static final String filename = Environment.getExternalStorageDirectory().toString() + "/.AutoMate/log.file";
 	
 	
 	private static Logger instance = null;
