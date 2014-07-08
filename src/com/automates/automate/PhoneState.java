@@ -20,19 +20,19 @@ public final class PhoneState {
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
 	private static int soundProfile;
-	
+
 	private static PhoneState instance = null;
-	   private PhoneState() {
-	      // Exists only to defeat instantiation.
-		  // Set to private -> no subclassing
-	   }
-	   public static PhoneState getInstance() {
-	      if(instance == null) {
-	         instance = new PhoneState();
-	      }
-	      return instance;
-	   }
-	
+	private PhoneState() {
+		// Exists only to defeat instantiation.
+		// Set to private -> no subclassing
+	}
+	public static PhoneState getInstance() {
+		if(instance == null) {
+			instance = new PhoneState();
+		}
+		return instance;
+	}
+
 	public static void update(Context context) {
 
 		soundProfile = SoundProfiles.getMode(context);
@@ -41,7 +41,7 @@ public final class PhoneState {
 		GPSTracker gps = new GPSTracker(context); 
 		location = gps.getLocation();
 	}
-	
+
 	public static void logIntent(Intent intent) {
 		String s = "";
 		String trigger = "";
@@ -53,63 +53,63 @@ public final class PhoneState {
 			trigger = "Wifi or Data";
 		}
 		s = trigger + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
-		
+
 		if (isExternalStorageWritable()) {
 			Log.d(TAG, s);
 			appendLog(s);
 		} else {
 			Log.d(TAG, "external not writable");
 		}
-		
+
 	}
-	
+
 	public static void logLocation() {
 		String s = "Location" + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
-		
+
 		appendLog(s);
-		
+
 	}
-	
+
 	/* Checks if external storage is available for read and write */
 	private static boolean isExternalStorageWritable() {
-	    String state = Environment.getExternalStorageState();
-	    if (Environment.MEDIA_MOUNTED.equals(state)) {
-	        return true;
-	    }
-	    return false;
+		String state = Environment.getExternalStorageState();
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+			return true;
+		}
+		return false;
 	}
-	
+
 	private static void appendLog(String text)
 	{  
-	String root = Environment.getExternalStorageDirectory().toString();
-	   File logFile = new File(root + "/log.file");
-	   if (!logFile.exists())
-	   {
-	      try
-	      {
-	         logFile.createNewFile();
-	      } 
-	      catch (IOException e)
-	      {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      }
-	   }
-	   try
-	   {
-	      //BufferedWriter for performance, true to set append to file flag
-	      BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
-	      buf.append(text);
-	      buf.newLine();
-	      buf.close();
-	   }
-	   catch (IOException e)
-	   {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	   }
+		String root = Environment.getExternalStorageDirectory().toString();
+		File logFile = new File(root + "/log.file");
+		if (!logFile.exists())
+		{
+			try
+			{
+				logFile.createNewFile();
+			} 
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try
+		{
+			//BufferedWriter for performance, true to set append to file flag
+			BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
+			buf.append(text);
+			buf.newLine();
+			buf.close();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	// Getters
 	public static Location getLocation() {
 		return location;
@@ -123,5 +123,5 @@ public final class PhoneState {
 	public static int getSoundProfile() {
 		return soundProfile;
 	}
-	
+
 }
