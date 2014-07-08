@@ -3,11 +3,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Environment;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.automates.automate.locations.GPSTracker;
@@ -41,74 +43,73 @@ public final class PhoneState {
 		GPSTracker gps = new GPSTracker(context); 
 		location = gps.getLocation();
 	}
-
-	public static void logIntent(Intent intent) {
-		String s = "";
+	
+	public static String checkConnectivityIntent() {
+		String s = Logger.getLastLine();
+		if (!s.equals(null)) {
+			String[] split = s.split("\\|");
+			if (split.length < 5) {
+				Log.d(TAG,"length error");
+			} else {
+				String wifi = split[3];
+				String data = split[4];
+				if (!data.equals(String.valueOf(dataEnabled))) {
+					// dataChange = true;
+					return "Data";
+					
+				} else if (!wifi.equals(String.valueOf(wifiEnabled))) {
+					// wifiChange = true;
+					return "Wifi";
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static String getTrigger(Intent intent) {
 		String trigger = "";
 		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
 			trigger = "Ringer";
+		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+			trigger = "Bootup";
 		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
 			trigger = "Wifi";
 		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-			trigger = "Wifi or Data";
-		}
-		s = trigger + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
-
-		if (isExternalStorageWritable()) {
-			Log.d(TAG, s);
-			appendLog(s);
-		} else {
-			Log.d(TAG, "external not writable");
-		}
-
-	}
-
-	public static void logLocation() {
-		String s = "Location" + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
-
-		appendLog(s);
-
-	}
-
-	/* Checks if external storage is available for read and write */
-	private static boolean isExternalStorageWritable() {
-		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			return true;
-		}
-		return false;
-	}
-
-	private static void appendLog(String text)
-	{  
-		String root = Environment.getExternalStorageDirectory().toString();
-		File logFile = new File(root + "/log.file");
-		if (!logFile.exists())
-		{
-			try
-			{
-				logFile.createNewFile();
-			} 
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			trigger = checkConnectivityIntent();
+			if (trigger == null) {
+				return null;
+			} else {
+//				Log.d(TAG, trigger);
 			}
 		}
-		try
-		{
-			//BufferedWriter for performance, true to set append to file flag
-			BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true)); 
-			buf.append(text);
-			buf.newLine();
-			buf.close();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Log.d(TAG, "Trigger: " + trigger);
+		return trigger;
+	}
+	
+	public static void logIntent(Intent intent) {
+		String s = "";
+		String trigger = getTrigger(intent);
+		if (trigger != null) {
+
+			Time now = new Time();
+			now.setToNow();
+			String time = now.format("%H%M%S");
+			
+			s = trigger + "|" + time + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
+			Logger.appendLog(s);
 		}
 	}
+
+//	public static void logLocation() {
+//		Time now = new Time();
+//		now.setToNow();
+//		String time = now.format("%H%M%S");
+//		String s = "Location" + "|" + time + "|" +soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
+//		Logger.appendLog(s);
+//	}
+
+
+	
 
 	// Getters
 	public static Location getLocation() {

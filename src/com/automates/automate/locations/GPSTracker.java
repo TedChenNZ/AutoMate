@@ -190,7 +190,7 @@ public class GPSTracker extends Service implements LocationListener {
 //    	Toast.makeText(getApplicationContext(), l,
 //    			   Toast.LENGTH_LONG).show();
     	PhoneState.update(mContext);
-    	PhoneState.logLocation();
+//    	PhoneState.logLocation();
     	
     }
  
