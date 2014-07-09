@@ -6,6 +6,7 @@ import java.util.Random;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -178,7 +179,7 @@ public class MainActivity extends Activity {
     /**
      * Diplaying fragment view for selected nav drawer list item
      * */
-    private void displayView(int position) {
+    public void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
@@ -206,9 +207,20 @@ public class MainActivity extends Activity {
         }
  
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+//            FragmentManager fragmentManager = getFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.frame_container, fragment).commit();
+        	
+        	
+    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+    		// Replace whatever is in the fragment_container view with this fragment,
+    		// and add the transaction to the back stack so the user can navigate back
+    		transaction.replace(R.id.frame_container, fragment);
+//    		transaction.addToBackStack(null); // would need to change the drawer as well
+
+    		// Commit the transaction
+    		transaction.commit();
  
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -246,4 +258,31 @@ public class MainActivity extends Activity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
  
+    public void displayOtherView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+        case 6:
+            fragment = new LocationsModifyFragment();
+            break;
+ 
+        default:
+            break;
+        }
+    	if (fragment != null) {
+    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+    		// Replace whatever is in the fragment_container view with this fragment,
+    		// and add the transaction to the back stack so the user can navigate back
+    		transaction.replace(R.id.frame_container, fragment);
+    		transaction.addToBackStack(null);
+
+    		// Commit the transaction
+    		transaction.commit();
+ 
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }
 }
