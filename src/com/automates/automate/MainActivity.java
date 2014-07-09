@@ -21,10 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
-<<<<<<< HEAD
-=======
 import com.automates.automate.data.Pattern;
->>>>>>> fdba35476d842110780b46b791848d8fd7a59846
 import com.automates.automate.model.NavDrawerItem;
 import com.automates.automate.sqlite.SQLiteDBManager;
  
