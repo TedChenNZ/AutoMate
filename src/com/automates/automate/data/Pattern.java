@@ -10,17 +10,17 @@ import java.lang.reflect.Field;
 public class Pattern {
 
     
-    private int id;
-    private String actionCategory;
     private String action;
-    private int time;
+    private String actionCategory;
     private int actualTime;
     private int day;
+    private int id;
     private String location;
-    private String wifi;
     private String mData;
-    private double weight;
     private int statusCode;
+    private int time;
+    private double weight;
+    private String wifi;
  
     public Pattern(){}
  
@@ -52,126 +52,136 @@ public class Pattern {
 	return false;
     }
 
-    /**
-     * Overridden toString method that prints out each field in the Pattern class.
-     */
-    @Override
-    public String toString() {
-	  StringBuilder result = new StringBuilder();
-	  String newLine = System.getProperty("line.separator");
-
-	  result.append( this.getClass().getName() );
-	  result.append( " Object {" );
-	  result.append(newLine);
-
-	  //determine fields declared in this class only (no fields of superclass)
-	  Field[] fields = this.getClass().getDeclaredFields();
-
-	  //print field names paired with their values
-	  for ( Field field : fields  ) {
-	    result.append("  ");
-	    try {
-	      result.append( field.getName() );
-	      result.append(": ");
-	      //requires access to private field:
-	      result.append( field.get(this) );
-	    } catch ( IllegalAccessException ex ) {
-	      System.out.println(ex);
-	    }
-	    result.append(newLine);
-	  }
-	  result.append("}");
-
-	  return result.toString();
-    }
-    
+//    /**
+//     * Overridden toString method that prints out each field in the Pattern class.
+//     */
+//    @Override
+//    public String toString() {
+//	  StringBuilder result = new StringBuilder();
+//	  String newLine = System.getProperty("line.separator");
+//
+//	  result.append( this.getClass().getName() );
+//	  result.append( " Object {" );
+//	  result.append(newLine);
+//
+//	  //determine fields declared in this class only (no fields of superclass)
+//	  Field[] fields = this.getClass().getDeclaredFields();
+//
+//	  //print field names paired with their values
+//	  for ( Field field : fields  ) {
+//	    result.append("  ");
+//	    try {
+//	      result.append( field.getName() );
+//	      result.append(": ");
+//	      //requires access to private field:
+//	      result.append( field.get(this) );
+//	    } catch ( IllegalAccessException ex ) {
+//	      System.out.println(ex);
+//	    }
+//	    result.append(newLine);
+//	  }
+//	  result.append("}");
+//
+//	  return result.toString();
+//    }
+//    
   //getters & setters
-
-    public String getActionCategory() {
-	return this.actionCategory;
-    }
-    
-    public void setActionCategory(String input){
-	this.actionCategory = input;
-    }
 
     public String getAction() {
 	return this.action;
     }
     
-    public void setAction(String input){
-	this.action = input;
+
+    public String getActionCategory() {
+	return this.actionCategory;
     }
 
-    public int getTime() {
-	return this.time;
-    }
-
-    public void setTime(int input){
-	this.time = input;
-    }
-    
     public int getActualTime() {
 	return this.actualTime;
-    }
-    
-    public void setActualTime(int input){
-	this.actualTime = input;
-    }
-
-    public int getDay() {
-	return this.day;
-    }
-    
-    public void setDay(int weekDay){
-	this.day = weekDay;
-    }
-
-    public String getLocation() {
-	return this.location;
-    }
-    
-    public void setLocation(String input){
-	this.location = input;
-    }
-
-    public String getWifi() {
-	return this.wifi;
-    }
-    
-    public void setWifi(String input){
-	this.wifi = input;
     }
 
     public String getData() {
 	return this.mData;
     }
     
-    public void setData(String input){
-	this.mData = input;
+    public int getDay() {
+	return this.day;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getLocation() {
+	return this.location;
+    }
+    
+    public int getStatusCode() {
+	return this.statusCode;
+    }
+    
+    public int getTime() {
+	return this.time;
     }
 
     public double getWeight() {
 	return this.weight;
     }
     
-    public void setWeight(double input){
-	this.weight = input;
+    public String getWifi() {
+	return this.wifi;
     }
 
-    public int getStatusCode() {
-	return this.statusCode;
+    public void setAction(String input){
+	this.action = input;
     }
     
-    public void setStatusCode(int input){
-	this.statusCode = input;
+    public void setActionCategory(String input){
+	this.actionCategory = input;
+    }
+
+    public void setActualTime(int input){
+	this.actualTime = input;
+    }
+    
+    public void setData(String input){
+	this.mData = input;
+    }
+
+    public void setDay(int weekDay){
+	this.day = weekDay;
     }
     
     public void setId(int input){
 	this.id = input;
     }
 
-    public int getId() {
-        return this.id;
+    public void setLocation(String input){
+	this.location = input;
+    }
+    
+    public void setStatusCode(int input){
+	this.statusCode = input;
+    }
+
+    public void setTime(int input){
+	this.time = input;
+    }
+    
+    public void setWeight(double input){
+	this.weight = input;
+    }
+    
+    public void setWifi(String input){
+	this.wifi = input;
+    }
+
+    @Override
+    public String toString() {
+	return "Pattern [id=" + id + ", actionCategory=" + actionCategory
+		+ ", action=" + action + ", time=" + time + ", actualTime="
+		+ actualTime + ", day=" + day + ", location=" + location
+		+ ", wifi=" + wifi + ", mData=" + mData + ", weight=" + weight
+		+ ", statusCode=" + statusCode + "]";
     }
 }

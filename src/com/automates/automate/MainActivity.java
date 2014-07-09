@@ -50,12 +50,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         Random rando = new Random();
-        SQLiteDBManager db = new SQLiteDBManager(this);
-        //Pattern example = new Pattern("wifi", "on", 15, rando.nextInt(), "wed", "home", "on", "data", 2.22, 0);
-        //db.addPattern(example);
-//        db.getAllPatterns();
-//        Time time = PhoneState.getTime();
-//        Log.d("testing", time.format2445());
 
         
         mTitle = mDrawerTitle = getTitle();
