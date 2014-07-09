@@ -51,7 +51,7 @@ public final class PhoneState {
 	
 	public static String checkConnectivityIntent() {
 		String s = Logger.getLastLine();
-		if (!s.equals(null)) {
+		if (s != null) {
 			String[] split = s.split("\\|");
 			if (split.length < 5) {
 				Log.d(TAG,"length error");
