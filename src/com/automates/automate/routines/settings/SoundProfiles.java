@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.util.Log;
 
 public class SoundProfiles {
     public static final int SILENT_NO_VIBRATE = 0;

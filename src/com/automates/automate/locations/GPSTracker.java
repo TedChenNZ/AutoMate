@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
 public class GPSTracker extends Service implements LocationListener {

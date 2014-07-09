@@ -1,14 +1,7 @@
 package com.automates.automate;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Calendar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
 

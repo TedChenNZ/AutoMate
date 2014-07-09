@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.automates.automate.data.Pattern;
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";
 	@Override
