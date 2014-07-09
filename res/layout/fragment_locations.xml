@@ -2,30 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <TextView
-        android:id="@+id/txtLabel"
-         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16dp"
-        android:text="Locations View"/>
-    
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLabel"
-        android:src="@drawable/ic_locations"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/addLocation"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/txtLabel"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:text="Add" />
+        android:layout_marginBottom="26dp"
+        android:text="@string/add_location" 
+        android:onClick="openLocationActivity" />
 
 </RelativeLayout>
