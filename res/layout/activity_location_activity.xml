@@ -9,9 +9,10 @@
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/find"
+        android:layout_alignBottom="@+id/et_radius"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:text="@string/find" />
  
     <EditText
         android:id="@+id/et_place"
@@ -19,13 +20,54 @@
         android:layout_height="wrap_content"
         android:hint="@string/enter_place"
         android:inputType="text"
-        android:layout_toLeftOf="@id/btn_show" />
+        android:layout_toLeftOf="@id/btn_show" >
+        <requestFocus />
+    </EditText>
  
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/et_place"
+        android:layout_above="@+id/btn_add"
+        android:layout_below="@+id/btn_show"
         class="com.google.android.gms.maps.SupportMapFragment" />
+
+    <EditText
+        android:id="@+id/et_radius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/et_place"
+        android:layout_below="@+id/et_place"
+        android:ems="10"
+        android:hint="@string/enter_radius"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/map"
+        android:layout_toLeftOf="@+id/btn_add"
+        android:ems="10"
+        android:hint="@string/enter_name" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add" />
+
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible" />
  
 </RelativeLayout>
