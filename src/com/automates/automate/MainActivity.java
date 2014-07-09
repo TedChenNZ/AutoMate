@@ -5,8 +5,8 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -21,7 +21,6 @@ import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
 import com.automates.automate.data.Pattern;
-import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.model.NavDrawerItem;
 import com.automates.automate.sqlite.SQLiteDBManager;
  
@@ -258,31 +257,37 @@ public class MainActivity extends Activity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
  
-    public void displayOtherView(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        switch (position) {
-        case 6:
-            fragment = new LocationsModifyFragment();
-            break;
- 
-        default:
-            break;
-        }
-    	if (fragment != null) {
-    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-    		// Replace whatever is in the fragment_container view with this fragment,
-    		// and add the transaction to the back stack so the user can navigate back
-    		transaction.replace(R.id.frame_container, fragment);
-    		transaction.addToBackStack(null);
-
-    		// Commit the transaction
-    		transaction.commit();
- 
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
+//    public void displayOtherView(int position) {
+//        // update the main content by replacing fragments
+//        Fragment fragment = null;
+//        switch (position) {
+//        case 6:
+//            fragment = new LocationsModifyFragment();
+//            break;
+// 
+//        default:
+//            break;
+//        }
+//    	if (fragment != null) {
+//    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//
+//    		// Replace whatever is in the fragment_container view with this fragment,
+//    		// and add the transaction to the back stack so the user can navigate back
+//    		transaction.replace(R.id.frame_container, fragment);
+//    		transaction.addToBackStack(null);
+//
+//    		// Commit the transaction
+//    		transaction.commit();
+// 
+//        } else {
+//            // error in creating fragment
+//            Log.e("MainActivity", "Error in creating fragment");
+//        }
+//    }
+    
+    /** Called when the user clicks add location button */
+    public void openLocationActivity(View view) {
+    	Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
     }
 }
