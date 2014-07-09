@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.automates.automate.data.Pattern;
+import com.automates.automate.data.PatternGenerator;
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";
 	@Override
@@ -16,7 +17,7 @@ public class IntentReceiver extends BroadcastReceiver {
         String event = PhoneState.getEvent(intent);
         if (event != null) {
 	        String eventAction = PhoneState.getEventAction(event);
-	        
+	        PatternGenerator pg = new PatternGenerator(event,eventAction);
 	//        Pattern p = new Pattern(event, eventAction, PhoneState.getTime(), PhoneState.getSetLocation());
 	        
 	        PhoneState.logIntent(event);

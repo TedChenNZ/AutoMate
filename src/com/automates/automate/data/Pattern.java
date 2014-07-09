@@ -15,7 +15,7 @@ public class Pattern {
     private String action;
     private int time;
     private int actualTime;
-    private String day;
+    private int day;
     private String location;
     private String wifi;
     private String mData;
@@ -24,7 +24,7 @@ public class Pattern {
  
     public Pattern(){}
  
-    public Pattern(String actionCategory, String action, int time, int actualTime, String day, String location, String wifi, String mData, double weight, int statusCode) {
+    public Pattern(String actionCategory, String action, int time, int actualTime, int day, String location, String wifi, String mData, double weight, int statusCode) {
         super();
         this.actionCategory = actionCategory;
         this.action = action;
@@ -119,12 +119,12 @@ public class Pattern {
 	this.actualTime = input;
     }
 
-    public String getDay() {
+    public int getDay() {
 	return this.day;
     }
     
-    public void setDay(String input){
-	this.day = input;
+    public void setDay(int weekDay){
+	this.day = weekDay;
     }
 
     public String getLocation() {

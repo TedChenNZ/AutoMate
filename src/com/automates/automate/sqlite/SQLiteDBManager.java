@@ -142,7 +142,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         pattern.setAction(cursor.getString(2));
         pattern.setTime(Integer.parseInt(cursor.getString(3)));
         pattern.setActualTime(Integer.parseInt(cursor.getString(4)));
-        pattern.setDay(cursor.getString(5));
+        pattern.setDay(Integer.parseInt(cursor.getString(5)));
         pattern.setLocation(cursor.getString(6));
         pattern.setWifi(cursor.getString(7));
         pattern.setData(cursor.getString(8));
@@ -176,7 +176,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
                 pattern.setAction(cursor.getString(2));
                 pattern.setTime(Integer.parseInt(cursor.getString(3)));
                 pattern.setActualTime(Integer.parseInt(cursor.getString(4)));
-                pattern.setDay(cursor.getString(5));
+                pattern.setDay(Integer.parseInt(cursor.getString(5)));
                 pattern.setLocation(cursor.getString(6));
                 pattern.setWifi(cursor.getString(7));
                 pattern.setData(cursor.getString(8));

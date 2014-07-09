@@ -22,7 +22,7 @@ public final class PhoneState {
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
 	private static int soundProfile;
-	private static Time time;
+	private static int time = 0;
 
 	private static PhoneState instance = null;
 	private PhoneState() {
@@ -43,10 +43,9 @@ public final class PhoneState {
 		dataEnabled = Data.getDataEnabled(context);
 		GPSTracker gps = new GPSTracker(context); 
 		location = gps.getLocation();
-		if (time == null) {
-			time = new Time();
+		if (time == 0) {
+			time = (int) System.currentTimeMillis();
 		}
-		time.setToNow();
 	}
 	
 	public static String checkConnectivityIntent() {
@@ -108,7 +107,7 @@ public final class PhoneState {
 		if (event != null) {
 
 			
-			String t = time.format("%H%M%S");
+			String t = "" + time;
 			
 			s = event + "|" + t + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
 			Logger.appendLog(s);
@@ -141,7 +140,7 @@ public final class PhoneState {
 	public static int getSoundProfile() {
 		return soundProfile;
 	}
-	public static Time getTime() {
+	public static int getTime() {
 		return time;
 	}
 }

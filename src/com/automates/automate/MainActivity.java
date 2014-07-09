@@ -5,13 +5,13 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,8 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
-import com.automates.automate.data.Pattern;
-import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.model.NavDrawerItem;
 import com.automates.automate.sqlite.SQLiteDBManager;
  
@@ -51,9 +49,12 @@ public class MainActivity extends Activity {
         
         Random rando = new Random();
         SQLiteDBManager db = new SQLiteDBManager(this);
-        Pattern example = new Pattern("wifi", "on", 15, rando.nextInt(), "wed", "home", "on", "data", 2.22, 0);
-        db.addPattern(example);
+        //Pattern example = new Pattern("wifi", "on", 15, rando.nextInt(), "wed", "home", "on", "data", 2.22, 0);
+        //db.addPattern(example);
 //        db.getAllPatterns();
+//        Time time = PhoneState.getTime();
+//        Log.d("testing", time.format2445());
+
         
         mTitle = mDrawerTitle = getTitle();
  
