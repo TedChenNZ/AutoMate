@@ -172,7 +172,12 @@ public class LocationActivity extends FragmentActivity {
     
 
 
-    
+    /**
+     * Moves camera to userLocation ul
+     * @param ul
+     * @param gm
+     * @param zoom
+     */
     private void showUserLocation(UserLocation ul, GoogleMap gm, int zoom) {
     	// Creating a marker
         MarkerOptions markerOptions = new MarkerOptions();
@@ -338,7 +343,10 @@ public class LocationActivity extends FragmentActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-
+    
+    /**
+     *Listener for add button
+     */
     private class addListener implements OnClickListener {
     	
         @Override
@@ -369,7 +377,9 @@ public class LocationActivity extends FragmentActivity {
             
         }
     }
-    
+    /**
+     * Listener for edit button
+     */
     private class editListener implements OnClickListener {
     	@Override
         public void onClick(View v) {

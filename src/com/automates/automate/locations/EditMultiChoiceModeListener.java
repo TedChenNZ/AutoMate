@@ -1,5 +1,6 @@
 package com.automates.automate.locations;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.automates.automate.LocationActivity;
@@ -8,13 +9,11 @@ import com.automates.automate.R;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AbsListView.MultiChoiceModeListener;
 
 public class EditMultiChoiceModeListener implements MultiChoiceModeListener {
@@ -45,7 +44,6 @@ public class EditMultiChoiceModeListener implements MultiChoiceModeListener {
 				switch (item.getItemId()) {
 					case R.id.action_edit:
 						if (selected != null && selected.size() == 1) {
-//							UserLocation ul = (UserLocation) adapter.getItem(selected.get(0));
 							Intent intent = new Intent(activity, LocationActivity.class);
 							intent.putExtra("EditItem", selected.get(0));
 			            	activity.startActivityForResult(intent, 0);
@@ -55,6 +53,8 @@ public class EditMultiChoiceModeListener implements MultiChoiceModeListener {
 						return true;
 					case R.id.action_discard:
 						if (selected != null) {
+							Collections.sort(selected);
+							Collections.reverse(selected);
 							for (int i = 0; i < selected.size(); i++) {
 								UserLocation ul = (UserLocation) adapter.getItem(selected.get(i));
 								PhoneState.getLocationsList().remove(ul);
