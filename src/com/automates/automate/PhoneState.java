@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.automates.automate.locations.*;
 import com.automates.automate.routines.settings.*;
+import com.automates.automate.sqlite.SQLiteDBManager;
 
 // Singleton
 public final class PhoneState {
@@ -17,11 +18,12 @@ public final class PhoneState {
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
 	private static int soundProfile;
+	private static SQLiteDBManager db;
 	private static int time = 0;
 	private static List<UserLocation> locationList = new ArrayList<UserLocation>();
-	
+
 	private static GPSTracker gpsTracker;
-	
+
 	private static PhoneState instance = null;
 	private PhoneState() {
 		// Exists only to defeat instantiation.
@@ -35,7 +37,7 @@ public final class PhoneState {
 	}
 
 	public static void update(Context context) {
-
+		db = new SQLiteDBManager(context);
 		soundProfile = SoundProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
@@ -44,9 +46,9 @@ public final class PhoneState {
 		}
 		location = gpsTracker.getLocation();
 		time = (int) System.currentTimeMillis();
-		
+
 	}
-	
+
 	public static String checkConnectivityIntent() {
 		String s = Logger.getLastLine();
 		if (s != null) {
@@ -59,7 +61,7 @@ public final class PhoneState {
 				if (!data.equals(String.valueOf(dataEnabled))) {
 					// dataChange = true;
 					return "Data";
-					
+
 				} else if (!wifi.equals(String.valueOf(wifiEnabled))) {
 					// wifiChange = true;
 					return "Wifi";
@@ -68,7 +70,7 @@ public final class PhoneState {
 		}
 		return null;
 	}
-	
+
 	public static String getEvent(Intent intent) {
 		String event = "";
 		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
@@ -82,13 +84,13 @@ public final class PhoneState {
 			if (event == null) {
 				return null;
 			} else {
-//				Log.d(TAG, event);
+				//				Log.d(TAG, event);
 			}
 		}
 		Log.d(TAG, "Event: " + event);
 		return event;
 	}
-	
+
 	public static String getEventAction(String event) {
 		String action = "";
 		if (event.equals("Wifi")) {
@@ -100,26 +102,26 @@ public final class PhoneState {
 		}
 		return action;
 	}
-	
+
 	public static void logIntent(String event) {
 		String s = "";
 		if (event != null) {
 
-			
+
 			String t = "" + time;
-			
+
 			s = event + "|" + t + "|" + soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
 			Logger.appendLog(s);
 		}
 	}
 
-//	public static void logLocation() {
-//		Time now = new Time();
-//		now.setToNow();
-//		String time = now.format("%H%M%S");
-//		String s = "Location" + "|" + time + "|" +soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
-//		Logger.appendLog(s);
-//	}
+	//	public static void logLocation() {
+	//		Time now = new Time();
+	//		now.setToNow();
+	//		String time = now.format("%H%M%S");
+	//		String s = "Location" + "|" + time + "|" +soundProfile + "|" + wifiEnabled + "|" + dataEnabled + "|" + location;
+	//		Logger.appendLog(s);
+	//	}
 
 
 	public static String getSetLocation() {
@@ -145,11 +147,14 @@ public final class PhoneState {
 	public static GPSTracker getGPSTracker() {
 		return gpsTracker;
 	}
-	
+	public static SQLiteDBManager getDb() {
+		return db;
+	}
+
 	public static List<UserLocation> getLocationList() {
 		return locationList;
 	}
-	
+
 	public static void setLocationList(List<UserLocation> locationList) {
 		PhoneState.locationList = locationList;
 	}

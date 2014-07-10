@@ -1,17 +1,19 @@
 package com.automates.automate.data;
 
 import java.util.Date;
+import java.util.List;
 
 import android.text.format.Time;
+import android.util.Log;
 
 import com.automates.automate.PhoneState;
 
-public class PatternGenerator {
-    private Pattern p = null;
+public class PatternController {
+    private Pattern p = new Pattern();
     private final int timeDivision = 900000; //15 minutes
+    private final String TAG = "PatternController";
 
-    public PatternGenerator(String actionCategory, String action) {
-	// TODO Auto-generated constructor stub
+    public PatternController(String actionCategory, String action) {
 	p.setAction(action);
 	p.setActionCategory(actionCategory);
 	generatePattern();
@@ -29,6 +31,10 @@ public class PatternGenerator {
 	p.setStatusCode(0);
 	return p;
 
+    }
+    
+    public Pattern getPattern(){
+	return p;
     }
     
     private void timeSet(){
@@ -60,6 +66,30 @@ public class PatternGenerator {
 	int result = Integer.parseInt(sRes);
 	
 	p.setTime(result);
+    }
+
+    public void updateDatabase() {
+	
+	int id = getInstanceFromDB();
+	if(id != -1){
+	    Log.d(TAG, "updating pattern");
+	}
+	else{
+	    Log.d(TAG, "adding pattern");
+	    PhoneState.getDb().addPattern(p);
+	}
+    }
+    
+    private int getInstanceFromDB(){
+	int id = -1;
+	List<Pattern> ps = PhoneState.getDb().getAllPatterns();
+	for(Pattern pList : ps){
+	    if (pList.compare(p)){
+		id = pList.getId();
+	    }
+	}
+	Log.d(TAG, "id is: " + id);
+	return id;
     }
 
 
