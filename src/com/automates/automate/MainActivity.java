@@ -1,18 +1,14 @@
 package com.automates.automate;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
-import com.automates.automate.data.Pattern;
 import com.automates.automate.model.NavDrawerItem;
-import com.automates.automate.sqlite.SQLiteDBManager;
  
 public class MainActivity extends Activity {
-	private static final String TAG = "MainActivity";
+//	private static final String TAG = "MainActivity";
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -51,7 +45,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        Random rando = new Random();
+//        Random rando = new Random();
 
         
         mTitle = mDrawerTitle = getTitle();

@@ -166,9 +166,9 @@ public class LocationActivity extends FragmentActivity {
                 }
                 
                 userloc.setName(name);
-                List<UserLocation> locationList = PhoneState.getLocationList();
+                List<UserLocation> locationList = PhoneState.getLocationsList();
                 locationList.add(userloc);
-                PhoneState.setLocationList(locationList);
+                PhoneState.setLocationsList(locationList);
                 
                 // Return to previous activity
             	Intent resultIntent = new Intent();

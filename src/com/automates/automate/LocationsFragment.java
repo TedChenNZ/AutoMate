@@ -1,30 +1,22 @@
 package com.automates.automate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsArrayAdapter;
-import com.google.android.gms.maps.model.LatLng;
-
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class LocationsFragment extends Fragment {
-	private static final String TAG = "LocationsFragment";
+//	private static final String TAG = "LocationsFragment";
 	private List<UserLocation> locationsList;
 	private ListView locationsListView;
 	private UserLocationsArrayAdapter locationsAdaptor;
@@ -39,7 +31,7 @@ public class LocationsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_locations, container, false);
         
         // List
-        locationsList = PhoneState.getLocationList();
+        locationsList = PhoneState.getLocationsList();
         locationsListView = (ListView) rootView.findViewById(R.id.locationsListView);
         locationsAdaptor = new UserLocationsArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_location, locationsList);
         locationsListView.setAdapter(locationsAdaptor);
@@ -66,8 +58,8 @@ public class LocationsFragment extends Fragment {
 	  switch(requestCode) { 
 	    case (0) : { 
 	      if (resultCode == Activity.RESULT_OK) {
-	    	  	Log.d(TAG, "OK");
-	    	  	locationsList = PhoneState.getLocationList();
+//	    	  	Log.d(TAG, "OK");
+	    	  	locationsList = PhoneState.getLocationsList();
 	    	  	locationsAdaptor.notifyDataSetChanged();
 		      } 
 	      break; 

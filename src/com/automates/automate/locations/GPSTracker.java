@@ -13,11 +13,10 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.util.Log;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
 public class GPSTracker extends Service implements LocationListener {
-	private final static String TAG = "GPSTracker";
+//	private final static String TAG = "GPSTracker";
 	 
     private final Context mContext;
  
