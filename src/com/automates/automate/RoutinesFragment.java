@@ -21,7 +21,6 @@ public class RoutinesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
         
         
-        testText = (TextView) rootView.findViewById(R.id.testText);
         
     	final Button testButton = (Button) rootView.findViewById(R.id.testButton);
     	testButton.setOnClickListener(new OnClickListener() {

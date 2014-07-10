@@ -102,8 +102,6 @@ public class LocationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(getActivity(), LocationActivity.class);
-            	Intent i = new Intent();
-            	
             	startActivityForResult(intent, 0);
             }
 		});
