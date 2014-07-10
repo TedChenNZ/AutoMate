@@ -18,9 +18,10 @@
         android:id="@+id/et_place"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/btn_show"
         android:hint="@string/enter_place"
-        android:inputType="text"
-        android:layout_toLeftOf="@id/btn_show" >
+        android:inputType="textNoSuggestions" >
+
         <requestFocus />
     </EditText>
  
@@ -52,7 +53,8 @@
         android:layout_below="@+id/map"
         android:layout_toLeftOf="@+id/btn_add"
         android:ems="10"
-        android:hint="@string/enter_name" />
+        android:hint="@string/enter_name"
+        android:inputType="textNoSuggestions" />
 
     <Button
         android:id="@+id/btn_add"

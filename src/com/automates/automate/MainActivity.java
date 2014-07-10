@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,8 @@ public class MainActivity extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     
- 
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,42 +252,6 @@ public class MainActivity extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
- 
-//    public void displayOtherView(int position) {
-//        // update the main content by replacing fragments
-//        Fragment fragment = null;
-//        switch (position) {
-//        case 6:
-//            fragment = new LocationsModifyFragment();
-//            break;
-// 
-//        default:
-//            break;
-//        }
-//    	if (fragment != null) {
-//    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//
-//    		// Replace whatever is in the fragment_container view with this fragment,
-//    		// and add the transaction to the back stack so the user can navigate back
-//    		transaction.replace(R.id.frame_container, fragment);
-//    		transaction.addToBackStack(null);
-//
-//    		// Commit the transaction
-//    		transaction.commit();
-// 
-//        } else {
-//            // error in creating fragment
-//            Log.e("MainActivity", "Error in creating fragment");
-//        }
-//    }
-    
-//    /** Called when the user clicks add location button */
-//    public void openLocationActivity(View view) {
-//    	Intent intent = new Intent(this, LocationActivity.class);
-//    	startActivityForResult(intent, 1);
-//    }
-//    
-
     
 
 }

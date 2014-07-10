@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -51,6 +52,8 @@ public class LocationActivity extends FragmentActivity {
     Double radius_to_parse;
     UserLocation userloc = new UserLocation();
     
+    int EditItem;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,15 +80,30 @@ public class LocationActivity extends FragmentActivity {
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         
+        
+        
         // Try getting Map to current location
-        
-        GPSTracker gps = PhoneState.getGPSTracker();
-        Location loc = gps.getLocation();
-        
-        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
-        
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
-
+        Intent intent = getIntent();
+        EditItem = intent.getIntExtra("EditItem", -1);
+        if (EditItem != -1) {
+        	userloc = PhoneState.getLocationsList().get(EditItem);
+        	showUserLocation(userloc, mMap, 15);
+        	etPlace.setText(userloc.getLocationName());
+        	etRadius.setText(""+userloc.getRadius());
+        	etName.setText(userloc.getName());
+            // Setting click event listener for the edit button
+        	btnAdd.setText("Edit");
+            btnAdd.setOnClickListener(new editListener());
+            
+        } else {
+	        GPSTracker gps = PhoneState.getGPSTracker();
+	        Location loc = gps.getLocation();
+	        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
+	        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
+	        
+	        // Setting click event listener for the add button
+	        btnAdd.setOnClickListener(new addListener());
+        }
 
  
         // Setting click event listener for the find button
@@ -93,6 +111,7 @@ public class LocationActivity extends FragmentActivity {
         	
             @Override
             public void onClick(View v) {
+            	hideSoftKeyboard();
                 // Getting the place entered
                 String location = etPlace.getText().toString();
  
@@ -145,44 +164,41 @@ public class LocationActivity extends FragmentActivity {
             }
         });
         
-        // Setting click event listener for the add button
-        btnAdd.setOnClickListener(new OnClickListener() {
-        	
-            @Override
-            public void onClick(View v) {
-                
-            	// Check if a place has been found
-            	if (userloc.getLocation() == null | userloc.getRadius() == null) {
-            		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
-                    return;
-            	}
-            	
-            	// Get the name
-                String name = etName.getText().toString();
- 
-                if(name==null || name.equals("")){
-                    Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                
-                userloc.setName(name);
-                List<UserLocation> locationList = PhoneState.getLocationsList();
-                locationList.add(userloc);
-                PhoneState.setLocationsList(locationList);
-                
-                // Return to previous activity
-            	Intent resultIntent = new Intent();
-            	setResult(Activity.RESULT_OK, resultIntent);
-            	finish();
-                
-            }
-        });
+
         
         
         
     }
- 
-    private String downloadUrl(String strUrl) throws IOException{
+    
+
+
+    
+    private void showUserLocation(UserLocation ul, GoogleMap gm, int zoom) {
+    	// Creating a marker
+        MarkerOptions markerOptions = new MarkerOptions();
+        // Setting the position for the marker
+        markerOptions.position(ul.getLocation());
+
+        // Setting the title for the marker
+        markerOptions.title(ul.getLocationName());
+
+        // Placing a marker on the position
+        gm.addMarker(markerOptions);
+        int stroke = Color.argb(255, 137, 180, 215);
+        int fill = Color.argb(50, 137, 180, 215);
+        
+    	gm.addCircle(new CircleOptions()
+        	.center(ul.getLocation())
+        	.radius(ul.getRadius())
+        	.strokeColor(stroke)
+        	.fillColor(fill));
+    	
+//        gm.animateCamera(CameraUpdateFactory.newLatLng(ul.getLocation()));
+        gm.animateCamera(CameraUpdateFactory.newLatLngZoom(ul.getLocation(), zoom));
+
+	}
+
+	private String downloadUrl(String strUrl) throws IOException{
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
@@ -306,40 +322,81 @@ public class LocationActivity extends FragmentActivity {
                     userloc.setRadius(radius_to_parse);
                     userloc.setLocationName(name);
                     
-               	 
-                    // Creating a marker
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    // Setting the position for the marker
-                    markerOptions.position(userloc.getLocation());
-     
-                    // Setting the title for the marker
-                    markerOptions.title(name);
-     
-                    // Placing a marker on the position
-                    mMap.addMarker(markerOptions);
-                    int stroke = Color.argb(255, 137, 180, 215);
-                    int fill = Color.argb(50, 137, 180, 215);
-                    
-                	mMap.addCircle(new CircleOptions()
-                    	.center(userloc.getLocation())
-                    	.radius(radius_to_parse)
-                    	.strokeColor(stroke)
-                    	.fillColor(fill));
-                	
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(userloc.getLocation()));
-                    
-                    
+                    showUserLocation(userloc, mMap, 15);
                     
                 }
             }
         }
     }
- 
     
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
+    /**
+     * Hides the soft keyboard
+     */
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    private class addListener implements OnClickListener {
+    	
+        @Override
+        public void onClick(View v) {
+        	hideSoftKeyboard();
+            
+        	// Check if a place has been found
+        	if (userloc.getLocation() == null | userloc.getRadius() == null) {
+        		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
+                return;
+        	}
+        	
+        	// Get the name
+            String name = etName.getText().toString();
+
+            if(name==null || name.equals("")){
+                Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            userloc.setName(name);
+            PhoneState.getLocationsList().add(userloc);
+            
+            // Return to previous activity
+        	Intent resultIntent = new Intent();
+        	setResult(Activity.RESULT_OK, resultIntent);
+        	finish();
+            
+        }
+    }
+    
+    private class editListener implements OnClickListener {
+    	@Override
+        public void onClick(View v) {
+        	hideSoftKeyboard();
+            
+        	// Check if a place has been found
+        	if (userloc.getLocation() == null | userloc.getRadius() == null) {
+        		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
+                return;
+        	}
+        	
+        	// Get the name
+            String name = etName.getText().toString();
+
+            if(name==null || name.equals("")){
+                Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            userloc.setName(name);
+            PhoneState.getLocationsList().set(EditItem, userloc);
+            
+            // Return to previous activity
+        	Intent resultIntent = new Intent();
+        	setResult(Activity.RESULT_OK, resultIntent);
+        	finish();
+            
+        }
+    }
 }

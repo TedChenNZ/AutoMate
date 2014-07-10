@@ -9,7 +9,7 @@ public class UserLocation {
 	private String locationName;
 	
 	public UserLocation() {
-		
+		locationName = "";
 	}
 	
 	public UserLocation(String name, LatLng location, Double radius, String locationName) {

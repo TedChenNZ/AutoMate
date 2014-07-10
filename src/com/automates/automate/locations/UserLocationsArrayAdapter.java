@@ -56,6 +56,8 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 		}
 
 		// the view must be returned to our activity
+		
+
 		return v;
 
 	}
