@@ -26,6 +26,8 @@ import com.automates.automate.model.NavDrawerItem;
 import com.automates.automate.sqlite.SQLiteDBManager;
  
 public class MainActivity extends Activity {
+	private static final String TAG = "MainActivity";
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -289,9 +291,13 @@ public class MainActivity extends Activity {
 //        }
 //    }
     
-    /** Called when the user clicks add location button */
-    public void openLocationActivity(View view) {
-    	Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }
+//    /** Called when the user clicks add location button */
+//    public void openLocationActivity(View view) {
+//    	Intent intent = new Intent(this, LocationActivity.class);
+//    	startActivityForResult(intent, 1);
+//    }
+//    
+
+    
+
 }

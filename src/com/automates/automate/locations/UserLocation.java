@@ -5,12 +5,18 @@ import com.google.android.gms.maps.model.LatLng;
 public class UserLocation {
 	private String name;
 	private LatLng location;
-	private Float radius;
+	private Double radius;
+	private String locationName;
 	
-	public UserLocation(String name, LatLng location, Float radius) {
+	public UserLocation() {
+		
+	}
+	
+	public UserLocation(String name, LatLng location, Double radius, String locationName) {
 		this.name = name;
 		this.location = location;
 		this.radius = radius;
+		this.locationName = locationName;
 	}
 
 	public String getName() {
@@ -29,11 +35,19 @@ public class UserLocation {
 		this.location = location;
 	}
 
-	public Float getRadius() {
+	public Double getRadius() {
 		return radius;
 	}
 
-	public void setRadius(Float radius) {
+	public void setRadius(Double radius) {
 		this.radius = radius;
+	}
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
 	}
 }

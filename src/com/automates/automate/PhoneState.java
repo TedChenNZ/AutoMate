@@ -1,11 +1,13 @@
 package com.automates.automate;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.text.format.Time;
 import android.util.Log;
 
-import com.automates.automate.locations.GPSTracker;
+import com.automates.automate.locations.*;
 import com.automates.automate.routines.settings.*;
 
 // Singleton
@@ -16,7 +18,10 @@ public final class PhoneState {
 	private static boolean wifiEnabled;
 	private static int soundProfile;
 	private static int time = 0;
-
+	private static List<UserLocation> locationList = new ArrayList<UserLocation>();
+	
+	private static GPSTracker gpsTracker;
+	
 	private static PhoneState instance = null;
 	private PhoneState() {
 		// Exists only to defeat instantiation.
@@ -34,11 +39,12 @@ public final class PhoneState {
 		soundProfile = SoundProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
-		GPSTracker gps = new GPSTracker(context); 
-		location = gps.getLocation();
-		if (time == 0) {
-			time = (int) System.currentTimeMillis();
+		if (gpsTracker == null) {
+			gpsTracker = new GPSTracker(context); 
 		}
+		location = gpsTracker.getLocation();
+		time = (int) System.currentTimeMillis();
+		
 	}
 	
 	public static String checkConnectivityIntent() {
@@ -136,4 +142,16 @@ public final class PhoneState {
 	public static int getTime() {
 		return time;
 	}
+	public static GPSTracker getGPSTracker() {
+		return gpsTracker;
+	}
+	
+	public static List<UserLocation> getLocationList() {
+		return locationList;
+	}
+	
+	public static void setLocationList(List<UserLocation> locationList) {
+		PhoneState.locationList = locationList;
+	}
+
 }

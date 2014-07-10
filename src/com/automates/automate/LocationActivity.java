@@ -13,6 +13,8 @@ import java.util.List;
  
 import org.json.JSONObject;
  
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -46,9 +48,8 @@ public class LocationActivity extends FragmentActivity {
     Button btnAdd;
     ProgressBar loadingSpinner;
     
-    Float radius_to_parse;
-    Float radius;
-    LatLng latLng;
+    Double radius_to_parse;
+    UserLocation userloc = new UserLocation();
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class LocationActivity extends FragmentActivity {
         
         // Try getting Map to current location
         
-        GPSTracker gps = new GPSTracker(this);
+        GPSTracker gps = PhoneState.getGPSTracker();
         Location loc = gps.getLocation();
         
         LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
@@ -109,7 +110,7 @@ public class LocationActivity extends FragmentActivity {
                 }
                 
                 try {
-                	radius_to_parse = Float.parseFloat(r);
+                	radius_to_parse = Double.parseDouble(r);
                 } catch (NumberFormatException e) {
                 	Toast.makeText(getBaseContext(), "Radius must be a number", Toast.LENGTH_SHORT).show();
                     return;
@@ -151,7 +152,7 @@ public class LocationActivity extends FragmentActivity {
             public void onClick(View v) {
                 
             	// Check if a place has been found
-            	if (latLng == null | radius == null) {
+            	if (userloc.getLocation() == null | userloc.getRadius() == null) {
             		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
                     return;
             	}
@@ -164,7 +165,15 @@ public class LocationActivity extends FragmentActivity {
                     return;
                 }
                 
-                UserLocation userloc = new UserLocation(name, latLng, radius);
+                userloc.setName(name);
+                List<UserLocation> locationList = PhoneState.getLocationList();
+                locationList.add(userloc);
+                PhoneState.setLocationList(locationList);
+                
+                // Return to previous activity
+            	Intent resultIntent = new Intent();
+            	setResult(Activity.RESULT_OK, resultIntent);
+            	finish();
                 
             }
         });
@@ -278,9 +287,7 @@ public class LocationActivity extends FragmentActivity {
 
                 // Locate the first location
                 if(i==0) {
-                	 
-                    // Creating a marker
-                    MarkerOptions markerOptions = new MarkerOptions();
+
      
                     // Getting a place from the places list
                     HashMap<String, String> hmPlace = list.get(i);
@@ -293,11 +300,17 @@ public class LocationActivity extends FragmentActivity {
      
                     // Getting name
                     String name = hmPlace.get("formatted_address");
-     
-                    latLng = new LatLng(lat, lng);
-     
+                    
+                    // Update userloc
+                    userloc.setLocation(new LatLng(lat, lng));
+                    userloc.setRadius(radius_to_parse);
+                    userloc.setLocationName(name);
+                    
+               	 
+                    // Creating a marker
+                    MarkerOptions markerOptions = new MarkerOptions();
                     // Setting the position for the marker
-                    markerOptions.position(latLng);
+                    markerOptions.position(userloc.getLocation());
      
                     // Setting the title for the marker
                     markerOptions.title(name);
@@ -308,19 +321,21 @@ public class LocationActivity extends FragmentActivity {
                     int fill = Color.argb(50, 137, 180, 215);
                     
                 	mMap.addCircle(new CircleOptions()
-                    	.center(latLng)
+                    	.center(userloc.getLocation())
                     	.radius(radius_to_parse)
                     	.strokeColor(stroke)
                     	.fillColor(fill));
                 	
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(userloc.getLocation()));
                     
-                    radius = radius_to_parse;
+                    
+                    
                 }
             }
         }
     }
  
+    
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
