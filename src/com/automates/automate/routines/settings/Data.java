@@ -29,7 +29,7 @@ public class Data {
 		boolean mobileDataEnabled = false; // Assume disabled
 	    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    try {
-	        Class cmClass = Class.forName(cm.getClass().getName());
+	        Class<?> cmClass = Class.forName(cm.getClass().getName());
 	        Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
 	        method.setAccessible(true); // Make the method callable
 	        // get the setting for "mobile data"

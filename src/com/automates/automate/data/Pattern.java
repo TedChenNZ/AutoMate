@@ -1,6 +1,4 @@
 package com.automates.automate.data;
-
-import java.lang.reflect.Field;
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
  * @author Dhanish

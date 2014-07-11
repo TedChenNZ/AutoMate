@@ -1,7 +1,6 @@
 package com.automates.automate.sqlite;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.automates.automate.locations.UserLocation;
