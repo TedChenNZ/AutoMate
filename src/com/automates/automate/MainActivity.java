@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class MainActivity extends Activity {
  
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+    
+    private Fragment fragment;
     
 
     
@@ -175,7 +178,7 @@ public class MainActivity extends Activity {
      * */
     public void displayView(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = null;
+        fragment = null;
         switch (position) {
         case 0:
             fragment = new RoutinesFragment();
@@ -248,9 +251,20 @@ public class MainActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
     
+	@Override 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+	    case (0) : { 
+	      fragment.onActivityResult(requestCode, resultCode, data);
+	      
+	      break; 
+	    } 
+	  } 
+	}
 
 }

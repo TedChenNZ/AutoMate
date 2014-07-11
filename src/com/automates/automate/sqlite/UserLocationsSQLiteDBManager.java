@@ -65,10 +65,11 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     
     /**
      * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
+     * @return 
      */
 
     
-    public void add(UserLocation ul){
+    public UserLocation add(UserLocation ul){
         Log.d("addUserLocation", ul.toString());
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -77,12 +78,14 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         ContentValues values = userLocationToContentValues(ul);
  
         // 3. insert
-        db.insert(TABLE_NAME, // table
+        long id = db.insert(TABLE_NAME, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
- 
+        ul.setId((int) id);
         // 4. close
         db.close(); 
+        
+        return ul;
     }
  
     public UserLocation get(int id){

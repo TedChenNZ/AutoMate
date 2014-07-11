@@ -20,8 +20,7 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 
 	@Override
 	public boolean add(UserLocation ul) {
-		locationsDB.add(ul);
-		return super.add(ul);
+		return super.add(locationsDB.add(ul));
 	}
 	
 	@Override
