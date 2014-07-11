@@ -12,7 +12,7 @@ public class Pattern {
     
     private String action;
     private String actionCategory;
-    private int actualTime;
+    private long actualTime;
     private int day;
     private int id;
     private String location;
@@ -44,8 +44,8 @@ public class Pattern {
      * @return a boolean indicating the match.
      */
     public boolean compare(Pattern p){
-	if(p.getActionCategory() == this.getActionCategory() &&
-		p.getAction() == this.getAction() &&
+	if(p.getActionCategory().equals(this.getActionCategory()) &&
+		p.getAction().equals(this.getAction()) &&
 		p.getTime() == this.getTime()){
 	    return true;
 	}
@@ -96,7 +96,7 @@ public class Pattern {
 	return this.actionCategory;
     }
 
-    public int getActualTime() {
+    public long getActualTime() {
 	return this.actualTime;
     }
 
@@ -140,8 +140,8 @@ public class Pattern {
 	this.actionCategory = input;
     }
 
-    public void setActualTime(int input){
-	this.actualTime = input;
+    public void setActualTime(long l){
+	this.actualTime = l;
     }
     
     public void setData(String input){

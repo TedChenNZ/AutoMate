@@ -20,7 +20,7 @@ public final class PhoneState {
 	private static boolean wifiEnabled;
 	private static int soundProfile;
 	private static SQLiteDBManager db;
-	private static int time = 0;
+	private static long time = 0;
 	private static GPSTracker gpsTracker;
 	private static List<UserLocation> locationsList;
 	private static String wifiBSSID;
@@ -53,7 +53,7 @@ public final class PhoneState {
 		}
 		location = gpsTracker.getLocation();
 		if (time == 0) {
-			time = (int) System.currentTimeMillis();
+			time = System.currentTimeMillis();
 		}
 
 	}
@@ -150,7 +150,7 @@ public final class PhoneState {
 	public static int getSoundProfile() {
 		return soundProfile;
 	}
-	public static int getTime() {
+	public static long getTime() {
 		return time;
 	}
 	public static SQLiteDBManager getDb() {

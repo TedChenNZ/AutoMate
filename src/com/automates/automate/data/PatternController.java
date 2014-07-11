@@ -27,8 +27,8 @@ public class PatternController {
 
 	timeSet();
 	//TODO weight and statuscode checking
-	p.setWeight(1);
-	p.setStatusCode(0);
+	p.setWeight(WeightManager.initialWeight);
+	p.setStatusCode(StatusCode.IN_DEV);
 	return p;
 
     }
@@ -42,7 +42,8 @@ public class PatternController {
 	time.setToNow();
 	p.setDay(time.weekDay);
 	p.setActualTime(PhoneState.getTime());
-	
+	String timeT = "" + PhoneState.getTime();
+	Log.d("test", timeT);
 	timeTransform();
 	
 
@@ -50,16 +51,16 @@ public class PatternController {
     
     @SuppressWarnings("deprecation")
     private void timeTransform(){
-	int current = PhoneState.getTime();
+	long current = PhoneState.getTime();
 	Date d = new Date(PhoneState.getTime());
 	d.setSeconds(0);
 	d.setMinutes(0);
 	d.setHours(0);
 	int day = d.getDay();
 	
-	int startOfDay = (int) d.getTime();
+	long startOfDay = d.getTime();
 	
-	int diff = current - startOfDay;
+	long diff = current - startOfDay;
 	int intervals = (int) Math.ceil(diff/timeDivision);
 	String sRes = "" + day + intervals;
 	
@@ -69,10 +70,12 @@ public class PatternController {
     }
 
     public void updateDatabase() {
-	
+	Log.d(TAG, p.toString());
 	int id = getInstanceFromDB();
 	if(id != -1){
-	    Log.d(TAG, "updating pattern");
+	    Pattern newP = new WeightUpdater(p, id).updatePattern();
+	    PhoneState.getDb().updatePattern(newP);
+	    Log.d(TAG, "updating pattern: " + newP.getWeight());
 	}
 	else{
 	    Log.d(TAG, "adding pattern");
