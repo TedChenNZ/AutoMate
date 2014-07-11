@@ -1,18 +1,22 @@
 package com.automates.automate.locations;
 
 import com.google.android.gms.maps.model.LatLng;
-
+/**
+ *  Object for user set locations.
+ *  Also works as model for SQLite DB 
+ * @author Ted
+ *
+ */
 public class UserLocation {
 	private String name;
 	private LatLng location;
-	private Double radius;
-	private String locationName;
+	private Integer radius;
+	private String locationName = "";
 	
 	public UserLocation() {
-		locationName = "";
 	}
 	
-	public UserLocation(String name, LatLng location, Double radius, String locationName) {
+	public UserLocation(String name, LatLng location, Integer radius, String locationName) {
 		this.name = name;
 		this.location = location;
 		this.radius = radius;
@@ -35,11 +39,11 @@ public class UserLocation {
 		this.location = location;
 	}
 
-	public Double getRadius() {
+	public Integer getRadius() {
 		return radius;
 	}
 
-	public void setRadius(Double radius) {
+	public void setRadius(Integer radius) {
 		this.radius = radius;
 	}
 
@@ -49,5 +53,10 @@ public class UserLocation {
 
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
+	}
+	
+	@Override
+	public String toString() {
+		return "UserLocation [name=" + name + ", location=" + location + ", radius=" + radius + ", locationName=" + locationName +"]";
 	}
 }

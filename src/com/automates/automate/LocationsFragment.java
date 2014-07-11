@@ -45,11 +45,11 @@ public class LocationsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_locations, container, false);
         
         // List
-        UserLocation u = new UserLocation("Work", new LatLng(1,1), 1.0, "1");
+        UserLocation u = new UserLocation("Work", new LatLng(1,1), 1, "1");
         PhoneState.getLocationsList().add(u);
-        u = new UserLocation("Work1", new LatLng(1,1), 1.0, "1");
+        u = new UserLocation("Work1", new LatLng(1,1), 1, "1");
         PhoneState.getLocationsList().add(u);
-        u = new UserLocation("Work2", new LatLng(1,1), 1.0, "1");
+        u = new UserLocation("Work2", new LatLng(1,1), 1, "1");
         PhoneState.getLocationsList().add(u);
         
         // Adapter

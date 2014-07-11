@@ -49,7 +49,7 @@ public class LocationActivity extends FragmentActivity {
     Button btnAdd;
     ProgressBar loadingSpinner;
     
-    Double radius_to_parse;
+    Integer radius_to_parse;
     UserLocation userloc = new UserLocation();
     
     int EditItem;
@@ -129,7 +129,7 @@ public class LocationActivity extends FragmentActivity {
                 }
                 
                 try {
-                	radius_to_parse = Double.parseDouble(r);
+                	radius_to_parse = Integer.parseInt(r);
                 } catch (NumberFormatException e) {
                 	Toast.makeText(getBaseContext(), "Radius must be a number", Toast.LENGTH_SHORT).show();
                     return;
