@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
  *
  */
 public class UserLocation {
+	private int id = -1; // For Database Purposes
 	private String name;
 	private LatLng location;
 	private Integer radius;
@@ -57,6 +58,14 @@ public class UserLocation {
 	
 	@Override
 	public String toString() {
-		return "UserLocation [name=" + name + ", location=" + location + ", radius=" + radius + ", locationName=" + locationName +"]";
+		return "UserLocation [id=" + id + ", name=" + name + ", location=" + location + ", radius=" + radius + ", locationName=" + locationName +"]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

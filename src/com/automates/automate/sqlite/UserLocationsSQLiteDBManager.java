@@ -24,13 +24,14 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "user_locations";
     
     // Table Columns names
+    private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_LAT = "latitude";
     private static final String KEY_LNG = "longitude";    
     private static final String KEY_RADIUS = "radius";
     private static final String KEY_LOCATION_NAME = "location_name";
  
-    private static final String[] COLUMNS = {KEY_NAME,KEY_LAT,KEY_LNG,KEY_RADIUS,KEY_LOCATION_NAME};
+    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_LAT,KEY_LNG,KEY_RADIUS,KEY_LOCATION_NAME};
  
     public UserLocationsSQLiteDBManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
@@ -40,7 +41,8 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create table
         String CREATE_USER_LOCATION_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " +
-                KEY_NAME + " TEXT PRIMARY KEY, " + 
+        		KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_NAME + " TEXT, " + 
                 KEY_LAT + " REAL, " +
                 KEY_LNG + " REAL, " +
                 KEY_RADIUS + " INTEGER, " +
@@ -55,7 +57,7 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         // Drop older books table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
  
-        // create fresh books table
+        // create fresh table
         this.onCreate(db);
     }
     
@@ -83,8 +85,8 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         db.close(); 
     }
  
-    public UserLocation get(String name){
- 
+    public UserLocation get(int id){
+    	 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
  
@@ -92,8 +94,8 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         Cursor cursor = 
                 db.query(TABLE_NAME, // a. table
                 COLUMNS, // b. column names
-                " name = ?", // c. selections 
-                new String[] { name }, // d. selections args
+                " "+KEY_ID+" = ?", // c. selections 
+                new String[] { String.valueOf(id) }, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by
@@ -106,12 +108,11 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         // 4. build book object
         UserLocation ul = cursorToUserLocation(cursor);
         
-        Log.d("getUserLocation("+name+")", ul.toString());
+        Log.d("getUserLocation("+id+")", ul.toString());
  
-        // 5. return book
+        // 5. return 
         return ul;
     }
- 
     // Get All Books
     public List<UserLocation> getAll() {
         List<UserLocation> locationsList = new ArrayList<UserLocation>();
@@ -140,20 +141,21 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         return locationsList;
     }
  
-     // Updating single book
+     // Updating single object
     public int update(UserLocation ul) {
  
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
  
         // 2. create ContentValues to add key "column"/value
-        ContentValues values = userLocationToContentValuesWIthoutKey(ul);
+        ContentValues values = userLocationToContentValues(ul);
  
         // 3. updating row
         int i = db.update(TABLE_NAME, //table
                 values, // column/value
-                KEY_NAME+" = ?", // selections
-                new String[] { ul.getName() }); //selection args
+                KEY_ID + " = ?", // selections
+                new String[] { String.valueOf(ul.getId()) }); //selection args
+        Log.d("Update", ""+i);
  
         // 4. close
         db.close();
@@ -163,15 +165,15 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     }
  
     // Deleting single UL
-    public void delete(UserLocation ul) {
+    public void remove(UserLocation ul) {
  
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
  
         // 2. delete
         db.delete(TABLE_NAME,
-                KEY_NAME+" = ?",
-                new String[] { ul.getName() });
+                KEY_ID+" = ?",
+                new String[] { String.valueOf(ul.getId()) });
  
         // 3. close
         db.close();
@@ -184,6 +186,7 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     
     private ContentValues userLocationToContentValues (UserLocation ul) {
     	ContentValues values = new ContentValues();
+//    	values.put(KEY_ID, ul.getId());
         values.put(KEY_NAME, ul.getName());
         values.put(KEY_LAT, ul.getLocation().latitude);
         values.put(KEY_LNG, ul.getLocation().longitude);
@@ -192,24 +195,17 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         return values;
     }
     
-    private ContentValues userLocationToContentValuesWIthoutKey (UserLocation ul) {
-    	ContentValues values = new ContentValues();
-        values.put(KEY_LAT, ul.getLocation().latitude);
-        values.put(KEY_LNG, ul.getLocation().longitude);
-        values.put(KEY_RADIUS, ul.getRadius());
-        values.put(KEY_LOCATION_NAME, ul.getLocationName());
-        return values;
-    }
     
 
     
     private UserLocation cursorToUserLocation(Cursor cursor) {
     	UserLocation ul = new UserLocation();
-    	ul.setName(cursor.getString(0));
-    	LatLng loc = new LatLng(cursor.getDouble(1), cursor.getDouble(2));
+    	ul.setId(cursor.getInt(0));
+    	ul.setName(cursor.getString(1));
+    	LatLng loc = new LatLng(cursor.getDouble(2), cursor.getDouble(3));
     	ul.setLocation(loc);
-    	ul.setRadius(cursor.getInt(3));
-    	ul.setLocationName(cursor.getString(4));
+    	ul.setRadius(cursor.getInt(4));
+    	ul.setLocationName(cursor.getString(5));
     	return ul;
     }
 }

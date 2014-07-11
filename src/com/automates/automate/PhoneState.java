@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationsList;
 import com.automates.automate.routines.settings.*;
 import com.automates.automate.sqlite.SQLiteDBManager;
 
@@ -22,7 +23,7 @@ public final class PhoneState {
     private static SQLiteDBManager db;
     private static int time = 0;
     private static GPSTracker gpsTracker;
-    private static List<UserLocation> locationsList = new ArrayList<UserLocation>();
+    private static List<UserLocation> locationsList;
     
     private static PhoneState instance = null;
     private PhoneState() {
@@ -37,7 +38,12 @@ public final class PhoneState {
     }
 
     public static void update(Context context) {
-		db = new SQLiteDBManager(context);
+    	if (db == null) {
+    		db = new SQLiteDBManager(context);
+    	}
+    	if (locationsList == null) {
+    		locationsList = new UserLocationsList(context);
+    	}
 		soundProfile = SoundProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
