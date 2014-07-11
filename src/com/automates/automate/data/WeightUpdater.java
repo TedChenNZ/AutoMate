@@ -11,6 +11,7 @@ public class WeightUpdater implements WeightManager {
     
     private Pattern oldP;
     private double oldWeight;
+    private int id;
     
     private long timeDiff; 
     private int weeksPast, daysPast;
@@ -21,6 +22,7 @@ public class WeightUpdater implements WeightManager {
     
     public WeightUpdater(Pattern p, int id){
 	this.p = p;
+	this.id = id;
 	actualTime = p.getActualTime();
 	oldPset(id);
     }
@@ -46,7 +48,7 @@ public class WeightUpdater implements WeightManager {
 	}
 	
 	p.setWeight(newWeight);
-	
+	p.setId(id);
 	Log.d("PatternController", "" + newWeight);
 	
 	return p;
