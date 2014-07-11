@@ -9,7 +9,7 @@
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/et_radius"
+        android:layout_alignBottom="@+id/et_place"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/find" />
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn_add"
-        android:layout_below="@+id/btn_show"
+        android:layout_below="@+id/et_radius"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
     <EditText
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/et_place"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/et_place"
         android:ems="10"
         android:hint="@string/enter_radius"

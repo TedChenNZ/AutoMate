@@ -20,6 +20,8 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,16 +43,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
  
 public class LocationActivity extends FragmentActivity {
  
-    Button mBtnFind;
-    GoogleMap mMap;
-    EditText etPlace;
-    EditText etRadius;
-    EditText etName;
-    Button btnAdd;
-    ProgressBar loadingSpinner;
+    private Button mBtnFind;
+    private GoogleMap mMap;
+    private EditText etPlace;
+    private EditText etRadius;
+    private EditText etName;
+    private Button btnAdd;
+    private ProgressBar loadingSpinner;
     
-    Integer radius_to_parse;
-    UserLocation userloc = new UserLocation();
+    private UserLocation userloc = new UserLocation();
+    
+    private CircleOptions radius;
+    private MarkerOptions markerOptions;
     
     int EditItem;
     
@@ -87,7 +91,9 @@ public class LocationActivity extends FragmentActivity {
         EditItem = intent.getIntExtra("EditItem", -1);
         if (EditItem != -1) {
         	userloc = PhoneState.getLocationsList().get(EditItem);
+        	
         	showUserLocation(userloc, mMap, 15);
+        	showRadius(userloc, mMap);
         	etPlace.setText(userloc.getLocationName());
         	etRadius.setText(""+userloc.getRadius());
         	etName.setText(userloc.getName());
@@ -105,7 +111,7 @@ public class LocationActivity extends FragmentActivity {
 	        btnAdd.setOnClickListener(new addListener());
         }
 
- 
+        
         // Setting click event listener for the find button
         mBtnFind.setOnClickListener(new OnClickListener() {
         	
@@ -120,20 +126,20 @@ public class LocationActivity extends FragmentActivity {
                     return;
                 }
                 
-                // Getting the radius entered
-                String r = etRadius.getText().toString();
+//                // Getting the radius entered
+//                String r = etRadius.getText().toString();
+//                
+//                if(r==null || r.equals("")){
+//                    Toast.makeText(getBaseContext(), "No Radius is entered", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 
-                if(r==null || r.equals("")){
-                    Toast.makeText(getBaseContext(), "No Radius is entered", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                
-                try {
-                	radius_to_parse = Integer.parseInt(r);
-                } catch (NumberFormatException e) {
-                	Toast.makeText(getBaseContext(), "Radius must be a number", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                try {
+//                	radius_to_parse = Integer.parseInt(r);
+//                } catch (NumberFormatException e) {
+//                	Toast.makeText(getBaseContext(), "Radius must be a number", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 
                 // Show loading icon
                 loadingSpinner.setVisibility(View.VISIBLE);
@@ -164,13 +170,55 @@ public class LocationActivity extends FragmentActivity {
             }
         });
         
+        // Radius update radius on text change
+        etRadius.addTextChangedListener(new TextWatcher() {
+        	@Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                    int count) {
+                // TODO Auto-generated method stub
+                String string = etRadius.getText().toString();
+                if (string != null && string.length() > 0 ) {
+                	userloc.setRadius(Integer.parseInt(string));
+                }
+                showRadius(userloc, mMap);
+            }
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                    int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        	
+        });
         
         
         
     }
     
 
+
+    private void showRadius(UserLocation ul, GoogleMap gm) {
+    	
+    	if (ul.getRadius() != null && markerOptions != null && markerOptions.getPosition() != null) {
+	        int stroke = Color.argb(255, 137, 180, 215);
+	        int fill = Color.argb(100, 137, 180, 215);
+	        gm.clear();
+	        
+	        
+	        radius = new CircleOptions()
+		        .center(markerOptions.getPosition())
+		        .radius(ul.getRadius())
+		        .strokeColor(stroke)
+		        .fillColor(fill);
+	        gm.addMarker(markerOptions);
+	        gm.addCircle(radius);
+    	}
+    }
 
     /**
      * Moves camera to userLocation ul
@@ -179,8 +227,8 @@ public class LocationActivity extends FragmentActivity {
      * @param zoom
      */
     private void showUserLocation(UserLocation ul, GoogleMap gm, int zoom) {
-    	// Creating a marker
-        MarkerOptions markerOptions = new MarkerOptions();
+        // Creating a marker
+        markerOptions = new MarkerOptions();
         // Setting the position for the marker
         markerOptions.position(ul.getLocation());
 
@@ -189,19 +237,12 @@ public class LocationActivity extends FragmentActivity {
 
         // Placing a marker on the position
         gm.addMarker(markerOptions);
-        int stroke = Color.argb(255, 137, 180, 215);
-        int fill = Color.argb(50, 137, 180, 215);
-        
-    	gm.addCircle(new CircleOptions()
-        	.center(ul.getLocation())
-        	.radius(ul.getRadius())
-        	.strokeColor(stroke)
-        	.fillColor(fill));
-    	
-//        gm.animateCamera(CameraUpdateFactory.newLatLng(ul.getLocation()));
+
+
+        //        gm.animateCamera(CameraUpdateFactory.newLatLng(ul.getLocation()));
         gm.animateCamera(CameraUpdateFactory.newLatLngZoom(ul.getLocation(), zoom));
 
-	}
+    }
 
 	private String downloadUrl(String strUrl) throws IOException{
         String data = "";
@@ -324,10 +365,13 @@ public class LocationActivity extends FragmentActivity {
                     
                     // Update userloc
                     userloc.setLocation(new LatLng(lat, lng));
-                    userloc.setRadius(radius_to_parse);
+//                    userloc.setRadius(radius_to_parse);
                     userloc.setLocationName(name);
                     
+                    
                     showUserLocation(userloc, mMap, 15);
+                    showRadius(userloc, mMap);
+                    
                     
                 }
             }
@@ -354,11 +398,15 @@ public class LocationActivity extends FragmentActivity {
         	hideSoftKeyboard();
             
         	// Check if a place has been found
-        	if (userloc.getLocation() == null | userloc.getRadius() == null) {
+        	if (userloc.getLocation() == null) {
         		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
                 return;
         	}
         	
+        	if (userloc.getRadius() == null || userloc.getRadius() == 0) {
+        		Toast.makeText(getBaseContext(), "No or zero Radius entered", Toast.LENGTH_SHORT).show();
+                return;
+        	}
         	// Get the name
             String name = etName.getText().toString();
 
