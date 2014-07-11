@@ -22,11 +22,11 @@ public class PatternController {
     public Pattern generatePattern(){
 
 	p.setLocation(PhoneState.getLocation().toString());
-	p.setWifi(Boolean.toString(PhoneState.isWifiEnabled()));
+	p.setWifi(PhoneState.getWifiBSSID());
 	p.setData(Boolean.toString(PhoneState.isDataEnabled()));
 
 	timeSet();
-	//TODO weight and statuscode checking
+	//TODO weight and status code checking
 	p.setWeight(WeightManager.initialWeight);
 	p.setStatusCode(StatusCode.IN_DEV);
 	return p;
