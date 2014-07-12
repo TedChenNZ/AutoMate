@@ -7,7 +7,6 @@ import android.content.Context;
 import android.location.Location;
 
 import com.automates.automate.sqlite.UserLocationsSQLiteDBManager;
-import com.google.android.gms.maps.model.LatLng;
 
 public class UserLocationsList extends ArrayList<UserLocation> {
 	/**

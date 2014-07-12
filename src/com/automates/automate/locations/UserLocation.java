@@ -1,7 +1,6 @@
 package com.automates.automate.locations;
 
 import android.location.Location;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 /**

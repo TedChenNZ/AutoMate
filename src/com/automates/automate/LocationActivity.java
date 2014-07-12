@@ -103,7 +103,7 @@ public class LocationActivity extends FragmentActivity {
             
         } else {
 	        GPSTracker gps = PhoneState.getGPSTracker();
-	        Location loc = gps.getLocation();
+	        Location loc = gps.getLastLocation();
 	        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
 	        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
 	        
@@ -175,7 +175,6 @@ public class LocationActivity extends FragmentActivity {
         	@Override
             public void onTextChanged(CharSequence s, int start, int before,
                     int count) {
-                // TODO Auto-generated method stub
                 String string = etRadius.getText().toString();
                 if (string != null && string.length() > 0 ) {
                 	userloc.setRadius(Integer.parseInt(string));

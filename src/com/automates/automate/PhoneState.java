@@ -51,7 +51,7 @@ public final class PhoneState {
 		if (gpsTracker == null) {
 			gpsTracker = new GPSTracker(context);
 		}
-		location = gpsTracker.getLocation();
+		location = gpsTracker.getLastLocation();
 		if (time == 0) {
 			time = System.currentTimeMillis();
 		}
