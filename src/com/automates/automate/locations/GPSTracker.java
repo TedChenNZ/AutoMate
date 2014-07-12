@@ -13,10 +13,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
 public class GPSTracker extends Service implements LocationListener {
-//	private final static String TAG = "GPSTracker";
+	private final static String TAG = "GPSTracker";
 	 
     private final Context mContext;
  
@@ -34,7 +35,7 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // longitude
  
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 20; // meters
  
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
@@ -70,7 +71,7 @@ public class GPSTracker extends Service implements LocationListener {
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//                    Log.d("Network", "Network");
+                    Log.d(TAG, "Network");
                     if (locationManager != null) {
                         location = locationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -80,14 +81,14 @@ public class GPSTracker extends Service implements LocationListener {
                         }
                     }
                 }
-                // if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled) {
+                // else if GPS Enabled get lat/long using GPS Services
+                else if (isGPSEnabled) {
                     if (location == null) {
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-//                        Log.d("GPS Enabled", "GPS Enabled");
+                        Log.d(TAG, "GPS Enabled");
                         if (locationManager != null) {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);

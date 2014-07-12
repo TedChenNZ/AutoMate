@@ -55,7 +55,8 @@ public final class PhoneState {
 		if (time == 0) {
 			time = System.currentTimeMillis();
 		}
-
+		Log.d("PhoneState", "Update at: " + time);
+//		Log.d("PhoneState", "" + ((UserLocationsList) locationsList).checkLocation(location));
 	}
 
 	public static String checkConnectivityIntent() {

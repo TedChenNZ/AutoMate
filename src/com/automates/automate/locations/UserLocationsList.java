@@ -1,10 +1,13 @@
 package com.automates.automate.locations;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.location.Location;
 
 import com.automates.automate.sqlite.UserLocationsSQLiteDBManager;
+import com.google.android.gms.maps.model.LatLng;
 
 public class UserLocationsList extends ArrayList<UserLocation> {
 	/**
@@ -33,5 +36,17 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 	public UserLocation set(int index, UserLocation ul) {
 		locationsDB.update(ul);
 		return super.set(index, ul);
+	}
+	
+	public List<UserLocation> checkLocation(Location loc) {
+		int size = super.size();
+		List<UserLocation> ulList = new ArrayList<UserLocation>();
+		
+		for (int i = 0; i < size; i++) {
+			if (this.get(i).containsLocation(loc)) {
+				ulList.add(this.get(i));
+			}
+		}
+		return ulList;
 	}
 }

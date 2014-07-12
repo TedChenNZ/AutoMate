@@ -1,5 +1,8 @@
 package com.automates.automate.locations;
 
+import android.location.Location;
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 /**
  *  Object for user set locations.
@@ -22,6 +25,30 @@ public class UserLocation {
 		this.location = location;
 		this.radius = radius;
 		this.locationName = locationName;
+	}
+	
+	/**
+	 * Check if a given location is within the radius of this UserLocation
+	 * @param loc
+	 * @return boolean
+	 */
+	public boolean containsLocation(LatLng loc) {
+		float[] results = new float[1];
+		double centerLatitude = this.location.latitude;
+		double centerLongitude = this.location.longitude;
+		double testLatitude = loc.latitude;
+		double testLongitude = loc.longitude;
+		Location.distanceBetween(centerLatitude, centerLongitude, testLatitude, testLongitude, results);
+		float distanceInMeters = results[0];
+		boolean isWithinRadius = distanceInMeters < radius;
+		
+		return isWithinRadius;
+	}
+	
+	public boolean containsLocation(Location loc) {
+		LatLng l = new LatLng(loc.getLatitude(), loc.getLongitude());
+		return this.containsLocation(l);
+		
 	}
 
 	public String getName() {
