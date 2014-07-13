@@ -1,4 +1,7 @@
 package com.automates.automate;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -38,24 +41,28 @@ public final class PhoneState {
 	}
 
 	public static void update(Context context) {
+		// Initialize variables if they are not already initialized
 		if (db == null) {
 			db = new SQLiteDBManager(context);
 		}
 		if (locationsList == null) {
 			locationsList = new UserLocationsList(context);
 		}
+		if (gpsTracker == null) {
+			gpsTracker = new GPSTracker(context);
+		}
+		
+		// Update variables
 		soundProfile = SoundProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
 		wifiBSSID = Wifi.getWifiBSSID(context);
-		if (gpsTracker == null) {
-			gpsTracker = new GPSTracker(context);
-		}
+		time = System.currentTimeMillis();
 		location = gpsTracker.getLastLocation();
-		if (time == 0) {
-			time = System.currentTimeMillis();
-		}
-		Log.d("PhoneState", "Update at: " + time);
+		
+		// Notify listeners
+		notifyListeners();
+		Log.d("PhoneState", "Update");
 //		Log.d("PhoneState", "" + ((UserLocationsList) locationsList).checkLocation(location));
 	}
 
@@ -169,5 +176,22 @@ public final class PhoneState {
 	public static String getWifiBSSID() {
 		return wifiBSSID;
 	}
+	
+	
+	
+	/**
+	 * Listeners
+	 */
+	
+	private static List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
+	
+	private static void notifyListeners() {
+		for (PropertyChangeListener name : listeners) {
+			name.propertyChange(new PropertyChangeEvent(getInstance(), "Triggers", true, true));
+		}
+	}
 
+	public void addChangeListener(PropertyChangeListener newListener) {
+		listeners.add(newListener);
+	}
 }

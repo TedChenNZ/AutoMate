@@ -1,5 +1,7 @@
 package com.automates.automate;
 // Based on http://wptrafficanalyzer.in/blog/locating-user-input-address-in-google-maps-android-api-v2-with-geocoding-api/
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +43,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
  
-public class LocationActivity extends FragmentActivity {
+public class LocationActivity extends FragmentActivity implements PropertyChangeListener {
  
     private Button mBtnFind;
     private GoogleMap mMap;
@@ -195,6 +197,8 @@ public class LocationActivity extends FragmentActivity {
         	
         });
         
+        // Listener
+        PhoneState.getInstance().addChangeListener(this);
         
         
     }
@@ -456,4 +460,12 @@ public class LocationActivity extends FragmentActivity {
             
         }
     }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		// TODO Auto-generated method stub
+		Log.d("Property Change", "Changed property: " + event.getPropertyName() + " [old -> "
+			      + event.getOldValue() + "] | [new -> " + event.getNewValue() +"]");
+		
+	}
 }

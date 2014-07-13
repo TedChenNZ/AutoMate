@@ -1,18 +1,17 @@
 package com.automates.automate;
 
-import com.automates.automate.routines.settings.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class RoutinesFragment extends Fragment {
-	private TextView testText;
+public class RoutinesFragment extends Fragment implements PropertyChangeListener {
+//	private TextView testText;
 
 	public RoutinesFragment(){}
 	@Override
@@ -22,30 +21,35 @@ public class RoutinesFragment extends Fragment {
         
         
         
-    	final Button testButton = (Button) rootView.findViewById(R.id.testButton);
-    	testButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                testButton(v);
-            }
-        });
+//    	final Button testButton = (Button) rootView.findViewById(R.id.testButton);
+//    	testButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                testButton(v);
+//            }
+//        });
         
-        
+        PhoneState.getInstance().addChangeListener(this);
         
         return rootView;
         
         
     }
-	
-	public void testButton(View v) {
-		Context context = this.getActivity();
-//		SoundProfiles.setSoundProfile(this.getActivity(), SoundProfiles.NORMAL_NO_VIBRATE);
-//		int m = SoundProfiles.getMode(this.getActivity());
-//		testText.setText(Integer.toString(m));
-		Data.setDataEnabled(context, true);
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		Log.d("RoutinesFragment", "PropertyChangeEvent recieved");
 		
-		testText.setText(Boolean.toString(Data.getDataEnabled(context)));
 	}
+	
+//	public void testButton(View v) {
+//		Context context = this.getActivity();
+////		SoundProfiles.setSoundProfile(this.getActivity(), SoundProfiles.NORMAL_NO_VIBRATE);
+////		int m = SoundProfiles.getMode(this.getActivity());
+////		testText.setText(Integer.toString(m));
+//		Data.setDataEnabled(context, true);
+//		
+//		testText.setText(Boolean.toString(Data.getDataEnabled(context)));
+//	}
 	
 
 }
