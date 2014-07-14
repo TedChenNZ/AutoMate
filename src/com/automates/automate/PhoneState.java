@@ -94,6 +94,7 @@ public final class PhoneState {
 			event = "Ringer";
 		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 			event = "Bootup";
+			return null;
 		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
 			event = "Wifi";
 		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {

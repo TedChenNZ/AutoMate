@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.GeocodeJSONParser;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationsList;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -43,7 +44,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
  
-public class LocationActivity extends FragmentActivity implements PropertyChangeListener {
+public class LocationActivity extends FragmentActivity {
  
     private Button mBtnFind;
     private GoogleMap mMap;
@@ -197,10 +198,7 @@ public class LocationActivity extends FragmentActivity implements PropertyChange
         	
         });
         
-        // Listener
-        PhoneState.getInstance().addChangeListener(this);
-        
-        
+
     }
     
 
@@ -428,6 +426,7 @@ public class LocationActivity extends FragmentActivity implements PropertyChange
             
         }
     }
+    
     /**
      * Listener for edit button
      */
@@ -461,11 +460,4 @@ public class LocationActivity extends FragmentActivity implements PropertyChange
         }
     }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		// TODO Auto-generated method stub
-		Log.d("Property Change", "Changed property: " + event.getPropertyName() + " [old -> "
-			      + event.getOldValue() + "] | [new -> " + event.getNewValue() +"]");
-		
-	}
 }

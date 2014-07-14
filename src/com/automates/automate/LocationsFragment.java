@@ -1,5 +1,7 @@
 package com.automates.automate;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,12 +9,12 @@ import java.util.List;
 import com.automates.automate.locations.EditMultiChoiceModeListener;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsArrayAdapter;
+import com.automates.automate.locations.UserLocationsList;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,14 +26,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class LocationsFragment extends Fragment {
+public class LocationsFragment extends Fragment implements PropertyChangeListener {
 //	private static final String TAG = "LocationsFragment";
 	private ListView locationsListView;
 	private UserLocationsArrayAdapter locationsAdapter;
 	private List<Integer> selected = new ArrayList<Integer>();
-	
-	
 	
     // action mode edit
     private ActionMode.Callback actionModeCallback;
@@ -101,22 +102,27 @@ public class LocationsFragment extends Fragment {
             }
 		});
         
+        updateCurrentLocation();
+        // Listener
+        PhoneState.getInstance().addChangeListener(this);
         return rootView;
     }
 	
 	@Override 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
 	  super.onActivityResult(requestCode, resultCode, data); 
-	  Log.d("LocationsFragment", "onActivityResult");
 	  switch(requestCode) { 
 	    case (0) : { 
 	      if (resultCode == Activity.RESULT_OK) {
 	    	  	locationsAdapter.notifyDataSetChanged();
+	    	  	updateCurrentLocation();
 		      } 
 	      break; 
 	    } 
 	  } 
 	}
+	
+	
 
 	private class LocationsModeListener extends EditMultiChoiceModeListener {
 		
@@ -165,6 +171,31 @@ public class LocationsFragment extends Fragment {
 		}
 	}
 
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		updateCurrentLocation();
+	}
 	
+	
+	private void updateCurrentLocation() {
+		List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
+		List<UserLocation> list = PhoneState.getLocationsList();
+		int index = 0;
+		for (UserLocation ul : list) {
+			for (UserLocation cul: currentList) {
+				View v = locationsListView.getChildAt(index - locationsListView.getFirstVisiblePosition());
+				if(v != null) {
+					TextView name = (TextView) v.findViewById(R.id.name);
+					if (ul.getId() == cul.getId()) {
+						name.setTextColor(getResources().getColor(R.color.active));
+					} else {
+						name.setTextColor(getResources().getColor(R.color.black));
+					}
+				}
+				index = index + 1;
+			}
+		}
+	}
 	
 }

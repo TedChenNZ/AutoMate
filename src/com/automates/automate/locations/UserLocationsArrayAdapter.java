@@ -2,8 +2,11 @@ package com.automates.automate.locations;
 
 import java.util.List;
 
+import com.automates.automate.PhoneState;
 import com.automates.automate.R;
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 
 	private List<UserLocation> objects;
+	private View v;
 
 	public UserLocationsArrayAdapter(Context context, int resource, List<UserLocation> objects) {
 		super(context, resource, objects);
@@ -26,7 +30,7 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 	 */
 	public View getView(int position, View convertView, ViewGroup parent){
 		// assign the view we are converting to a local variable
-		View v = convertView;
+		v = convertView;
 
 		// first check to see if the view is null. if so, we have to inflate it.
 		// to inflate it basically means to render, or show, the view.
@@ -49,18 +53,24 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 			// This is how you obtain a reference to the TextViews.
 			// These TextViews are created in the XML files we defined.
 
-			TextView tt = (TextView) v.findViewById(R.id.name);
-			tt.setText(i.getName());
+			TextView name = (TextView) v.findViewById(R.id.name);
+			name.setText(i.getName());
+			TextView details = (TextView) v.findViewById(R.id.details);
+			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
+			details.setText(d);
+			
+			List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
+
+			if (currentList.contains(i)) {
+				name.setTextColor(v.getResources().getColor(R.color.active));
+			}
 
 			
 		}
 
 		// the view must be returned to our activity
-		
-
 		return v;
 
 	}
-	
 
 }

@@ -9,20 +9,20 @@ import com.automates.automate.PhoneState;
 import com.automates.automate.data.PatternController;
 
 public class IntentReceiver extends BroadcastReceiver {	
-    private final static String TAG = "IntentReceiver";
-    @Override
-    public void onReceive(Context context, Intent intent) {
-	Log.d(TAG, intent.getAction());
-	PhoneState.update(context);
-	String event = PhoneState.getEvent(intent);
-	if (event != null) {
-	    String eventAction = PhoneState.getEventAction(event);
-	    PatternController pg = new PatternController(event,eventAction);
-	    pg.updateDatabase();
+	private final static String TAG = "IntentReceiver";
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		Log.d(TAG, intent.getAction());
+		PhoneState.update(context);
+		String event = PhoneState.getEvent(intent);
+		if (event != null) {
+			String eventAction = PhoneState.getEventAction(event);
+			PatternController pg = new PatternController(event,eventAction);
+			pg.updateDatabase();
 
-	    PhoneState.logIntent(event);
+			PhoneState.logIntent(event);
+		}
+
 	}
-
-    }
 
 }

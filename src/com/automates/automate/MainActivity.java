@@ -119,12 +119,8 @@ public class MainActivity extends Activity {
             displayView(0);
         }
         
-        
         // Initialize Phone State (includes GPS service)
         PhoneState.update(this);
-        
-        
-        
         
     }
  
@@ -174,7 +170,7 @@ public class MainActivity extends Activity {
     }
  
     /**
-     * Diplaying fragment view for selected nav drawer list item
+     * Displaying fragment view for selected nav drawer list item
      * */
     public void displayView(int position) {
         // update the main content by replacing fragments
