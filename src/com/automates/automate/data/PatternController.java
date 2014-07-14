@@ -21,7 +21,7 @@ public class PatternController {
 
     public Pattern generatePattern(){
 
-	p.setLocation(PhoneState.getLocation().toString());
+	p.setLocation(PhoneState.getSetLocation());
 	p.setWifi(PhoneState.getWifiBSSID());
 	p.setData(Boolean.toString(PhoneState.isDataEnabled()));
 

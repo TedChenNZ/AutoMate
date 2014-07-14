@@ -7,7 +7,7 @@
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
     <color name="black">#000</color>
-    <color name="grey">#ccc</color>
+    <color name="grey">#666</color>
     <color name="transparent">#00000000</color>
     <color name="list_location_normal">#00000000</color>
     <color name="list_location_pressed">#7FCBE2</color>

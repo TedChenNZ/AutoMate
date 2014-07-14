@@ -128,7 +128,7 @@ public final class PhoneState {
 
 			String t = "" + time;
 
-			s = event + "|" + t + "|" + soundProfile + "|" + wifiBSSID + "|" + dataEnabled + "|" + location;
+			s = event + "|" + t + "|" + soundProfile + "|" + wifiBSSID + "|" + dataEnabled + "|" + getSetLocation();
 			Logger.appendLog(s);
 		}
 	}
@@ -143,6 +143,17 @@ public final class PhoneState {
 
 
 	public static String getSetLocation() {
+		List<UserLocation> currentList = ((UserLocationsList) locationsList).checkLocation(location);
+		if (!(currentList.isEmpty())) {
+			String s = "";
+			for (UserLocation ul: currentList) {
+				s = s + ul.getId() + ",";
+			}
+			s = s.substring(0, s.length() - 1);
+
+			Log.d(TAG, s);
+			return s;
+		}
 		return location.toString();
 	}
 
