@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
+public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper implements UserLocationsManager {
 	// Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -62,12 +62,12 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     
     //---------------------------------------------------------------------
     
-    /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
-     * @return 
+    /* (non-Javadoc)
+     * @see com.automates.automate.sqlite.UserLocationsManager#add(com.automates.automate.locations.UserLocation)
      */
 
     
+    @Override
     public UserLocation add(UserLocation ul){
         Log.d("addUserLocation", ul.toString());
         // 1. get reference to writable DB
@@ -87,6 +87,10 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         return ul;
     }
  
+    /* (non-Javadoc)
+     * @see com.automates.automate.sqlite.UserLocationsManager#get(int)
+     */
+    @Override
     public UserLocation get(int id){
     	 
         // 1. get reference to readable DB
@@ -116,6 +120,10 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
         return ul;
     }
     // Get All Books
+    /* (non-Javadoc)
+     * @see com.automates.automate.sqlite.UserLocationsManager#getAll()
+     */
+    @Override
     public List<UserLocation> getAll() {
         List<UserLocation> locationsList = new ArrayList<UserLocation>();
  
@@ -144,6 +152,10 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     }
  
      // Updating single object
+    /* (non-Javadoc)
+     * @see com.automates.automate.sqlite.UserLocationsManager#update(com.automates.automate.locations.UserLocation)
+     */
+    @Override
     public int update(UserLocation ul) {
  
         // 1. get reference to writable DB
@@ -167,6 +179,10 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper {
     }
  
     // Deleting single UL
+    /* (non-Javadoc)
+     * @see com.automates.automate.sqlite.UserLocationsManager#remove(com.automates.automate.locations.UserLocation)
+     */
+    @Override
     public void remove(UserLocation ul) {
  
         // 1. get reference to writable DB

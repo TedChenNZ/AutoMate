@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.location.Location;
 
+import com.automates.automate.sqlite.UserLocationsManager;
 import com.automates.automate.sqlite.UserLocationsSQLiteDBManager;
 
 public class UserLocationsList extends ArrayList<UserLocation> {
@@ -15,7 +16,7 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 	private static final long serialVersionUID = -8241065009438371175L;
 
 
-	private UserLocationsSQLiteDBManager locationsDB;
+	private UserLocationsManager locationsDB;
 	private List<UserLocation> currentULList;
 
 

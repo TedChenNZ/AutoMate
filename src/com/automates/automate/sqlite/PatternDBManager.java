@@ -18,7 +18,7 @@ import android.util.Log;
  * @author Dhanish
  *
  */
-public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
+public class PatternDBManager extends SQLiteOpenHelper implements PatternManager{
  
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -27,7 +27,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
     // For logging purposes - tag
     private final static String TAG = "PatternDB";
  
-    public SQLiteDBManager(Context context) {
+    public PatternDBManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
  
