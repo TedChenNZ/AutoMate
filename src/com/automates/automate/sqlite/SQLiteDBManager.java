@@ -25,7 +25,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
     // Database Name
     private static final String DATABASE_NAME = "PatternDB";
     // For logging purposes - tag
-    private final static String TAG = "DBManager";
+    private final static String TAG = "PatternDB";
  
     public SQLiteDBManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
