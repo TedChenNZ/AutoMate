@@ -27,6 +27,11 @@ public class Routine {
     }
 
 
+    public Routine() {
+	// TODO Auto-generated constructor stub
+    }
+
+
     public int getId() {
         return id;
     }

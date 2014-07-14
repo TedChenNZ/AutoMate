@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.automates.automate.PhoneState;
 
-public class PatternController {
+public class PatternController implements PatternControl {
     private Pattern p = new Pattern();
     private final int timeDivision = 900000; //15 minutes
     private final String TAG = "PatternController";
@@ -19,6 +19,10 @@ public class PatternController {
 	generatePattern();
     }
 
+    /* (non-Javadoc)
+     * @see com.automates.automate.data.PatternControl#generatePattern()
+     */
+    @Override
     public Pattern generatePattern(){
 
 	p.setLocation(PhoneState.getSetLocation());
@@ -34,6 +38,10 @@ public class PatternController {
 
     }
     
+    /* (non-Javadoc)
+     * @see com.automates.automate.data.PatternControl#getPattern()
+     */
+    @Override
     public Pattern getPattern(){
 	return p;
     }
@@ -69,6 +77,10 @@ public class PatternController {
 	p.setTime(result);
     }
 
+    /* (non-Javadoc)
+     * @see com.automates.automate.data.PatternControl#updateDatabase()
+     */
+    @Override
     public void updateDatabase() {
 	Log.d(TAG, p.toString());
 	int id = getInstanceFromDB();
