@@ -8,21 +8,22 @@ package com.automates.automate.data;
 public class Pattern {
 
     
+    private int id;
     private String action;
     private String actionCategory;
+    private int time;
     private long actualTime;
     private int day;
-    private int id;
     private String location;
-    private String mData;
-    private int statusCode;
-    private int time;
-    private double weight;
     private String wifi;
+    private String mData;
+    private double weekWeight;
+    private double weight;
+    private int statusCode;
  
     public Pattern(){}
  
-    public Pattern(String actionCategory, String action, int time, int actualTime, int day, String location, String wifi, String mData, double weight, int statusCode) {
+    public Pattern(String actionCategory, String action, int time, int actualTime, int day, String location, String wifi, String mData, double weekWeight, double weight, int statusCode) {
         super();
         this.actionCategory = actionCategory;
         this.action = action;
@@ -32,6 +33,7 @@ public class Pattern {
         this.location = location;
         this.wifi = wifi;
         this.mData = mData;
+        this.weekWeight = weekWeight;
         this.weight = weight;
         this.statusCode = statusCode;
     }
@@ -174,12 +176,23 @@ public class Pattern {
 	this.wifi = input;
     }
 
+    public double getWeekWeight() {
+        return weekWeight;
+    }
+
+    public void setWeekWeight(double weekWeight) {
+        this.weekWeight = weekWeight;
+    }
+
     @Override
     public String toString() {
-	return "Pattern [id=" + id + ", actionCategory=" + actionCategory
-		+ ", action=" + action + ", time=" + time + ", actualTime="
+	return "Pattern [id=" + id + ", action=" + action + ", actionCategory="
+		+ actionCategory + ", time=" + time + ", actualTime="
 		+ actualTime + ", day=" + day + ", location=" + location
-		+ ", wifi=" + wifi + ", mData=" + mData + ", weight=" + weight
-		+ ", statusCode=" + statusCode + "]";
+		+ ", wifi=" + wifi + ", mData=" + mData + ", weekWeight="
+		+ weekWeight + ", weight=" + weight + ", statusCode="
+		+ statusCode + "]";
     }
+
+
 }

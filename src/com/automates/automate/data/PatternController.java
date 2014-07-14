@@ -27,6 +27,7 @@ public class PatternController {
 
 	timeSet();
 	//TODO weight and status code checking
+	p.setWeekWeight(WeightManager.initialZeroWeight);
 	p.setWeight(WeightManager.initialWeight);
 	p.setStatusCode(StatusCode.IN_DEV);
 	return p;
@@ -43,7 +44,6 @@ public class PatternController {
 	p.setDay(time.weekDay);
 	p.setActualTime(PhoneState.getTime());
 	String timeT = "" + PhoneState.getTime();
-	Log.d("test", timeT);
 	timeTransform();
 	
 

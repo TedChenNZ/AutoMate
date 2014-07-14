@@ -44,6 +44,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
                 "location TEXT, "+
                 "wifi TEXT, "+
                 "data INTEGER, "+
+                "weekWeight REAL, "+
                 "weight REAL, "+
                 "statusCode INTEGER )";
  
@@ -80,12 +81,13 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
     private static final String KEY_LOCATION = "location";
     private static final String KEY_WIFI = "wifi";
     private static final String KEY_DATA = "data";
+    private static final String KEY_WEEKWEIGHT = "weekWeight";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_STATUSCODE = "statusCode";
     
     
     
-    private static final String[] COLUMNS = {KEY_ID,KEY_ACTIONCATEGORY,KEY_ACTION,KEY_TIME,KEY_ACTUALTIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_WEIGHT,KEY_STATUSCODE};
+    private static final String[] COLUMNS = {KEY_ID,KEY_ACTIONCATEGORY,KEY_ACTION,KEY_TIME,KEY_ACTUALTIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_WEEKWEIGHT, KEY_WEIGHT,KEY_STATUSCODE};
  
     public void addPattern(Pattern pattern){
         Log.d("addPattern", pattern.toString());
@@ -102,6 +104,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         values.put(KEY_LOCATION, pattern.getLocation());
         values.put(KEY_WIFI, pattern.getWifi());
         values.put(KEY_DATA, pattern.getData());
+        values.put(KEY_WEEKWEIGHT, pattern.getWeekWeight());
         values.put(KEY_WEIGHT, pattern.getWeight());
         values.put(KEY_STATUSCODE, pattern.getStatusCode());
  
@@ -146,10 +149,11 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         pattern.setLocation(cursor.getString(6));
         pattern.setWifi(cursor.getString(7));
         pattern.setData(cursor.getString(8));
-        pattern.setWeight(Double.parseDouble(cursor.getString(9)));
-        pattern.setStatusCode(Integer.parseInt(cursor.getString(10)));
+        pattern.setWeekWeight(Double.parseDouble(cursor.getString(9)));
+        pattern.setWeight(Double.parseDouble(cursor.getString(10)));
+        pattern.setStatusCode(Integer.parseInt(cursor.getString(11)));
  
-        Log.d("getPattern("+id+")", pattern.toString());
+        Log.d("TAG", "getPattern("+id+") " + pattern.toString());
  
         // 5. return pattern
         return pattern;
@@ -180,15 +184,16 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
                 pattern.setLocation(cursor.getString(6));
                 pattern.setWifi(cursor.getString(7));
                 pattern.setData(cursor.getString(8));
-                pattern.setWeight(Double.parseDouble(cursor.getString(9)));
-                pattern.setStatusCode(Integer.parseInt(cursor.getString(10)));
+                pattern.setWeekWeight(Double.parseDouble(cursor.getString(9)));
+                pattern.setWeight(Double.parseDouble(cursor.getString(10)));
+                pattern.setStatusCode(Integer.parseInt(cursor.getString(11)));
  
                 // Add pattern to patterns
                 patterns.add(pattern);
             } while (cursor.moveToNext());
         }
  
-        Log.d("getAllPatterns()", patterns.toString());
+        Log.d("TAG", "getAllPatterns() " + patterns.toString());
  
         // return patterns
         return patterns;
@@ -210,6 +215,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         values.put(KEY_LOCATION, pattern.getLocation());
         values.put(KEY_WIFI, pattern.getWifi());
         values.put(KEY_DATA, pattern.getData());
+        values.put(KEY_WEEKWEIGHT, pattern.getWeekWeight());
         values.put(KEY_WEIGHT, pattern.getWeight());
         values.put(KEY_STATUSCODE, pattern.getStatusCode());
  
@@ -222,7 +228,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         // 4. close
         db.close();
  
-        Log.d("updatePattern", values.toString());
+        Log.d("TAG", "updatePattern " + values.toString());
         return i;
  
     }
@@ -241,7 +247,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         // 3. close
         db.close();
  
-        Log.d("deletePattern", pattern.toString());
+        Log.d("TAG", "deletePattern " + pattern.toString());
  
     }
 }
