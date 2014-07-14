@@ -36,8 +36,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         // SQL statement to create pattern table
         String CREATE_PATTERN_TABLE = "CREATE TABLE patterns ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-                "actionCategory TEXT, "+
-                "action TEXT, "+
+                "eventCategory TEXT, "+
+                "event TEXT, "+
                 "time INTEGER, "+
                 "actualTime INTEGER, "+
                 "day TEXT, "+
@@ -73,8 +73,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
  
     // Patterns Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_ACTIONCATEGORY = "actionCategory";
-    private static final String KEY_ACTION = "action";
+    private static final String KEY_EVENTCATEGORY = "eventCategory";
+    private static final String KEY_EVENT = "event";
     private static final String KEY_TIME = "time";
     private static final String KEY_ACTUALTIME = "actualTIme";
     private static final String KEY_DAY = "day";
@@ -87,7 +87,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
     
     
     
-    private static final String[] COLUMNS = {KEY_ID,KEY_ACTIONCATEGORY,KEY_ACTION,KEY_TIME,KEY_ACTUALTIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_WEEKWEIGHT, KEY_WEIGHT,KEY_STATUSCODE};
+    private static final String[] COLUMNS = {KEY_ID,KEY_EVENTCATEGORY,KEY_EVENT,KEY_TIME,KEY_ACTUALTIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_WEEKWEIGHT, KEY_WEIGHT,KEY_STATUSCODE};
  
     public void addPattern(Pattern pattern){
         Log.d("addPattern", pattern.toString());
@@ -96,8 +96,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
  
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_ACTIONCATEGORY, pattern.getActionCategory()); 
-        values.put(KEY_ACTION, pattern.getAction());
+        values.put(KEY_EVENTCATEGORY, pattern.getEventCategory()); 
+        values.put(KEY_EVENT, pattern.getEvent());
         values.put(KEY_TIME, pattern.getTime());
         values.put(KEY_ACTUALTIME, pattern.getActualTime());
         values.put(KEY_DAY, pattern.getDay());
@@ -141,8 +141,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
         // 4. build pattern object
         Pattern pattern = new Pattern();
         pattern.setId(Integer.parseInt(cursor.getString(0)));
-        pattern.setActionCategory(cursor.getString(1));
-        pattern.setAction(cursor.getString(2));
+        pattern.setEventCategory(cursor.getString(1));
+        pattern.setEvent(cursor.getString(2));
         pattern.setTime(Integer.parseInt(cursor.getString(3)));
         pattern.setActualTime(Long.parseLong(cursor.getString(4)));
         pattern.setDay(Integer.parseInt(cursor.getString(5)));
@@ -176,8 +176,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
             do {
                 pattern = new Pattern();
                 pattern.setId(Integer.parseInt(cursor.getString(0)));
-                pattern.setActionCategory(cursor.getString(1));
-                pattern.setAction(cursor.getString(2));
+                pattern.setEventCategory(cursor.getString(1));
+                pattern.setEvent(cursor.getString(2));
                 pattern.setTime(Integer.parseInt(cursor.getString(3)));
                 pattern.setActualTime(Long.parseLong(cursor.getString(4)));
                 pattern.setDay(Integer.parseInt(cursor.getString(5)));
@@ -207,8 +207,8 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements PatternManager{
  
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_ACTIONCATEGORY, pattern.getActionCategory()); 
-        values.put(KEY_ACTION, pattern.getAction());
+        values.put(KEY_EVENTCATEGORY, pattern.getEventCategory()); 
+        values.put(KEY_EVENT, pattern.getEvent());
         values.put(KEY_TIME, pattern.getTime());
         values.put(KEY_ACTUALTIME, pattern.getActualTime());
         values.put(KEY_DAY, pattern.getDay());

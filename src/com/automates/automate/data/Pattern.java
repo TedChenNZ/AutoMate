@@ -9,8 +9,8 @@ public class Pattern {
 
     
     private int id;
-    private String action;
-    private String actionCategory;
+    private String event;
+    private String eventCategory;
     private int time;
     private long actualTime;
     private int day;
@@ -23,10 +23,9 @@ public class Pattern {
  
     public Pattern(){}
  
-    public Pattern(String actionCategory, String action, int time, int actualTime, int day, String location, String wifi, String mData, double weekWeight, double weight, int statusCode) {
-        super();
-        this.actionCategory = actionCategory;
-        this.action = action;
+    public Pattern(String eventCategory, String event, int time, int actualTime, int day, String location, String wifi, String mData, double weekWeight, double weight, int statusCode) {
+        this.eventCategory = eventCategory;
+        this.event = event;
         this.time = time;
         this.actualTime = actualTime;
         this.day = day;
@@ -44,8 +43,8 @@ public class Pattern {
      * @return a boolean indicating the match.
      */
     public boolean compare(Pattern p){
-	if(p.getActionCategory().equals(this.getActionCategory()) &&
-		p.getAction().equals(this.getAction()) &&
+	if(p.getEventCategory().equals(this.getEventCategory()) &&
+		p.getEvent().equals(this.getEvent()) &&
 		p.getTime() == this.getTime()){
 	    return true;
 	}
@@ -87,13 +86,13 @@ public class Pattern {
 //    
   //getters & setters
 
-    public String getAction() {
-	return this.action;
+    public String getEvent() {
+	return this.event;
     }
     
 
-    public String getActionCategory() {
-	return this.actionCategory;
+    public String getEventCategory() {
+	return this.eventCategory;
     }
 
     public long getActualTime() {
@@ -132,12 +131,12 @@ public class Pattern {
 	return this.wifi;
     }
 
-    public void setAction(String input){
-	this.action = input;
+    public void setEvent(String input){
+	this.event = input;
     }
     
-    public void setActionCategory(String input){
-	this.actionCategory = input;
+    public void setEventCategory(String input){
+	this.eventCategory = input;
     }
 
     public void setActualTime(long l){
@@ -186,8 +185,8 @@ public class Pattern {
 
     @Override
     public String toString() {
-	return "Pattern [id=" + id + ", action=" + action + ", actionCategory="
-		+ actionCategory + ", time=" + time + ", actualTime="
+	return "Pattern [id=" + id + ", action=" + event + ", actionCategory="
+		+ eventCategory + ", time=" + time + ", actualTime="
 		+ actualTime + ", day=" + day + ", location=" + location
 		+ ", wifi=" + wifi + ", mData=" + mData + ", weekWeight="
 		+ weekWeight + ", weight=" + weight + ", statusCode="

@@ -14,8 +14,8 @@ public class PatternController {
     private final String TAG = "PatternController";
 
     public PatternController(String actionCategory, String action) {
-	p.setAction(action);
-	p.setActionCategory(actionCategory);
+	p.setEvent(action);
+	p.setEventCategory(actionCategory);
 	generatePattern();
     }
 
