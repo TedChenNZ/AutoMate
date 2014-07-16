@@ -12,4 +12,7 @@
     <color name="list_location_normal">#00000000</color>
     <color name="list_location_pressed">#7FCBE2</color>
     <color name="active">#177245</color>
+    <color name="blue">#33B6EA</color>
+    <color name="orange">#FF9B2F</color>
+    <color name="white">#ffffff</color>
 </resources>

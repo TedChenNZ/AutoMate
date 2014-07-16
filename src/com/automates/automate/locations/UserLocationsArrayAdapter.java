@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 	 * we are overriding the getView method here - this is what defines how each
 	 * list item will look.
 	 */
+	@SuppressLint("InflateParams")
 	public View getView(int position, View convertView, ViewGroup parent){
 		// assign the view we are converting to a local variable
 		v = convertView;
@@ -63,6 +63,9 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 
 			if (currentList.contains(i)) {
 				name.setTextColor(v.getResources().getColor(R.color.active));
+			} else {
+				name.setTextColor(v.getResources().getColor(R.color.black));
+
 			}
 
 			

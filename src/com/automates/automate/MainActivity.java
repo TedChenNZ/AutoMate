@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -121,6 +123,35 @@ public class MainActivity extends Activity {
         
         // Initialize Phone State (includes GPS service)
         PhoneState.update(this);
+        
+        
+        
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        
+        // Set firstrun back to true for debugging purposes
+        {
+        	// Code to run once
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", true);
+            editor.commit();
+        }
+        
+        if (isFirstRun)
+        {
+        	// Set FIRSTRUN to false
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", false);
+            editor.commit();
+            
+            // Code to run once
+            Log.d("MainActivity", "First Run");
+            Intent intent = new Intent(this, FirstRunActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+        	startActivity(intent);
+        } 
+        
+
         
     }
  

@@ -1,7 +1,4 @@
 package com.automates.automate;
-// Based on http://wptrafficanalyzer.in/blog/locating-user-input-address-in-google-maps-android-api-v2-with-geocoding-api/
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +33,6 @@ import android.widget.Toast;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.GeocodeJSONParser;
 import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsList;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -92,6 +88,10 @@ public class LocationActivity extends FragmentActivity {
         // Try getting Map to current location
         Intent intent = getIntent();
         EditItem = intent.getIntExtra("EditItem", -1);
+        String FIRSTRUN = intent.getStringExtra("FIRSTRUN");
+        if (FIRSTRUN != null) {
+        	etName.setText(FIRSTRUN);
+        }
         if (EditItem != -1) {
         	userloc = PhoneState.getLocationsList().get(EditItem);
         	
