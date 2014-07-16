@@ -116,7 +116,8 @@ public final class PhoneState {
 		} else if (event.equals("Data")) {
 			action = String.valueOf(dataEnabled);
 		} else if (event.equals("Ringer")) {
-			action = String.valueOf(soundProfile);
+//			action = String.valueOf(soundProfile);
+			action = "Changed";
 		}
 		return action;
 	}
