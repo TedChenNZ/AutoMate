@@ -1,4 +1,8 @@
 package com.automates.automate.pattern;
+
+import com.automates.automate.PhoneState;
+import com.automates.automate.routines.Routine;
+
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
  * @author Dhanish
@@ -7,7 +11,6 @@ package com.automates.automate.pattern;
 
 public class Pattern {
 
-    
     private int id;
     private String event;
     private String eventCategory;
@@ -50,46 +53,26 @@ public class Pattern {
 	}
 	return false;
     }
-
-//    /**
-//     * Overridden toString method that prints out each field in the Pattern class.
-//     */
-//    @Override
-//    public String toString() {
-//	  StringBuilder result = new StringBuilder();
-//	  String newLine = System.getProperty("line.separator");
-//
-//	  result.append( this.getClass().getName() );
-//	  result.append( " Object {" );
-//	  result.append(newLine);
-//
-//	  //determine fields declared in this class only (no fields of superclass)
-//	  Field[] fields = this.getClass().getDeclaredFields();
-//
-//	  //print field names paired with their values
-//	  for ( Field field : fields  ) {
-//	    result.append("  ");
-//	    try {
-//	      result.append( field.getName() );
-//	      result.append(": ");
-//	      //requires access to private field:
-//	      result.append( field.get(this) );
-//	    } catch ( IllegalAccessException ex ) {
-//	      System.out.println(ex);
-//	    }
-//	    result.append(newLine);
-//	  }
-//	  result.append("}");
-//
-//	  return result.toString();
-//    }
-//    
-  //getters & setters
+    
+    
+    private void addToRoutineDB() {
+	Routine r = new Routine();
+	r.setName("Routine " + this.id);
+	r.setEvent(this.event);
+	r.setEventCategory(this.eventCategory);
+	r.setTime(this.actualTime);
+	r.setDay(this.day);
+	r.setLocation(this.location);
+	r.setmData(this.mData);
+	r.setWifi(this.wifi);
+	r.setStatusCode(StatusCode.IN_DEV);
+	r.activate();
+	PhoneState.getRoutineDb().addRoutine(r);
+    }
 
     public String getEvent() {
 	return this.event;
     }
-    
 
     public String getEventCategory() {
 	return this.eventCategory;
@@ -139,8 +122,8 @@ public class Pattern {
 	this.eventCategory = input;
     }
 
-    public void setActualTime(long l){
-	this.actualTime = l;
+    public void setActualTime(long input){
+	this.actualTime = input;
     }
     
     public void setData(String input){
@@ -169,8 +152,9 @@ public class Pattern {
     
     public void setWeight(double input){
 	this.weight = input;
+	if (this.weight >= WeightManager.suggestedWeight){addToRoutineDB();}
     }
-    
+
     public void setWifi(String input){
 	this.wifi = input;
     }

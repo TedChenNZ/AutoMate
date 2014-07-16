@@ -3,9 +3,10 @@ package com.automates.automate.routines;
 public class Routine {
 
     private int id;
+    private String name;
     private String event;
     private String eventCategory;
-    private int time;
+    private long time;
     private int day;
     private String location;
     private String wifi;
@@ -13,9 +14,14 @@ public class Routine {
     private int statusCode;
     
     
-    public Routine(int id, String event, String eventCategory, int time,
+    public Routine() {
+	// TODO Auto-generated constructor stub
+    }
+    
+    public Routine(int id, String name, String event, String eventCategory, long time,
 	    int day, String location, String wifi, String mData, int statusCode) {
 	this.id = id;
+	this.name = name;
 	this.event = event;
 	this.eventCategory = eventCategory;
 	this.time = time;
@@ -26,28 +32,37 @@ public class Routine {
 	this.statusCode = statusCode;
     }
 
-
-    public Routine() {
-	// TODO Auto-generated constructor stub
+    @Override
+    public String toString() {
+	return "Routine [id=" + id + ", name=" + name + ", event=" + event
+		+ ", eventCategory=" + eventCategory + ", time=" + time
+		+ ", day=" + day + ", location=" + location + ", wifi=" + wifi
+		+ ", mData=" + mData + ", statusCode=" + statusCode + "]";
     }
 
 
+    public void activate() {
+	// TODO Auto-generated method stub
+	//ask user if location/wifi/data are conditions
+	//alarm manager to do something for time based.
+    }
+    
     public int getId() {
         return id;
     }
 
-
-    @Override
-    public String toString() {
-	return "Routine [id=" + id + ", event=" + event + ", eventCategory="
-		+ eventCategory + ", time=" + time + ", day=" + day
-		+ ", location=" + location + ", wifi=" + wifi + ", mData="
-		+ mData + ", statusCode=" + statusCode + "]";
+    public void setId(int id) {
+        this.id = id;
     }
 
 
-    public void setId(int id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -71,13 +86,13 @@ public class Routine {
     }
 
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTime(long actualTime) {
+        this.time = actualTime;
     }
 
 
@@ -129,6 +144,7 @@ public class Routine {
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
+
     
     
     

@@ -36,6 +36,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         // SQL statement to create routine table
         String CREATE_ROUTINE_TABLE = "CREATE TABLE routines ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "name TEXT, "+
                 "eventCategory TEXT, "+
                 "event TEXT, "+
                 "time INTEGER, "+
@@ -70,6 +71,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
     // Routines Table Columns names
     private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";
     private static final String KEY_EVENTCATEGORY = "eventCategory";
     private static final String KEY_EVENT = "event";
     private static final String KEY_TIME = "time";
@@ -81,7 +83,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
     
     
     
-    private static final String[] COLUMNS = {KEY_ID,KEY_EVENTCATEGORY,KEY_EVENT,KEY_TIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_STATUSCODE};
+    private static final String[] COLUMNS = {KEY_ID,KEY_NAME, KEY_EVENTCATEGORY,KEY_EVENT,KEY_TIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_STATUSCODE};
  
     /* (non-Javadoc)
      * @see com.automates.automate.sqlite.RoutineManager#addRoutine(com.automates.automate.routines.Routine)
@@ -94,6 +96,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
+        values.put(KEY_NAME, routine.getName());
         values.put(KEY_EVENTCATEGORY, routine.getEventCategory()); 
         values.put(KEY_EVENT, routine.getEvent());
         values.put(KEY_TIME, routine.getTime());
@@ -139,15 +142,16 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
         // 4. build routine object
         Routine routine = new Routine();
-        routine.setId(Integer.parseInt(cursor.getString(0)));
-        routine.setEventCategory(cursor.getString(1));
-        routine.setEvent(cursor.getString(2));
-        routine.setTime(cursor.getInt(3));
-        routine.setDay(cursor.getInt(4));
-        routine.setLocation(cursor.getString(5));
-        routine.setWifi(cursor.getString(6));
-        routine.setmData(cursor.getString(7));
-        routine.setStatusCode(cursor.getInt(8));
+        routine.setId(cursor.getInt(0));
+        routine.setName(cursor.getString(1));
+        routine.setEventCategory(cursor.getString(2));
+        routine.setEvent(cursor.getString(3));
+        routine.setTime(cursor.getInt(4));
+        routine.setDay(cursor.getInt(5));
+        routine.setLocation(cursor.getString(6));
+        routine.setWifi(cursor.getString(7));
+        routine.setmData(cursor.getString(8));
+        routine.setStatusCode(cursor.getInt(9));
  
         Log.d("TAG", "getRoutine("+id+") " + routine.toString());
  
@@ -175,15 +179,16 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         if (cursor.moveToFirst()) {
             do {
                 routine = new Routine();
-                routine.setId(Integer.parseInt(cursor.getString(0)));
-                routine.setEventCategory(cursor.getString(1));
-                routine.setEvent(cursor.getString(2));
-                routine.setTime(cursor.getInt(3));
-                routine.setDay(cursor.getInt(4));
-                routine.setLocation(cursor.getString(5));
-                routine.setWifi(cursor.getString(6));
-                routine.setmData(cursor.getString(7));
-                routine.setStatusCode(cursor.getInt(8));
+                routine.setId(cursor.getInt(0));
+                routine.setName(cursor.getString(1));
+                routine.setEventCategory(cursor.getString(2));
+                routine.setEvent(cursor.getString(3));
+                routine.setTime(cursor.getInt(4));
+                routine.setDay(cursor.getInt(5));
+                routine.setLocation(cursor.getString(6));
+                routine.setWifi(cursor.getString(7));
+                routine.setmData(cursor.getString(8));
+                routine.setStatusCode(cursor.getInt(9));
  
                 // Add routine to routines
                 routines.add(routine);
@@ -208,6 +213,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
+        values.put(KEY_NAME, routine.getName());
         values.put(KEY_EVENTCATEGORY, routine.getEventCategory()); 
         values.put(KEY_EVENT, routine.getEvent());
         values.put(KEY_TIME, routine.getTime());

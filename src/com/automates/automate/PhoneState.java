@@ -12,8 +12,10 @@ import android.util.Log;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsList;
+import com.automates.automate.routines.RoutineListener;
 import com.automates.automate.routines.settings.*;
 import com.automates.automate.sqlite.PatternDB;
+import com.automates.automate.sqlite.RoutineDB;
 
 // Singleton
 public final class PhoneState {
@@ -22,9 +24,11 @@ public final class PhoneState {
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
 	private static int soundProfile;
-	private static PatternDB db;
+	private static PatternDB patternDB;
+	private static RoutineDB routineDB;
 	private static long time = 0;
 	private static GPSTracker gpsTracker;
+	private static RoutineListener routineListener;
 	private static List<UserLocation> locationsList;
 	private static String wifiBSSID;
 
@@ -42,8 +46,11 @@ public final class PhoneState {
 
 	public static void update(Context context) {
 		// Initialize variables if they are not already initialized
-		if (db == null) {
-			db = new PatternDB(context);
+		if (patternDB == null) {
+			patternDB = new PatternDB(context);
+		}
+		if (routineDB == null) {
+			routineDB = new RoutineDB(context);
 		}
 		if (locationsList == null) {
 			locationsList = new UserLocationsList(context);
@@ -173,11 +180,17 @@ public final class PhoneState {
 	public static long getTime() {
 		return time;
 	}
-	public static PatternDB getDb() {
-		return db;
+	public static PatternDB getPatternDb() {
+		return patternDB;
+	}
+	public static RoutineDB getRoutineDb() {
+		return routineDB;
 	}
 	public static GPSTracker getGPSTracker() {
 		return gpsTracker;
+	}
+	public static RoutineListener getRoutineListener() {
+		return routineListener;
 	}
 	public static List<UserLocation> getLocationsList() {
 		return locationsList;

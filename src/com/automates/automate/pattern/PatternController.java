@@ -86,18 +86,18 @@ public class PatternController implements PatternControl {
 	int id = getInstanceFromDB();
 	if(id != -1){
 	    Pattern newP = new WeightUpdater(p, id).updatePattern();
-	    PhoneState.getDb().updatePattern(newP);
+	    PhoneState.getPatternDb().updatePattern(newP);
 	    Log.d(TAG, "updating pattern: " + newP.getWeight());
 	}
 	else{
 	    Log.d(TAG, "adding pattern");
-	    PhoneState.getDb().addPattern(p);
+	    PhoneState.getPatternDb().addPattern(p);
 	}
     }
     
     private int getInstanceFromDB(){
 	int id = -1;
-	List<Pattern> ps = PhoneState.getDb().getAllPatterns();
+	List<Pattern> ps = PhoneState.getPatternDb().getAllPatterns();
 	for(Pattern pList : ps){
 	    if (pList.compare(p)){
 		id = pList.getId();

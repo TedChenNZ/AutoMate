@@ -29,7 +29,7 @@ public class WeightUpdater implements WeightManager {
     }
 
     private void oldPset(int id){
-	oldP = PhoneState.getDb().getPattern(id);
+	oldP = PhoneState.getPatternDb().getPattern(id);
 	oldWeight = oldP.getWeight();
 	oldWeekWeight = oldP.getWeekWeight();
 	timeDiff = actualTime - oldP.getActualTime();
