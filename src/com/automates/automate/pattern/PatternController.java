@@ -1,4 +1,4 @@
-package com.automates.automate.data;
+package com.automates.automate.pattern;
 
 import java.util.Date;
 import java.util.List;

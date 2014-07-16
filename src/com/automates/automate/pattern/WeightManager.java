@@ -1,4 +1,4 @@
-package com.automates.automate.data;
+package com.automates.automate.pattern;
 
 public interface WeightManager {
 

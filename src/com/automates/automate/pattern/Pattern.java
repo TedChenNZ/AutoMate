@@ -1,4 +1,4 @@
-package com.automates.automate.data;
+package com.automates.automate.pattern;
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
  * @author Dhanish

@@ -2,7 +2,7 @@ package com.automates.automate.sqlite;
 
 import java.util.List;
 
-import com.automates.automate.data.Pattern;
+import com.automates.automate.pattern.Pattern;
 
 public interface PatternManager {
 

@@ -1,4 +1,4 @@
-package com.automates.automate.data;
+package com.automates.automate.pattern;
 
 import android.util.Log;
 

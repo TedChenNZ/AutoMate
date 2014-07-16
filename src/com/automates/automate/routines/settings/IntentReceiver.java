@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.automates.automate.PhoneState;
-import com.automates.automate.data.PatternControl;
-import com.automates.automate.data.PatternController;
+import com.automates.automate.pattern.PatternControl;
+import com.automates.automate.pattern.PatternController;
 
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";

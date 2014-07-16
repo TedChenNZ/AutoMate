@@ -4,7 +4,7 @@ package com.automates.automate.sqlite;
 import java.util.LinkedList;
 import java.util.List;
  
-import com.automates.automate.data.Pattern;
+import com.automates.automate.pattern.Pattern;
  
 import android.content.ContentValues;
 import android.content.Context;
