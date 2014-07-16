@@ -129,13 +129,13 @@ public class MainActivity extends Activity {
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         
-        // Set firstrun back to true for debugging purposes
-        {
-        	// Code to run once
-            SharedPreferences.Editor editor = wmbPreference.edit();
-            editor.putBoolean("FIRSTRUN", true);
-            editor.commit();
-        }
+//        // Set firstrun back to true for debugging purposes
+//        {
+//        	// Code to run once
+//            SharedPreferences.Editor editor = wmbPreference.edit();
+//            editor.putBoolean("FIRSTRUN", true);
+//            editor.commit();
+//        }
         
         if (isFirstRun)
         {
