@@ -156,9 +156,6 @@ public class FirstRunActivity extends Activity {
       if (resultCode == Activity.RESULT_OK) {
     	  screen++;
     	  updateScreen();
-      } else {
-    	  screen++;
-    	  updateScreen();
       }
 	}
 	

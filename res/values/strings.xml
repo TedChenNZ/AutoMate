@@ -47,10 +47,14 @@
     <!-- First Run -->
     <string name="welcome">Welcome To\nAutoMate</string>
     <string name="continues">Tap Anywhere To Continue</string>
-    <string name="next">Next</string>
-    <string name="home">First, set your home location</string>
-    <string name="work">Do you work away from home?</string>
-    <string name="school">Are you a student?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    
+    <!-- Settings -->
+    <string name="services">Services</string>
+    <string name="enable_routines">Enable Routines</string>
+    <string name="routines_d">Enabling Routines allows Triggers to perform Actions</string>
+    <string name="enable_learning">Enable Learning</string>
+    <string name="learning_d">Enabling learning lets AutoMate learn your Routines</string>
+    
 </resources>
