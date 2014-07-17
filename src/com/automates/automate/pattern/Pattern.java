@@ -1,5 +1,7 @@
 package com.automates.automate.pattern;
 
+import java.util.Calendar;
+
 import com.automates.automate.PhoneState;
 import com.automates.automate.routines.Routine;
 
@@ -60,8 +62,13 @@ public class Pattern {
 	r.setName("Routine " + this.id);
 	r.setEvent(this.event);
 	r.setEventCategory(this.eventCategory);
-	r.setTime(this.actualTime);
-	r.setDay(this.day);
+	
+	Calendar c = Calendar.getInstance();
+	c.setTimeInMillis(this.actualTime);
+	r.setHour(c.get(Calendar.HOUR_OF_DAY));
+	r.setMinute(c.get(Calendar.MINUTE));
+
+	r.setDay("" + this.day);
 	r.setLocation(this.location);
 	r.setmData(this.mData);
 	r.setWifi(this.wifi);

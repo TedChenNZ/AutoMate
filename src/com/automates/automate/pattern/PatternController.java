@@ -51,7 +51,6 @@ public class PatternController implements PatternControl {
 	time.setToNow();
 	p.setDay(time.weekDay);
 	p.setActualTime(PhoneState.getTime());
-	String timeT = "" + PhoneState.getTime();
 	timeTransform();
 	
 
