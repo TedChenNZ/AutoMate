@@ -21,7 +21,9 @@ public class IntentReceiver extends BroadcastReceiver {
 		
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean routines = sharedPrefs.getBoolean("pref_learning", true);
-		if (event != null && routines) {
+		
+		if (event != null && routines && PhoneState.getLocation() != null) {
+			Log.d("IntentReceiver", "event: " + event);
 			String eventAction = PhoneState.getEventAction(event);
 			PatternControl pg = new PatternController(event,eventAction);
 			pg.updateDatabase();
