@@ -12,7 +12,7 @@ import android.util.Log;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsList;
-import com.automates.automate.routines.RoutineListener;
+import com.automates.automate.routines.RoutineApplier;
 import com.automates.automate.routines.settings.*;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
@@ -28,7 +28,7 @@ public final class PhoneState {
 	private static RoutineDB routineDB;
 	private static long time = 0;
 	private static GPSTracker gpsTracker;
-	private static RoutineListener routineListener;
+	private static RoutineApplier routineListener;
 	private static List<UserLocation> locationsList;
 	private static String wifiBSSID;
 
@@ -190,7 +190,7 @@ public final class PhoneState {
 	public static GPSTracker getGPSTracker() {
 		return gpsTracker;
 	}
-	public static RoutineListener getRoutineListener() {
+	public static RoutineApplier getRoutineListener() {
 		return routineListener;
 	}
 	public static List<UserLocation> getLocationsList() {
