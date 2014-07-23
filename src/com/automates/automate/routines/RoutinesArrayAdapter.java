@@ -57,12 +57,24 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 			name.setText(i.getName());
 			TextView details = (TextView) v.findViewById(R.id.details);
 //			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
-			String d = "hi";
-			details.setText(d);
+			String d = "";
+			d = d + ", " + i.getEvent();
+			d = d + ", " + i.getEventCategory();
+			d = d + ", " + i.getLocation();
+			d = d + ", " + i.getWifi();
+			d = d + ", " + i.getmData();
+			d = d + ", " + i.getDay();
+			d = d + ", " + i.getHour();
+			d = d + ", " + i.getMinute();
+			d = d + ", " + i.getStatusCode(); 
 			
-			// Current crap
+			
+//			 Current crap
+			
+			
+			
 //			List<Routine> currentList = ((RoutinesList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
-//
+
 //			if (currentList.contains(i)) {
 //				name.setTextColor(v.getResources().getColor(R.color.active));
 //			} else {
@@ -70,7 +82,7 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 //
 //			}
 
-			
+			details.setText(d);
 		}
 
 		// the view must be returned to our activity
