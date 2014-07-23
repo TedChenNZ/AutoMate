@@ -45,7 +45,6 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 
 	public List<UserLocation> checkLocation(Location loc) {
 		int size = super.size();
-//		List<UserLocation> oldULList = currentULList;
 		currentULList.clear();
 
 		for (int i = 0; i < size; i++) {
@@ -53,8 +52,6 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 				currentULList.add(this.get(i));
 			}
 		}
-
-//		notifyListeners(this, "current_locations_list", oldULList, currentULList);
 
 		return currentULList;
 	}

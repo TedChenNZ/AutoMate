@@ -57,4 +57,6 @@
     <string name="enable_learning">Enable Learning</string>
     <string name="learning_d">Enabling learning lets AutoMate learn your Routines</string>
     
+    <!-- Routines -->
+    <string name="add_routine">Add Routine</string>
 </resources>

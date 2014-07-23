@@ -4,14 +4,24 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/testButton"
+        android:id="@+id/addRoutine"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:onClick="testButton"
-        android:text="@string/add" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add_routine" />
+
+    <ListView
+        android:id="@+id/routinesListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addRoutine"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" 
+       >
+
+    </ListView>
 
 </RelativeLayout>

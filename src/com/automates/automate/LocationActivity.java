@@ -101,7 +101,7 @@ public class LocationActivity extends FragmentActivity {
         	etRadius.setText(""+userloc.getRadius());
         	etName.setText(userloc.getName());
             // Setting click event listener for the edit button
-        	btnAdd.setText("Edit");
+        	btnAdd.setText("Save");
             btnAdd.setOnClickListener(new editListener());
             
         } else {

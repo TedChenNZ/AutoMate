@@ -32,6 +32,12 @@ public class UserLocation {
 	 * @return boolean
 	 */
 	public boolean containsLocation(LatLng loc) {
+		if (location == null) {
+			return false;
+		}
+		if (loc == null) {
+			return false;
+		}
 		float[] results = new float[1];
 		double centerLatitude = this.location.latitude;
 		double centerLongitude = this.location.longitude;
