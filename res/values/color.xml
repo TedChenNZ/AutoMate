@@ -15,4 +15,5 @@
     <color name="blue">#33B6EA</color>
     <color name="orange">#FF9B2F</color>
     <color name="white">#ffffff</color>
+    <color name="semi_transparent">#66000000</color>
 </resources>

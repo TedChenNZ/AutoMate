@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
  
 import com.automates.automate.locations.GPSTracker;
@@ -48,7 +49,7 @@ public class LocationActivity extends FragmentActivity {
     private EditText etRadius;
     private EditText etName;
     private Button btnAdd;
-    private ProgressBar loadingSpinner;
+    private RelativeLayout loading;
     
     private UserLocation userloc = new UserLocation();
     
@@ -72,7 +73,7 @@ public class LocationActivity extends FragmentActivity {
         etName = (EditText) findViewById(R.id.et_name);
         
         // Getting reference to ProgressBar
-        loadingSpinner = (ProgressBar) findViewById(R.id.loadingSpinner);
+        loading = (RelativeLayout) findViewById(R.id.loadingLayout);
  
         // Getting reference to the SupportMapFragment
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
@@ -81,7 +82,7 @@ public class LocationActivity extends FragmentActivity {
         mMap = mapFragment.getMap();
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+//        mMap.getUiSettings().setMyLocationButtonEnabled(true);
         
         
         
@@ -105,11 +106,11 @@ public class LocationActivity extends FragmentActivity {
             btnAdd.setOnClickListener(new editListener());
             
         } else {
-	        GPSTracker gps = PhoneState.getGPSTracker();
-	        Location loc = gps.getLastLocation();
-	        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
-	        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
-	        
+//	        GPSTracker gps = PhoneState.getGPSTracker();
+//	        Location loc = gps.getLastLocation();
+//	        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
+//	        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
+//	        
 	        // Setting click event listener for the add button
 	        btnAdd.setOnClickListener(new addListener());
         }
@@ -145,7 +146,7 @@ public class LocationActivity extends FragmentActivity {
 //                }
                 
                 // Show loading icon
-                loadingSpinner.setVisibility(View.VISIBLE);
+                loading.setVisibility(View.VISIBLE);
                 
                 // Getting the location entered with api
                 String url = "https://maps.googleapis.com/maps/api/geocode/json?";
@@ -339,7 +340,7 @@ public class LocationActivity extends FragmentActivity {
         @Override
         protected void onPostExecute(List<HashMap<String,String>> list){
         	// Hide  loading icon
-            loadingSpinner.setVisibility(View.INVISIBLE);
+        	loading.setVisibility(View.INVISIBLE);
             // Clears all the existing markers
             mMap.clear();
             if (list.size() == 0) {
@@ -397,6 +398,21 @@ public class LocationActivity extends FragmentActivity {
         @Override
         public void onClick(View v) {
         	hideSoftKeyboard();
+        	
+        	// Get the name
+            String name = etName.getText().toString().trim();
+
+            if(name==null || name.equals("")){
+                Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            for (UserLocation u: PhoneState.getLocationsList()) {
+            	Log.d("LocationActivity", u.getName() + " " + name);
+            	if (u.getName().trim().equals(name)) {
+                    Toast.makeText(getBaseContext(), "The Name '" + name + "' is already in use", Toast.LENGTH_SHORT).show();
+                    return;
+            	}
+            }
             
         	// Check if a place has been found
         	if (userloc.getLocation() == null) {
@@ -404,17 +420,12 @@ public class LocationActivity extends FragmentActivity {
                 return;
         	}
         	
+        	// Check radius
         	if (userloc.getRadius() == null || userloc.getRadius() == 0) {
-        		Toast.makeText(getBaseContext(), "No or zero Radius entered", Toast.LENGTH_SHORT).show();
+        		Toast.makeText(getBaseContext(), "Radius must be greater than 0", Toast.LENGTH_SHORT).show();
                 return;
         	}
-        	// Get the name
-            String name = etName.getText().toString();
 
-            if(name==null || name.equals("")){
-                Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
-                return;
-            }
             
             userloc.setName(name);
             PhoneState.getLocationsList().add(userloc);

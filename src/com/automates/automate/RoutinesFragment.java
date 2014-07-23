@@ -111,15 +111,20 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 		
 	}
 	
-//	public void testButton(View v) {
-//		Context context = this.getActivity();
-////		SoundProfiles.setSoundProfile(this.getActivity(), SoundProfiles.NORMAL_NO_VIBRATE);
-////		int m = SoundProfiles.getMode(this.getActivity());
-////		testText.setText(Integer.toString(m));
-//		Data.setDataEnabled(context, true);
-//		
-//		testText.setText(Boolean.toString(Data.getDataEnabled(context)));
-//	}
+	@Override 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+	    case (0) : { 
+	      if (resultCode == Activity.RESULT_OK) {
+	    	  	routinesAdapter.notifyDataSetChanged();
+//	    	  	updateCurrentLocation();
+		      } 
+	      break; 
+	    } 
+	  } 
+	}
+	
 	private class RoutinesModeListener extends EditMultiChoiceModeListener {
 		
 		private List<Integer> selected;

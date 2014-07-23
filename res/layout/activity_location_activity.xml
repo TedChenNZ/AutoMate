@@ -11,19 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/et_place"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:text="@string/find" />
- 
-    <EditText
-        android:id="@+id/et_place"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/btn_show"
-        android:hint="@string/enter_place"
-        android:inputType="textNoSuggestions" >
-
-        <requestFocus />
-    </EditText>
  
     <fragment
         android:id="@+id/map"
@@ -32,6 +20,42 @@
         android:layout_above="@+id/btn_add"
         android:layout_below="@+id/et_radius"
         class="com.google.android.gms.maps.SupportMapFragment" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add" />
+
+
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/enter_name"
+        android:inputType="textNoSuggestions" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/et_place"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/et_name"
+        android:layout_toLeftOf="@+id/btn_show"
+        android:ems="10"
+        android:hint="@string/enter_place"
+        android:inputType="textNoSuggestions" />
 
     <EditText
         android:id="@+id/et_radius"
@@ -44,25 +68,16 @@
         android:hint="@string/enter_radius"
         android:inputType="number" />
 
-    <EditText
-        android:id="@+id/et_name"
+    <RelativeLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/map"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/map"
-        android:layout_toLeftOf="@+id/btn_add"
-        android:ems="10"
-        android:hint="@string/enter_name"
-        android:inputType="textNoSuggestions" />
-
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/add" />
+        android:layout_alignTop="@+id/map"
+        android:background="@color/semi_transparent"
+        android:visibility="invisible" >
 
     <ProgressBar
         android:id="@+id/loadingSpinner"
@@ -70,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="invisible" />
+         />
+    </RelativeLayout>
  
 </RelativeLayout>
