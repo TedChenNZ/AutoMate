@@ -4,6 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -13,6 +15,7 @@ import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsList;
 import com.automates.automate.routines.RoutineApplier;
+import com.automates.automate.routines.TimelyChecker;
 import com.automates.automate.routines.settings.*;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
@@ -28,8 +31,9 @@ public final class PhoneState {
 	private static RoutineDB routineDB;
 	private static long time = 0;
 	private static GPSTracker gpsTracker;
-	private static RoutineApplier routineListener;
+	private static RoutineApplier routineApplier;
 	private static List<UserLocation> locationsList;
+	private static AlarmManager alarmManager;
 	private static String wifiBSSID;
 
 	private static PhoneState instance = null;
@@ -58,6 +62,11 @@ public final class PhoneState {
 		if (gpsTracker == null) {
 			gpsTracker = new GPSTracker(context);
 		}
+		if (routineApplier == null) {
+			routineApplier = new RoutineApplier();
+			startRoutineChecking(context);
+		}
+		
 		
 		// Update variables
 		soundProfile = SoundProfiles.getMode(context);
@@ -73,6 +82,14 @@ public final class PhoneState {
 //		Log.d("PhoneState", "" + ((UserLocationsList) locationsList).checkLocation(location));
 	}
 
+	private static void startRoutineChecking(Context context) {
+	    AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+	    Intent intent = new Intent(context, TimelyChecker.class);
+	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),60000,
+	                                                                          pendingIntent);
+	    
+	}
 	public static String checkConnectivityIntent() {
 		String s = Logger.getLastLine();
 		if (s != null) {
@@ -190,8 +207,11 @@ public final class PhoneState {
 	public static GPSTracker getGPSTracker() {
 		return gpsTracker;
 	}
-	public static RoutineApplier getRoutineListener() {
-		return routineListener;
+	public static RoutineApplier getRoutineApplier() {
+		return routineApplier;
+	}
+	public static AlarmManager getAlarmManager() {
+		return alarmManager;
 	}
 	public static List<UserLocation> getLocationsList() {
 		return locationsList;

@@ -10,7 +10,8 @@ import com.automates.automate.PhoneState;
 
 public class PatternController implements PatternControl {
     private Pattern p = new Pattern();
-    private final int timeDivision = 900000; //15 minutes
+    private final int oneMinute = 60000;
+    private final int timeDivision = 30 * oneMinute; //15 minutes
     private final String TAG = "PatternController";
 
     public PatternController(String actionCategory, String action) {

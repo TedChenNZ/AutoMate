@@ -24,6 +24,10 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
+	checkRoutines();
+    }
+
+    public void checkRoutines(){
 	routines = PhoneState.getRoutineDb().getAllRoutines();
 
 	for(Routine r : routines){

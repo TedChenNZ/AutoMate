@@ -49,6 +49,7 @@ public class WeightUpdater implements WeightManager {
 		newWeekWeight = oldWeekWeight + WeightManager.initialWeight/weeksPast;
 	    }
 	    else{
+		Log.d("PatternController", "Same day - so same weight!");
 		newWeight = oldWeight;
 		newWeekWeight = oldWeekWeight;
 	    }
@@ -61,6 +62,7 @@ public class WeightUpdater implements WeightManager {
 		newWeight = oldWeight + WeightManager.initialWeight/daysPast;
 	    }
 	    else{
+		Log.d("PatternController", "Should never hit this");
 		newWeight = oldWeight;
 	    }
 	}
