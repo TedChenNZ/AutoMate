@@ -51,6 +51,9 @@ public class UserLocation {
 	}
 	
 	public boolean containsLocation(Location loc) {
+		if (loc == null) {
+			return false;
+		}
 		LatLng l = new LatLng(loc.getLatitude(), loc.getLongitude());
 		return this.containsLocation(l);
 		

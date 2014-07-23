@@ -168,6 +168,9 @@ public final class PhoneState {
 
 
 	public static String getSetLocation() {
+		if (location == null) {
+			return null;
+		}
 		List<UserLocation> currentList = ((UserLocationsList) locationsList).checkLocation(location);
 		if (!(currentList.isEmpty())) {
 			String s = "";
