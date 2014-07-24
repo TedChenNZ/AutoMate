@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.automates.automate.locations.EditMultiChoiceModeListener;
-import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsArrayAdapter;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutinesArrayAdapter;
 
@@ -49,7 +47,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
         View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
         
         // Adapter
-        routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_location, PhoneState.getRoutineDb().getAllRoutines());
+        routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_location, PhoneState.getRoutinesList());
         
         // List View Initialize
         routinesListView = (ListView) rootView.findViewById(R.id.routinesListView);
@@ -157,8 +155,8 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 						Collections.sort(selected);
 						Collections.reverse(selected);
 						for (int i = 0; i < selected.size(); i++) {
-//							Routine ul = (Routine) adapter.getItem(selected.get(i));
-//							PhoneState.getLocationsList().remove(ul);
+							Routine r = (Routine) adapter.getItem(selected.get(i));
+							PhoneState.getRoutinesList().remove(r);
 						}
 						adapter.notifyDataSetChanged();
 						mode.finish();

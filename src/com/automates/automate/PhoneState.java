@@ -14,7 +14,9 @@ import android.util.Log;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsList;
+import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineApplier;
+import com.automates.automate.routines.RoutineList;
 import com.automates.automate.routines.TimelyChecker;
 import com.automates.automate.routines.settings.*;
 import com.automates.automate.sqlite.PatternDB;
@@ -35,6 +37,7 @@ public final class PhoneState {
 	private static List<UserLocation> locationsList;
 	private static AlarmManager alarmManager;
 	private static String wifiBSSID;
+	private static List<Routine> routinesList;
 
 	private static PhoneState instance = null;
 	private PhoneState() {
@@ -66,7 +69,9 @@ public final class PhoneState {
 			routineApplier = new RoutineApplier();
 			startRoutineChecking(context);
 		}
-		
+		if (routinesList == null) {
+			routinesList = new RoutineList(routineDB);
+		}
 		
 		// Update variables
 		soundProfile = SoundProfiles.getMode(context);
@@ -78,18 +83,15 @@ public final class PhoneState {
 		
 		// Notify listeners
 		notifyListeners();
-		Log.d("PhoneState", "Update");
-//		Log.d("PhoneState", "" + ((UserLocationsList) locationsList).checkLocation(location));
 	}
 
 	private static void startRoutineChecking(Context context) {
 	    AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	    Intent intent = new Intent(context, TimelyChecker.class);
 	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),60000,
-	                                                                          pendingIntent);
-	    
+	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),60000,pendingIntent);
 	}
+	
 	public static String checkConnectivityIntent() {
 		String s = Logger.getLastLine();
 		if (s != null) {
@@ -225,7 +227,9 @@ public final class PhoneState {
 	public static String getWifiBSSID() {
 		return wifiBSSID;
 	}
-	
+	public static List<Routine> getRoutinesList() {
+		return routinesList;
+	}
 	
 	
 	/**
@@ -243,4 +247,6 @@ public final class PhoneState {
 	public void addChangeListener(PropertyChangeListener newListener) {
 		listeners.add(newListener);
 	}
+	
+	
 }

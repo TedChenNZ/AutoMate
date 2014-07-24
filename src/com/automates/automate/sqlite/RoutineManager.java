@@ -6,7 +6,7 @@ import com.automates.automate.routines.Routine;
 
 public interface RoutineManager {
 
-    public abstract void addRoutine(Routine routine);
+    public abstract Routine addRoutine(Routine routine);
 
     public abstract Routine getRoutine(int id);
 

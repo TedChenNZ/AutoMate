@@ -91,7 +91,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
      * @see com.automates.automate.sqlite.RoutineManager#addRoutine(com.automates.automate.routines.Routine)
      */
     @Override
-    public void addRoutine(Routine routine){
+    public Routine addRoutine(Routine routine){
         Log.d("addRoutine", routine.toString());
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -110,13 +110,14 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         values.put(KEY_STATUSCODE, routine.getStatusCode());
  
         // 3. insert
-        db.insert(TABLE_ROUTINES, // table
+        long id = db.insert(TABLE_ROUTINES, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
  
         // 4. close
         db.close(); 
-        
+        routine.setId((int) id);
+        return routine;
     }
  
     /* (non-Javadoc)

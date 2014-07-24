@@ -2,7 +2,9 @@ package com.automates.automate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -142,6 +144,17 @@ public class FirstRunActivity extends Activity {
 				no.startAnimation(animFadein);
 				break;
 			default:
+		        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
+		        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+
+		        
+		        if (isFirstRun)
+		        {
+		        	// Set FIRSTRUN to false
+		            SharedPreferences.Editor editor = wmbPreference.edit();
+		            editor.putBoolean("FIRSTRUN", false);
+		            editor.commit();
+		        }
 				Intent i = new Intent(this, MainActivity.class);
 	            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
 	        	startActivity(i);
@@ -159,10 +172,6 @@ public class FirstRunActivity extends Activity {
       }
 	}
 	
-//	@Override
-//	protected void onDestroy() {
-//		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-//        getActionBar().show();
-//	}
+
 	
 }
