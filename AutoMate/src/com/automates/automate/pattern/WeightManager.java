@@ -6,5 +6,8 @@ public interface WeightManager {
     public final static double initialWeight = 1;
     public final static double suggestedWeight = 3;
     
+    public final int oneMinute = 60000; //one minute in milliseconds (used for timeDivision calculation)
+    public final int timeDivision = 60 * oneMinute; //30 minutes
+    
     public Pattern updatePattern();
 }

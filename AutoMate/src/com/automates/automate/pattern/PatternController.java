@@ -10,8 +10,7 @@ import com.automates.automate.PhoneState;
 
 public class PatternController implements PatternControl {
     private Pattern p = new Pattern();
-    private final int oneMinute = 60000;
-    private final int timeDivision = 30 * oneMinute; //15 minutes
+
     private final String TAG = "PatternController";
 
     public PatternController(String actionCategory, String action) {
@@ -69,7 +68,7 @@ public class PatternController implements PatternControl {
 	long startOfDay = d.getTime();
 	
 	long diff = current - startOfDay;
-	int intervals = (int) Math.ceil(diff/timeDivision);
+	int intervals = (int) Math.ceil(diff/WeightManager.timeDivision);
 	String sRes = "" + day + intervals;
 	
 	int result = Integer.parseInt(sRes);

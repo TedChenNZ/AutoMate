@@ -7,7 +7,10 @@ import junit.framework.TestCase;
 import com.automates.automate.pattern.Pattern;
 import com.automates.automate.pattern.WeightUpdater;
 
-//COMMENT OUT oldPset(id); in the WeightUpdater constructor to run this test properly.
+//_______________________________________________________________________
+//IMPORTANT
+//COMMENT OUT oldPset(id); in WeightUpdater's constructor to run this test properly.
+//_______________________________________________________________________
 
 public class WeightUpdaterTest extends TestCase {
 
