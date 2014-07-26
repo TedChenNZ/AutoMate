@@ -25,6 +25,16 @@ public class PatternsTest extends TestCase {
 	assertFalse(p2.compare(p));
     }
     
+    public void testCompareFail2() {
+	Pattern p2 = new Pattern("WiFi", "Off", 345, 12236739751L, 4, "abc", "true", "true", 1, 0, -1);
+	assertFalse(p2.compare(p));
+    }
+    
+    public void testCompareFail3() {
+	Pattern p2 = new Pattern("WiFi", "Ofsf", 45, 12236739751L, 4, "abc", "true", "true", 1, 0, -1);
+	assertFalse(p2.compare(p));
+    }
+    
     public void testNullString() {
 	Pattern p2 = new Pattern("WiFi", "Off", 45, 12236739751L, 4, null, "true", "true", 1, 0, -1);
 	

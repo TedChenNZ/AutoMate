@@ -25,7 +25,7 @@ public class WeightUpdater implements WeightManager {
 	this.p = p;
 	this.id = id;
 	actualTime = p.getActualTime();
-	//oldPset(id);
+	oldPset(id);
     }
 
     private void oldPset(int id){
