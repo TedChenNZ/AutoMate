@@ -15,8 +15,7 @@ public class WeightUpdater implements WeightManager {
     private int id;
 
     private long timeDiff; 
-    private int weeksPast, daysPast;
-
+    
     private final double weekInMS = 604800000;
     private final double dayInMS = 86400000;
 
@@ -37,7 +36,8 @@ public class WeightUpdater implements WeightManager {
 
     public Pattern updatePattern() {
 	double newWeight, newWeekWeight;
-
+	int weeksPast, daysPast;
+	
 	weeksPast = (int) Math.round(timeDiff/weekInMS); 
 	daysPast = (int) Math.round(timeDiff/dayInMS);
 
@@ -47,12 +47,13 @@ public class WeightUpdater implements WeightManager {
 	    if(weeksPast != 0){
 		newWeight = oldWeight + WeightManager.initialWeight/weeksPast;
 		newWeekWeight = oldWeekWeight + WeightManager.initialWeight/weeksPast;
-		Log.d("PatternController", "It's been more than a week - update/increase!");
+//		Log.d("PatternController", "It's been more than a week - update/increase!");
 	    }
 	    else{
 //		Log.d("PatternController", "Same day - so same weight!");
 		newWeight = oldWeight;
 		newWeekWeight = oldWeekWeight;
+	
 	    }
 
 	    p.setWeekWeight(newWeekWeight - oldWeekWeight);
@@ -60,6 +61,7 @@ public class WeightUpdater implements WeightManager {
 	}
 	else{
 	    if(daysPast != 0){
+		
 		newWeight = oldWeight + WeightManager.initialWeight/daysPast;
 	    }
 	    else{
