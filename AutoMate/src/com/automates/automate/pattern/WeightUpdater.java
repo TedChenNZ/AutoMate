@@ -1,6 +1,7 @@
 package com.automates.automate.pattern;
 
 import android.util.Log;
+import com.automates.automate.pattern.WeightManager;
 
 import com.automates.automate.PhoneState;
 
@@ -40,7 +41,7 @@ public class WeightUpdater implements WeightManager {
 	
 	weeksPast = (int) Math.round(timeDiff/weekInMS); 
 	daysPast = (int) Math.round(timeDiff/dayInMS);
-
+	
 
 	if(oldP.getDay() == p.getDay()){
 
@@ -61,7 +62,6 @@ public class WeightUpdater implements WeightManager {
 	}
 	else{
 	    if(daysPast != 0){
-		
 		newWeight = oldWeight + WeightManager.initialWeight/daysPast;
 	    }
 	    else{
