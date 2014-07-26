@@ -34,3 +34,5 @@ proguard/
 project.properties
 
 project.properties
+
+*.log

@@ -28,7 +28,7 @@ public class Pattern {
  
     public Pattern(){}
  
-    public Pattern(String eventCategory, String event, int time, int actualTime, int day, String location, String wifi, String mData, double weekWeight, double weight, int statusCode) {
+    public Pattern(String eventCategory, String event, int time, long actualTime, int day, String location, String wifi, String mData, double weekWeight, double weight, int statusCode) {
         this.eventCategory = eventCategory;
         this.event = event;
         this.time = time;
@@ -40,8 +40,27 @@ public class Pattern {
         this.weekWeight = weekWeight;
         this.weight = weight;
         this.statusCode = statusCode;
+        nullTransform();
     }
  
+    private void nullTransform() {
+	this.event = stringToNull(this.event);
+        this.eventCategory = stringToNull(this.eventCategory);
+        this.event = stringToNull(this.event);
+        this.location = stringToNull(this.location);
+        this.wifi = stringToNull(this.wifi);
+        this.mData = stringToNull(this.mData);
+    }
+    
+    private String stringToNull(String str){
+	if(str == null){
+	    return "";
+	}
+	else{
+	    return str;
+	}
+    }
+
     /**
      * Used to check if the unique values of a pattern match with another 
      * @param p The pattern to be compared against.
@@ -123,10 +142,12 @@ public class Pattern {
 
     public void setEvent(String input){
 	this.event = input;
+	nullTransform();
     }
     
     public void setEventCategory(String input){
 	this.eventCategory = input;
+	nullTransform();
     }
 
     public void setActualTime(long input){
@@ -135,10 +156,12 @@ public class Pattern {
     
     public void setData(String input){
 	this.mData = input;
+	nullTransform();
     }
 
     public void setDay(int weekDay){
 	this.day = weekDay;
+	nullTransform();
     }
     
     public void setId(int input){
@@ -147,6 +170,7 @@ public class Pattern {
 
     public void setLocation(String input){
 	this.location = input;
+	nullTransform();
     }
     
     public void setStatusCode(int input){
@@ -164,6 +188,7 @@ public class Pattern {
 
     public void setWifi(String input){
 	this.wifi = input;
+	nullTransform();
     }
 
     public double getWeekWeight() {
