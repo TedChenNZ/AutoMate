@@ -17,15 +17,15 @@ public class WeightUpdater implements WeightManager {
     private long timeDiff; 
     private int weeksPast, daysPast;
 
-    private final long weekInMS = 604800000;
-    private final long dayInMS = 86400000;
+    private final double weekInMS = 604800000;
+    private final double dayInMS = 86400000;
 
 
     public WeightUpdater(Pattern p, int id){
 	this.p = p;
 	this.id = id;
 	actualTime = p.getActualTime();
-	oldPset(id);
+	//oldPset(id);
     }
 
     private void oldPset(int id){
@@ -38,8 +38,8 @@ public class WeightUpdater implements WeightManager {
     public Pattern updatePattern() {
 	double newWeight, newWeekWeight;
 
-	weeksPast = Math.round(timeDiff/weekInMS); 
-	daysPast = Math.round(timeDiff/dayInMS);
+	weeksPast = (int) Math.round(timeDiff/weekInMS); 
+	daysPast = (int) Math.round(timeDiff/dayInMS);
 
 
 	if(oldP.getDay() == p.getDay()){
@@ -50,27 +50,27 @@ public class WeightUpdater implements WeightManager {
 		Log.d("PatternController", "It's been more than a week - update/increase!");
 	    }
 	    else{
-		Log.d("PatternController", "Same day - so same weight!");
+//		Log.d("PatternController", "Same day - so same weight!");
 		newWeight = oldWeight;
 		newWeekWeight = oldWeekWeight;
 	    }
 
 	    p.setWeekWeight(newWeekWeight - oldWeekWeight);
-	    Log.d("PatternController", "New week weight is: " + newWeekWeight);
+//	    Log.d("PatternController", "New week weight is: " + newWeekWeight);
 	}
 	else{
 	    if(daysPast != 0){
 		newWeight = oldWeight + WeightManager.initialWeight/daysPast;
 	    }
 	    else{
-		Log.d("PatternController", "Should never hit this");
+//		Log.d("PatternController", "Should never hit this");
 		newWeight = oldWeight;
 	    }
 	}
 
 	p.setWeight(newWeight);
 	p.setId(id);
-	Log.d("PatternController", "New weight is: " + newWeight);
+//	Log.d("PatternController", "New weight is: " + newWeight);
 
 	return p;
     }
