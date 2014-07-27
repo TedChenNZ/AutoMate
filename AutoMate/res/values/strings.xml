@@ -59,4 +59,5 @@
     
     <!-- Routines -->
     <string name="add_routine">Add Routine</string>
+    <string name="save">Save</string>
 </resources>
