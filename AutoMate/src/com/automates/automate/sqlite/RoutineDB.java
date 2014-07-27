@@ -158,7 +158,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         routine.setmData(cursor.getString(9));
         routine.setStatusCode(cursor.getInt(10));
  
-        Log.d("TAG", "getRoutine("+id+") " + routine.toString());
+        Log.d(TAG, "getRoutine("+id+") " + routine.toString());
  
         // 5. return routine
         return routine;
@@ -201,7 +201,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
             } while (cursor.moveToNext());
         }
  
-        Log.d("TAG", "getAllRoutines() " + routines.toString());
+        Log.d(TAG, "getAllRoutines() " + routines.toString());
  
         // return routines
         return routines;
@@ -239,7 +239,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         // 4. close
         db.close();
  
-        Log.d("TAG", "updateRoutine " + values.toString());
+        Log.d(TAG, "updateRoutine " + values.toString());
         return i;
  
     }
@@ -262,7 +262,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
         // 3. close
         db.close();
  
-        Log.d("TAG", "deleteRoutine " + routine.toString());
+        Log.d(TAG, "deleteRoutine " + routine.toString());
  
     }
 }
