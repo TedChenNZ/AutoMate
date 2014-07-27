@@ -201,7 +201,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
             } while (cursor.moveToNext());
         }
  
-        Log.d(TAG, "getAllRoutines() " + routines.toString());
+//        Log.d(TAG, "getAllRoutines() " + routines.toString());
  
         // return routines
         return routines;

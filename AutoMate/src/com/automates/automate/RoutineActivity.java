@@ -1,5 +1,7 @@
 package com.automates.automate;
 
+import com.automates.automate.routines.Routine;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -9,11 +11,14 @@ import android.widget.Button;
 
 public class RoutineActivity extends FragmentActivity {
 
-    private Button saveButton;
+    //    private Button saveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_location_activity);
+	Routine r = new Routine(10, "rName1", "WiFi", "false", 0, 52, "1", "Home", "false", "false", 1);
+	PhoneState.getRoutineDb().addRoutine(r);
+
     }
 
     //        // Setting click event listener for the add button

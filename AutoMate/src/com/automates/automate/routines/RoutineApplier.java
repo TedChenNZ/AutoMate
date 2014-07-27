@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.text.format.Time;
+import android.util.Log;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
@@ -17,6 +18,7 @@ import com.automates.automate.routines.settings.Wifi;
 public class RoutineApplier extends Service implements PropertyChangeListener{
 
     List<Routine> routines;
+    private final static String TAG = "RoutineDB";
 
     public RoutineApplier(){
 	PhoneState.getInstance().addChangeListener(this);
@@ -40,6 +42,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
     private void apply(Routine r) {
 	// TODO Auto-generated method stub
+	Log.d(TAG, "Checking applications");
 	if(r.getEventCategory().equals("Wifi")){
 	    if(r.getEvent().equals("false")){
 		Wifi.setWifiEnabled(this, false);
