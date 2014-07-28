@@ -69,7 +69,7 @@ public class PatternController implements PatternControl {
 	
 	long diff = current - startOfDay;
 	int intervals = (int) Math.ceil(diff/WeightManager.timeDivision);
-	String sRes = "" + day + intervals;
+	String sRes = "" + intervals;
 	
 	int result = Integer.parseInt(sRes);
 	
