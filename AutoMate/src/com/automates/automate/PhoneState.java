@@ -66,7 +66,7 @@ public final class PhoneState {
 			gpsTracker = new GPSTracker(context);
 		}
 		if (routineApplier == null) {
-			routineApplier = new RoutineApplier();
+			routineApplier = new RoutineApplier(context);
 			startRoutineChecking(context);
 		}
 		if (routinesList == null) {
@@ -89,7 +89,7 @@ public final class PhoneState {
 	    AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	    Intent intent = new Intent(context, TimelyChecker.class);
 	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),60000,pendingIntent);
+	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),30000,pendingIntent);
 	}
 	
 	public static String checkConnectivityIntent() {

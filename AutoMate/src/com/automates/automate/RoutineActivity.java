@@ -16,7 +16,7 @@ public class RoutineActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_location_activity);
-	Routine r = new Routine(10, "rName1", "WiFi", "false", 0, 52, "1", "Home", "false", "false", 1);
+	Routine r = new Routine(10, "tr1", "false", "Wifi", 22, 17, "", "", "", "", 1);
 	PhoneState.getRoutineDb().addRoutine(r);
 
     }

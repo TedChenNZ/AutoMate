@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.text.format.Time;
@@ -18,10 +19,12 @@ import com.automates.automate.routines.settings.Wifi;
 public class RoutineApplier extends Service implements PropertyChangeListener{
 
     List<Routine> routines;
+    public Context context;
     private final static String TAG = "RoutineDB";
 
-    public RoutineApplier(){
+    public RoutineApplier(Context context){
 	PhoneState.getInstance().addChangeListener(this);
+	this.context = context;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
     public void checkRoutines(){
 	routines = PhoneState.getRoutineDb().getAllRoutines();
-
+	Log.d(TAG, "Checking applications");
 	for(Routine r : routines){
 	    if(checkPhoneConditions(r)){
 		apply(r);
@@ -42,17 +45,20 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
     private void apply(Routine r) {
 	// TODO Auto-generated method stub
-	Log.d(TAG, "Checking applications");
-	if(r.getEventCategory().equals("Wifi")){
-	    if(r.getEvent().equals("false")){
-		Wifi.setWifiEnabled(this, false);
+	Log.d(TAG, "Actioning routine " + r.getName());
+	if(r.getEventCategory().equalsIgnoreCase("Wifi")){
+	    if(r.getEvent().equalsIgnoreCase("false")){
+		Wifi.setWifiEnabled(context, false);
+		Log.d(TAG, "Wifi turned off");
 	    }
 	    else{
-		Wifi.setWifiEnabled(this, true);
+		Wifi.setWifiEnabled(context, true);
+		Log.d(TAG, "Wifi turned on");
 	    }
 	}
-	else if(r.getEventCategory().equals("Ringer")){
+	else if(r.getEventCategory().equalsIgnoreCase("Ringer")){
 	    SoundProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
+	    Log.d(TAG, "Ringer changed to " + r.getEvent());
 	}
 
     }
