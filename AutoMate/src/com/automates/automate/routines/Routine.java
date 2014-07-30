@@ -1,5 +1,15 @@
 package com.automates.automate.routines;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+import com.automates.automate.R;
+import com.automates.automate.RoutineActivity;
+import com.automates.automate.pattern.Pattern;
+
 public class Routine {
 
     private String day;
@@ -36,11 +46,13 @@ public class Routine {
 
 
 
-
     public void activate() {
     // TODO Auto-generated method stub
     //ask user if location/wifi/data are conditions NOTIFICATION
     //alarm manager to do something for time based.
+	RoutineActivity r = new RoutineActivity();
+	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
+
    }
 
 	public String getDay() {

@@ -92,8 +92,8 @@ public class Pattern {
 	r.setmData(this.mData);
 	r.setWifi(this.wifi);
 	r.setStatusCode(StatusCode.IN_DEV);
-	r.activate();
-	PhoneState.getRoutineDb().addRoutine(r);
+	Routine r2 = PhoneState.getRoutineDb().addRoutine(r);
+	r2.activate();
     }
 
     public String getEvent() {
