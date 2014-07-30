@@ -1,5 +1,15 @@
 package com.automates.automate.routines;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+import com.automates.automate.R;
+import com.automates.automate.RoutineActivity;
+import com.automates.automate.pattern.Pattern;
+
 public class Routine {
 
     private String day;
@@ -13,12 +23,12 @@ public class Routine {
     private String name;
     private int statusCode;
     private String wifi;
-    
-    
+
+
     public Routine() {
 	// TODO Auto-generated constructor stub
     }
-    
+
     public Routine(int id, String name, String event, String eventCategory, int hour, int minute,
 	    String day, String location, String wifi, String mData, int statusCode) {
 	this.id = id;
@@ -36,130 +46,136 @@ public class Routine {
 
 
 
-
     public void activate() {
-    // TODO Auto-generated method stub
-    //ask user if location/wifi/data are conditions NOTIFICATION
-    //alarm manager to do something for time based.
-   }
+	// TODO Auto-generated method stub
+	//ask user if location/wifi/data are conditions NOTIFICATION
+	//alarm manager to do something for time based.
+	RoutineActivity r = new RoutineActivity();
+	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
 
-	public String getDay() {
-	    return day;
-	}
+    }
 
-	public String getEvent() {
-	    return event;
-	}
+    public String getDay() {
+	return day;
+    }
 
-	public String getEventCategory() {
-	    return eventCategory;
-	}
+    public String getEvent() {
+	return event;
+    }
 
-	public int getHour() {
-		return hour;
-	}
+    public String getEventCategory() {
+	return eventCategory;
+    }
 
-	public int getId() {
-	    return id;
-	}
-    
+    public int getHour() {
+	return hour;
+    }
+
+    public int getId() {
+	return id;
+    }
+
     public String getLocation() {
-        return location;
+	return location;
     }
 
     public String getmData() {
-        return mData;
+	return mData;
     }
 
 
     public int getMinute() {
-    	return minute;
+	return minute;
     }
 
 
     public String getName() {
-        return name;
+	return name;
     }
 
 
     public int getStatusCode() {
-        return statusCode;
+	return statusCode;
     }
 
 
     public String getWifi() {
-        return wifi;
+	return wifi;
     }
 
 
     public void setDay(String day) {
-        this.day = day;
+	this.day = day;
     }
 
 
     public void setEvent(String event) {
-        this.event = event;
+	this.event = event;
     }
 
 
 
 
     public void setEventCategory(String eventCategory) {
-        this.eventCategory = eventCategory;
+	this.eventCategory = eventCategory;
     }
 
 
     public void setHour(int hour) {
-    	this.hour = hour;
+	this.hour = hour;
     }
 
 
     public void setId(int id) {
-        this.id = id;
+	this.id = id;
     }
 
 
     public void setLocation(String location) {
-        this.location = location;
+	this.location = location;
     }
 
 
     public void setmData(String mData) {
-        this.mData = mData;
+	this.mData = mData;
     }
 
 
     public void setMinute(int minute) {
-    	this.minute = minute;
+	this.minute = minute;
     }
 
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
 
     public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+	this.statusCode = statusCode;
     }
 
 
     public void setWifi(String wifi) {
-        this.wifi = wifi;
+	this.wifi = wifi;
     }
 
 
     @Override
-	public String toString() {
-		return "Routine [id=" + id + ", name=" + name + ", event=" + event
-				+ ", eventCategory=" + eventCategory + ", hour=" + hour
-				+ ", minute=" + minute + ", day=" + day + ", location="
-				+ location + ", wifi=" + wifi + ", mData=" + mData
-				+ ", statusCode=" + statusCode + "]";
-	}
+    public String toString() {
+	return "Routine [id=" + id + ", name=" + name + ", event=" + event
+		+ ", eventCategory=" + eventCategory + ", hour=" + hour
+		+ ", minute=" + minute + ", day=" + day + ", location="
+		+ location + ", wifi=" + wifi + ", mData=" + mData
+		+ ", statusCode=" + statusCode + "]";
+    }
 
-    
-    
-    
-    
+    public String readableForm() {
+	return "Set " + eventCategory + " to " + "event" + " at " + hour + ":" + "minute" + " depending on conditions."; 
+    }
+
+
+
+
+
 }
