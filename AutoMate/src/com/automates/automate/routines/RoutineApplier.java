@@ -18,73 +18,75 @@ import com.automates.automate.routines.settings.Wifi;
 
 public class RoutineApplier extends Service implements PropertyChangeListener{
 
-    List<Routine> routines;
-    public Context context;
-    private final static String TAG = "RoutineDB";
+	List<Routine> routines;
+	public Context context;
+	private final static String TAG = "RoutineDB";
 
-    public RoutineApplier(Context context){
-	PhoneState.getInstance().addChangeListener(this);
-	this.context = context;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-	checkRoutines();
-    }
-
-    public void checkRoutines(){
-	routines = PhoneState.getRoutineDb().getAllRoutines();
-	Log.d(TAG, "Checking applications");
-	for(Routine r : routines){
-	    if(checkPhoneConditions(r)){
-		apply(r);
-	    }
+	public RoutineApplier(Context context){
+		PhoneState.getInstance().addChangeListener(this);
+		this.context = context;
 	}
 
-    }
-
-    private void apply(Routine r) {
-	// TODO Auto-generated method stub
-	Log.d(TAG, "Actioning routine " + r.getName());
-	if(r.getEventCategory().equalsIgnoreCase(Routine.WIFI)){
-	    if(r.getEvent().equalsIgnoreCase("false")){
-		Wifi.setWifiEnabled(context, false);
-		Log.d(TAG, "Wifi turned off");
-	    }
-	    else{
-		Wifi.setWifiEnabled(context, true);
-		Log.d(TAG, "Wifi turned on");
-	    }
-	}
-	else if(r.getEventCategory().equalsIgnoreCase(Routine.RINGER)){
-	    RingerProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
-	    Log.d(TAG, "Ringer changed to " + r.getEvent());
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		checkRoutines();
 	}
 
-    }
+	public void checkRoutines(){
+		routines = PhoneState.getRoutineDb().getAllRoutines();
+		Log.d(TAG, "Checking applications");
+		for(Routine r : routines){
+			if(checkPhoneConditions(r)){
+				apply(r);
+			}
+		}
 
-    @Override
-    public IBinder onBind(Intent arg0) {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	}
 
-    private boolean checkPhoneConditions(Routine r){
-	boolean conditions = true;
+	private void apply(Routine r) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, "Actioning routine " + r.getName());
+		if(r.getEventCategory().equalsIgnoreCase(Routine.WIFI)){
+			if(r.getEvent().equalsIgnoreCase("false")){
+				Wifi.setWifiEnabled(context, false);
+				Log.d(TAG, "Wifi turned off");
+			}
+			else{
+				Wifi.setWifiEnabled(context, true);
+				Log.d(TAG, "Wifi turned on");
+			}
+		}
+		else if(r.getEventCategory().equalsIgnoreCase(Routine.RINGER)){
+			RingerProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
+			Log.d(TAG, "Ringer changed to " + r.getEvent());
+		}
 
-	Time time = new Time();
-	time.setToNow();
+	}
 
-	if (!r.getDay().equals(StatusCode.EMPTY) && r.getDay().indexOf(time.weekDay) == -1){conditions = false;};
-	if (r.getHour() != (StatusCode.DECLINED) && r.getHour() != time.hour){conditions = false;};
-	if (r.getMinute() != (StatusCode.DECLINED) && r.getMinute() != time.minute){conditions = false;};
-	if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneState.getSetLocation())){conditions = false;};
-	if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneState.isDataEnabled()))){conditions = false;};
-	if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneState.getWifiBSSID())){conditions = false;};
+	@Override
+	public IBinder onBind(Intent arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	private boolean checkPhoneConditions(Routine r){
+		boolean conditions = true;
 
-	return conditions;
-    }
+		Time time = new Time();
+		time.setToNow();
+
+		if (!r.getDay().equals(StatusCode.EMPTY) && r.getDay().indexOf(time.weekDay) == -1){conditions = false;};
+		if (r.getHour() != (StatusCode.DECLINED) && r.getHour() != time.hour){conditions = false;};
+		if (r.getMinute() != (StatusCode.DECLINED) && r.getMinute() != time.minute){conditions = false;};
+		if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneState.getSetLocation())){conditions = false;};
+		if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneState.isDataEnabled()))){conditions = false;};
+		if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneState.getWifiBSSID())){conditions = false;};
+
+		if(r.getStatusCode() != StatusCode.IMPLEMENTED){
+			conditions = false;
+		}
+		return conditions;
+	}
 
 }
 
