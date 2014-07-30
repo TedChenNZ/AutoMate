@@ -4,20 +4,16 @@ package com.automates.automate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 import com.automates.automate.locations.EditMultiChoiceModeListener;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -44,11 +40,7 @@ import android.widget.PopupWindow;
 @SuppressLint("InflateParams")
 public class RoutineActivity extends FragmentActivity {
     private EditText textName;
-    private ListView triggersListView;
-    private ArrayAdapter<String> triggersAdapter;
-    private ListView actionsListView;
-    private ArrayAdapter<String> actionsAdapter;
-    
+
     private Button addTrigger;
     private Button addAction;
     private Button saveButton;
@@ -59,19 +51,28 @@ public class RoutineActivity extends FragmentActivity {
     private List<String> actions;
     private FragmentActivity activity;
     
-    // trigger mode edit
+    // trigger list
+    private ListView triggersListView;
+    private ArrayAdapter<String> triggersAdapter;
     private List<Integer> triggersSelected = new ArrayList<Integer>();
     private ActionMode.Callback triggersActionModeCallback;
     private ActionMode triggersActionMode;
     private EditMultiChoiceModeListener triggersModeListener;
+    
+    // action list
+    private ListView actionsListView;
+    private ArrayAdapter<String> actionsAdapter;
+    private List<Integer> actionsSelected = new ArrayList<Integer>();
+    private ActionMode.Callback actionsActionModeCallback;
+    private ActionMode actionsActionMode;
+    private EditMultiChoiceModeListener actionsModeListener;
+    
     
     //    private Button saveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine_activity);
-    //  Routine r = new Routine(10, "rName1", "WiFi", "false", 0, 52, "1", "Home", "false", "false", 1);
-    //  PhoneState.getRoutineDb().addRoutine(r);
         activity = this;
         textName = (EditText) findViewById(R.id.textName);
         addTrigger = (Button) findViewById(R.id.addTrigger);
@@ -95,7 +96,11 @@ public class RoutineActivity extends FragmentActivity {
         addAction.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	addClick(v, 1);
+            	if (actions.size() == 0) {
+            		addClick(v, 1);
+            	} else {
+                    Toast.makeText(getBaseContext(), "Only 1 Action allowed", Toast.LENGTH_SHORT).show();
+            	}
                 
             }
         });
@@ -103,10 +108,26 @@ public class RoutineActivity extends FragmentActivity {
         saveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (textName.getText() == null || textName.getText().equals("")) {
+            	String name = (String) textName.getText().toString();
+                if (name == null || name.length() == 0) {
                     Toast.makeText(getBaseContext(), "No Name was set", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (triggers.size() == 0) {
+                	Toast.makeText(getBaseContext(), "Must have at least 1 Trigger", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (actions.size() == 0) {
+                	Toast.makeText(getBaseContext(), "Must have an Action", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                routine.setName(name);
+                routine.setStatusCode(StatusCode.IMPLEMENTED);
+                PhoneState.getRoutineDb().addRoutine(routine);
+                
+                Intent resultIntent = new Intent();
+            	setResult(Activity.RESULT_OK, resultIntent);
+                finish();
             }
         });
         
@@ -141,6 +162,41 @@ public class RoutineActivity extends FragmentActivity {
 						triggersActionMode = activity.startActionMode(triggersActionModeCallback);
 					}
 					triggersListView.setItemChecked(position, true);
+					
+				}
+
+			}
+        });
+        
+        
+        // Action List Display
+        // Adapter
+        actionsAdapter = new ArrayAdapter<String>(activity,
+                android.R.layout.simple_list_item_1, android.R.id.text1, actions);
+        actionsListView.setAdapter(actionsAdapter);
+        // List View Initialize
+        actionsListView.setAdapter(actionsAdapter);
+        actionsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        
+        // List View Mode Listener and CAB
+        actionsModeListener = new ActionsModeListener(this, actionsSelected, actionsAdapter);
+        actionsListView.setMultiChoiceModeListener(actionsModeListener);
+        actionsActionModeCallback = new EditActionModeCallback(actionsListView, actionsSelected);
+        actionsListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long id) {
+				if (actionsSelected.contains(position)) {
+					actionsListView.setItemChecked(position, false);
+					if (actionsActionMode != null && actionsSelected.size() == 0) {
+						actionsActionMode.finish();
+					}
+				} else {
+					// For multiple selections
+					if (actionsActionMode == null || actionsSelected.size() == 0) {
+						actionsActionMode = startActionMode(actionsActionModeCallback);
+					}
+					actionsListView.setItemChecked(position, true);
 					
 				}
 
@@ -413,6 +469,10 @@ public class RoutineActivity extends FragmentActivity {
                     int ringer = Routine.ringerToInt((String) b.getText());
                     routine.setEventCategory(Routine.RINGER);
                     routine.setEvent("" + ringer);
+                    
+                    actions.clear();
+                    actions.add(Routine.RINGER + ": " + ringer);
+                    actionsAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
             });
@@ -446,9 +506,9 @@ public class RoutineActivity extends FragmentActivity {
                     routine.setEvent(onoff);
                     
                     
-                    triggers.clear();
-                    triggers.addAll(routine.activeTriggerList());
-                    triggersAdapter.notifyDataSetChanged();
+                    actions.clear();
+                    actions.add(string+ ": " + onoff);
+                    actionsAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
             });
@@ -491,9 +551,13 @@ public class RoutineActivity extends FragmentActivity {
 			switch (item.getItemId()) {
 				case R.id.action_edit:
 					if (selected != null && selected.size() == 1) {
+						s = (String) adapter.getItem(selected.get(0));
+						trigger = s.split(":")[0];
 //						Intent intent = new Intent(activity, RoutineActivity.class);
 //						intent.putExtra("EditItem", selected.get(0));
 //		            	activity.startActivityForResult(intent, 0);
+
+						popupTriggerOptions(activity.findViewById(android.R.id.content), trigger);
 					}
 					adapter.notifyDataSetChanged();
 					mode.finish();
@@ -517,6 +581,66 @@ public class RoutineActivity extends FragmentActivity {
 								routine.setmData("");
 							}
 
+							adapter.remove(s);
+						}
+						adapter.notifyDataSetChanged();
+						mode.finish();
+					}
+					return true;
+				default:
+					return false;
+					
+			}
+			
+		}
+	}
+    
+    private class ActionsModeListener extends EditMultiChoiceModeListener {
+		
+		private List<Integer> selected;
+		private ArrayAdapter<String> adapter;
+		private Activity activity;
+		
+		public ActionsModeListener(Activity activity,
+				List<Integer> selected, ArrayAdapter<String> adapter) {
+			super(selected);
+			this.activity = activity;
+			this.selected = selected;
+			this.adapter = adapter;
+		}
+		
+		
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			String s = "";
+			String action = "";
+			if (selected != null) {
+				Collections.sort(selected);
+				Collections.reverse(selected);
+			}
+			
+			switch (item.getItemId()) {
+				case R.id.action_edit:
+					if (selected != null && selected.size() == 1) {
+						if (selected != null && selected.size() == 1) {
+							s = (String) adapter.getItem(selected.get(0));
+							action = s.split(":")[0];
+
+							popupActionOptions(activity.findViewById(android.R.id.content), action);
+						}
+					}
+					adapter.notifyDataSetChanged();
+					mode.finish();
+					return true;
+				case R.id.action_discard:
+					
+					if (selected != null) {
+						for (int i = 0; i < selected.size(); i++) {
+							s = (String) adapter.getItem(selected.get(i));
+							action = s.split(":")[0];
+							
+							routine.setEvent("");
+							routine.setEventCategory("");
 							adapter.remove(s);
 						}
 						adapter.notifyDataSetChanged();
