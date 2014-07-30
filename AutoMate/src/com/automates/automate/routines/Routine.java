@@ -72,7 +72,7 @@ public class Routine {
 	//ask user if location/wifi/data are conditions NOTIFICATION
 	//alarm manager to do something for time based.
 	RoutineActivity r = new RoutineActivity();
-//	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
+	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
 
     }
 
