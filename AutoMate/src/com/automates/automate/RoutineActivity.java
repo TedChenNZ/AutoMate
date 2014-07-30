@@ -41,7 +41,9 @@ import android.widget.PopupWindow;
 public class RoutineActivity extends FragmentActivity {
     private EditText textName;
     private ListView triggersList;
+    private ArrayAdapter<String> triggersAdapter;
     private ListView actionsList;
+    
     private Button addTrigger;
     private Button addAction;
     private Button saveButton;
@@ -66,11 +68,12 @@ public class RoutineActivity extends FragmentActivity {
         addTrigger = (Button) findViewById(R.id.addTrigger);
         addAction = (Button) findViewById(R.id.addAction);
         saveButton = (Button) findViewById(R.id.saveButton);
+        triggersList = (ListView) findViewById(R.id.triggersList);
+        actionsList = (ListView) findViewById(R.id.actionsList);
         
-        allTriggers = Arrays.asList("Time", "Day", "Location", "Wifi", "Mobile Data");
+        allTriggers = Arrays.asList(Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA);
         
         routine = new Routine();
-        triggers = new ArrayList<String>();
         actions = new ArrayList<String>();
     
         addTrigger.setOnClickListener(new OnClickListener() {
@@ -97,6 +100,15 @@ public class RoutineActivity extends FragmentActivity {
                 }
             }
         });
+        
+        triggers = routine.activeTriggerList();
+        
+        triggersAdapter = new ArrayAdapter<String>(activity,
+                android.R.layout.simple_list_item_1, android.R.id.text1, triggers);
+        triggersList.setAdapter(triggersAdapter);
+        
+        
+        
     }
     
     /**
@@ -187,6 +199,10 @@ public class RoutineActivity extends FragmentActivity {
                 public void onClick(View v) {
                     routine.setHour(timePicker.getCurrentHour());
                     routine.setMinute(timePicker.getCurrentMinute());
+                    
+                    triggers.clear();
+                    triggers.addAll(routine.activeTriggerList());
+                    triggersAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
             });
@@ -203,15 +219,18 @@ public class RoutineActivity extends FragmentActivity {
                 radioGroup.addView(rb, 0, layoutParams);
                 i++;
             }
-            
+            radioGroup.check(i-1);
             buttonOK.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Gets a reference to "selected" radio button
                     int selected = radioGroup.getCheckedRadioButtonId();
                     RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    int day = dayToInt((String) b.getText());
+                    int day = Routine.dayToInt((String) b.getText());
                     routine.setDay("" + day);
+                    triggers.clear();
+                    triggers.addAll(routine.activeTriggerList());
+                    triggersAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
             });
@@ -234,6 +253,7 @@ public class RoutineActivity extends FragmentActivity {
                 radioGroup.addView(rb, 0, layoutParams);
                 i++;
             }
+            radioGroup.check(i-1);
             
             buttonOK.setOnClickListener(new OnClickListener() {
                 @Override
@@ -248,8 +268,11 @@ public class RoutineActivity extends FragmentActivity {
                             break;
                         }
                     }
-                    
+                    triggers.clear();
+                    triggers.addAll(routine.activeTriggerList());
+                    triggersAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
+                    
                 }
             });
         } else {
@@ -265,7 +288,7 @@ public class RoutineActivity extends FragmentActivity {
                 radioGroup.addView(rb, 0, layoutParams);
                 i++;
             }
-            
+            radioGroup.check(i-1);
             buttonOK.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -283,27 +306,21 @@ public class RoutineActivity extends FragmentActivity {
                         routine.setmData(onoff);
                     }
                     
+                    triggers.clear();
+                    triggers.addAll(routine.activeTriggerList());
+                    triggersAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
             });
         }
+        
         
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
     }
     
     
-    private int dayToInt(String day) {
-         Map<String,Integer> mp = new HashMap<String,Integer>();
-         
-         mp.put("Sunday",0);
-         mp.put("Monday",1);
-         mp.put("Tuesday",2);
-         mp.put("Wednesday",3);
-         mp.put("Thrusday",4);
-         mp.put("Friday",5);
-         mp.put("Saturday",6);
-         
-         return mp.get(day).intValue();
-    }
+
+    
+    
 }

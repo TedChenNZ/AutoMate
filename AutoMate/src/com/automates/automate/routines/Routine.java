@@ -1,17 +1,29 @@
 package com.automates.automate.routines;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.automates.automate.PhoneState;
 import com.automates.automate.R;
 import com.automates.automate.RoutineActivity;
-import com.automates.automate.pattern.Pattern;
+import com.automates.automate.locations.UserLocation;
 
 public class Routine {
-
+	public static final String TIME = "Time";
+	public static final String DAY = "Day";
+	public static final String LOCATION = "Location";
+	public static final String WIFI = "Wifi";
+	public static final String MDATA = "Mobile Data";
+			
     private String day;
     private String event;
     private String eventCategory;
@@ -26,7 +38,15 @@ public class Routine {
 
 
     public Routine() {
-	// TODO Auto-generated constructor stub
+    	this.name = "";
+    	this.event = "";
+    	this.eventCategory = "";
+    	this.day = "";
+    	this.location = "";
+    	this.wifi = "";
+    	this.mData = "";
+    	this.minute = -1;
+    	this.hour = 01;
     }
 
     public Routine(int id, String name, String event, String eventCategory, int hour, int minute,
@@ -51,7 +71,7 @@ public class Routine {
 	//ask user if location/wifi/data are conditions NOTIFICATION
 	//alarm manager to do something for time based.
 	RoutineActivity r = new RoutineActivity();
-	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
+//	r.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", this.id);
 
     }
 
@@ -173,8 +193,76 @@ public class Routine {
     public String readableForm() {
 	return "Set " + eventCategory + " to " + "event" + " at " + hour + ":" + "minute" + " depending on conditions."; 
     }
+    
+    public List<String> activeTriggerList() {
+    	List<String> triggerList = new ArrayList<String>();
+    	//Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA
+    	if (this.getHour() != -1 && this.getMinute() != -1) {
+    		triggerList.add(Routine.TIME + ": " + this.getHour() + ":" + this.getMinute());
+    	}
+    	if (this.getDay() != null && !this.getDay().equals("")) {
+    		// TODO: FIX TIS FOR MULTIPLE DAYS
+    		triggerList.add(Routine.DAY + ": " + intToDay(Integer.parseInt(getDay())));
+    	}
+    	
+    	if (this.getLocation() != null && !this.getLocation().equals("")) {
+    		String s = this.getLocation();
+    		try {
+    			int loc = Integer.parseInt(this.getLocation());
+    			for (UserLocation ul: PhoneState.getLocationsList()) {
+                    if (ul.getId() == (loc)) {
+                        s = ul.getName();
+                        break;
+                    }
+                }
+    		} catch (NumberFormatException e) {
+    			
+    		}
+            
+    		triggerList.add(Routine.LOCATION + ": " + s);
+    	}
+    	if (this.getWifi() != null && !this.getWifi().equals("")) {
+    		triggerList.add(Routine.WIFI + ": " + this.getWifi());
+    	}
+    	if (this.getmData() != null && !this.getmData().equals("")) {
+    		triggerList.add(Routine.MDATA + ": " + this.getmData());
+    	}
+    	
+    	return triggerList;
+    }
 
-
+    public static int dayToInt(String day) {
+        Map<String,Integer> mp = new HashMap<String,Integer>();
+        
+        mp.put("Sunday",0);
+        mp.put("Monday",1);
+        mp.put("Tuesday",2);
+        mp.put("Wednesday",3);
+        mp.put("Thrusday",4);
+        mp.put("Friday",5);
+        mp.put("Saturday",6);
+        
+        return mp.get(day).intValue();
+   }
+    
+   public static String intToDay(int day) {
+       Map<String,Integer> mp = new HashMap<String,Integer>();
+       String d = "";
+       mp.put("Sunday",0);
+       mp.put("Monday",1);
+       mp.put("Tuesday",2);
+       mp.put("Wednesday",3);
+       mp.put("Thrusday",4);
+       mp.put("Friday",5);
+       mp.put("Saturday",6);
+       
+       for (Entry<String, Integer> entry : mp.entrySet()) {
+           if (entry.getValue().equals(day)) {
+               d = entry.getKey();
+           }
+       }
+       return d;
+   }
 
 
 
