@@ -60,4 +60,11 @@
     <!-- Routines -->
     <string name="add_routine">Add Routine</string>
     <string name="save">Save</string>
+    <string name="Name">Name</string>
+    <string name="add_trigger">Add Trigger</string>
+    <string name="add_action">Add Action</string>
+    <string name="triggers">Triggers</string>
+    <string name="actions">Actions</string>
+    <string name="trigger">Trigger</string>
+    <string name="OK">OK</string>
 </resources>

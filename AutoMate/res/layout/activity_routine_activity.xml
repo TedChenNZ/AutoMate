@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+	android:focusable="true"
+	android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/enter_name"
+        android:inputType="text" >
+
+    </EditText>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addAction"
+        android:layout_below="@+id/textName" >
+	    <TextView
+	        android:id="@+id/textTriggers"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:text="@string/triggers"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <ListView
+	        android:id="@+id/triggersList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/textTriggers"
+	        android:layout_above="@+id/textActions"  
+	        >
+	    </ListView>
+	
+	    <TextView
+	        android:id="@+id/textActions"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:text="@string/actions"
+	        android:textAppearance="?android:attr/textAppearanceLarge" 
+	        />
+	
+	    <ListView
+	        android:id="@+id/actionsList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/textActions" >
+	    </ListView>
+	    
+    </RelativeLayout>
+    
+    
+	<Button
+        android:id="@+id/addAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/addTrigger"
+        android:text="@string/add_action" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/addAction"
         android:text="@string/save" />
 
+    <Button
+        android:id="@+id/addTrigger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/add_trigger" />
 </RelativeLayout>
