@@ -144,9 +144,11 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 			switch (item.getItemId()) {
 				case R.id.action_edit:
 					if (selected != null && selected.size() == 1) {
-//						Intent intent = new Intent(activity, RoutineActivity.class);
-//						intent.putExtra("EditItem", selected.get(0));
-//		            	activity.startActivityForResult(intent, 0);
+						Intent intent = new Intent(activity, RoutineActivity.class);
+						Routine r = (Routine) adapter.getItem(selected.get(0));
+						
+						intent.putExtra("routineID", r.getId());
+		            	activity.startActivityForResult(intent, 0);
 					}
 					adapter.notifyDataSetChanged();
 					mode.finish();

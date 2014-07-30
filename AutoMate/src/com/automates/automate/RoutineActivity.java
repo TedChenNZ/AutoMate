@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import com.automates.automate.locations.EditMultiChoiceModeListener;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.pattern.StatusCode;
@@ -14,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -84,6 +86,24 @@ public class RoutineActivity extends FragmentActivity {
         
         routine = new Routine();
         actions = new ArrayList<String>();
+        
+        // intent
+        Intent intent = getIntent();
+        int routineID = intent.getIntExtra("routineID", -1);
+        Log.d("RoutineActivity", ""+routineID);
+
+        if (routineID != -1) {
+        	for (Routine r: PhoneState.getRoutinesList()) {
+        		if (routineID == r.getId()) {
+        			routine = r;
+        			actions.add(r.getEventCategory() + ": " + r.getEvent());
+        			textName.setText(r.getName());
+        		}
+        	}
+        	
+        }
+        
+        
     
         addTrigger.setOnClickListener(new OnClickListener() {
             @Override
@@ -204,6 +224,9 @@ public class RoutineActivity extends FragmentActivity {
         });
         
         
+        
+
+            
         
     }
     

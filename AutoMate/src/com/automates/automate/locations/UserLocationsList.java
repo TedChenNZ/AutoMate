@@ -55,6 +55,7 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 
 		return currentULList;
 	}
+	
 
 
 
