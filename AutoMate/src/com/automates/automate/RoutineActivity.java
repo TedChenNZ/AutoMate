@@ -69,6 +69,8 @@ public class RoutineActivity extends FragmentActivity {
     private ActionMode actionsActionMode;
     private EditMultiChoiceModeListener actionsModeListener;
     
+    private boolean editing;
+    
     
     //    private Button saveButton;
     @Override
@@ -83,13 +85,14 @@ public class RoutineActivity extends FragmentActivity {
         triggersListView = (ListView) findViewById(R.id.triggersList);
         actionsListView = (ListView) findViewById(R.id.actionsList);
         
+        editing = false;
         
         routine = new Routine();
         actions = new ArrayList<String>();
         
         // intent
         Intent intent = getIntent();
-        int routineID = intent.getIntExtra("routineID", -1);
+        final int routineID = intent.getIntExtra("routineID", -1);
         Log.d("RoutineActivity", ""+routineID);
 
         if (routineID != -1) {
@@ -98,6 +101,7 @@ public class RoutineActivity extends FragmentActivity {
         			routine = r;
         			actions.add(r.getEventCategory() + ": " + r.getEvent());
         			textName.setText(r.getName());
+        			editing = true;
         		}
         	}
         	
@@ -143,7 +147,18 @@ public class RoutineActivity extends FragmentActivity {
                 }
                 routine.setName(name);
                 routine.setStatusCode(StatusCode.IMPLEMENTED);
-                PhoneState.getRoutinesList().add(routine);
+                if (editing) {
+                	for (int i = 0; i < PhoneState.getRoutinesList().size(); i++) {
+                		Routine r = PhoneState.getRoutinesList().get(i);
+            			if (r.getId() == routineID) {
+            				PhoneState.getRoutinesList().set(i, r);
+            				break;
+                		}
+                	}
+                	
+                } else {
+                	PhoneState.getRoutinesList().add(routine);
+                }
                 
                 Intent resultIntent = new Intent();
             	setResult(Activity.RESULT_OK, resultIntent);
