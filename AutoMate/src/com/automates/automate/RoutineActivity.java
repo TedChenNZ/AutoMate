@@ -123,7 +123,7 @@ public class RoutineActivity extends FragmentActivity {
                 }
                 routine.setName(name);
                 routine.setStatusCode(StatusCode.IMPLEMENTED);
-                PhoneState.getRoutineDb().addRoutine(routine);
+                PhoneState.getRoutinesList().add(routine);
                 
                 Intent resultIntent = new Intent();
             	setResult(Activity.RESULT_OK, resultIntent);

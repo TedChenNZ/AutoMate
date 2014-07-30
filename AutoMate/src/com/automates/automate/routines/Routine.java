@@ -239,7 +239,7 @@ public class Routine {
         mp.put("Monday",1);
         mp.put("Tuesday",2);
         mp.put("Wednesday",3);
-        mp.put("Thrusday",4);
+        mp.put("Thursday",4);
         mp.put("Friday",5);
         mp.put("Saturday",6);
         

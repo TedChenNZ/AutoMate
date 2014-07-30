@@ -114,6 +114,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
 	  switch(requestCode) { 
 	    case (0) : { 
 	      if (resultCode == Activity.RESULT_OK) {
+	    	  	
 	    	  	locationsAdapter.notifyDataSetChanged();
 	    	  	updateCurrentLocation();
 		      } 

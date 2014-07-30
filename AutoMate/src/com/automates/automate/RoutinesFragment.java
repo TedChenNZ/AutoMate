@@ -115,6 +115,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 	  switch(requestCode) { 
 	    case (0) : { 
 	      if (resultCode == Activity.RESULT_OK) {
+	    	  	PhoneState.getRoutinesList();
 	    	  	routinesAdapter.notifyDataSetChanged();
 //	    	  	updateCurrentLocation();
 		      } 
