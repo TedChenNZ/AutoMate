@@ -34,10 +34,12 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	public void checkRoutines(){
 		routines = PhoneState.getRoutineDb().getAllRoutines();
-		Log.d(TAG, "Checking applications");
-		for(Routine r : routines){
-			if(checkPhoneConditions(r)){
-				apply(r);
+		if (routines != null) {
+			Log.d(TAG, "Checking applications");
+			for(Routine r : routines){
+				if(checkPhoneConditions(r)){
+					apply(r);
+				}
 			}
 		}
 
@@ -74,6 +76,9 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 		Time time = new Time();
 		time.setToNow();
+		if (r.getEventCategory() == null || r.getEvent() == null || r.getDay() == null || r.getLocation() == null || r.getWifi() == null || r.getmData() == null) {
+			return false;
+		}
 
 		if (!r.getDay().equals(StatusCode.EMPTY) && r.getDay().indexOf(time.weekDay) == -1){conditions = false;};
 		if (r.getHour() != (StatusCode.DECLINED) && r.getHour() != time.hour){conditions = false;};
