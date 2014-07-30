@@ -3,7 +3,9 @@ package com.automates.automate.pattern;
 import java.util.Calendar;
 
 import com.automates.automate.PhoneState;
+import com.automates.automate.RoutineActivity;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.settings.NotifyManager;
 
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
@@ -95,9 +97,19 @@ public class Pattern {
 			r.setWifi(this.wifi);
 			r.setStatusCode(StatusCode.IN_DEV);
 			Routine r2 = PhoneState.getRoutineDb().addRoutine(r);
-			r2.activate();
+			activate(r2);
 		}
 	}
+
+	public void activate(Routine r) {
+		// TODO Auto-generated method stub
+		//ask user if location/wifi/data are conditions NOTIFICATION
+		//alarm manager to do something for time based.
+		NotifyManager nM = new NotifyManager();
+		nM.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", r.getId());
+
+	}
+
 
 	public String getEvent() {
 		return this.event;
