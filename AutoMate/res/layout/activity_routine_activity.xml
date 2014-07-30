@@ -37,7 +37,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/textTriggers"
-	        android:layout_above="@+id/textActions"  
+	        android:layout_above="@+id/textActions" 
+	        android:listSelector="@drawable/list_selector" 
 	        >
 	    </ListView>
 	
@@ -56,7 +57,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textActions" >
+	        android:layout_below="@+id/textActions"
+	        android:listSelector="@drawable/list_selector" >
 	    </ListView>
 	    
     </RelativeLayout>

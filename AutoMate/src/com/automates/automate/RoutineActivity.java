@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import com.automates.automate.locations.EditMultiChoiceModeListener;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.routines.Routine;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -31,8 +33,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.PopupWindow;
@@ -40,9 +44,10 @@ import android.widget.PopupWindow;
 @SuppressLint("InflateParams")
 public class RoutineActivity extends FragmentActivity {
     private EditText textName;
-    private ListView triggersList;
+    private ListView triggersListView;
     private ArrayAdapter<String> triggersAdapter;
-    private ListView actionsList;
+    private ListView actionsListView;
+    private ArrayAdapter<String> actionsAdapter;
     
     private Button addTrigger;
     private Button addAction;
@@ -52,9 +57,13 @@ public class RoutineActivity extends FragmentActivity {
     private Routine routine;
     private List<String> triggers;
     private List<String> actions;
-    private List<String> allTriggers;
     private FragmentActivity activity;
     
+    // trigger mode edit
+    private List<Integer> triggersSelected = new ArrayList<Integer>();
+    private ActionMode.Callback triggersActionModeCallback;
+    private ActionMode triggersActionMode;
+    private EditMultiChoiceModeListener triggersModeListener;
     
     //    private Button saveButton;
     @Override
@@ -68,10 +77,9 @@ public class RoutineActivity extends FragmentActivity {
         addTrigger = (Button) findViewById(R.id.addTrigger);
         addAction = (Button) findViewById(R.id.addAction);
         saveButton = (Button) findViewById(R.id.saveButton);
-        triggersList = (ListView) findViewById(R.id.triggersList);
-        actionsList = (ListView) findViewById(R.id.actionsList);
+        triggersListView = (ListView) findViewById(R.id.triggersList);
+        actionsListView = (ListView) findViewById(R.id.actionsList);
         
-        allTriggers = Arrays.asList(Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA);
         
         routine = new Routine();
         actions = new ArrayList<String>();
@@ -79,7 +87,7 @@ public class RoutineActivity extends FragmentActivity {
         addTrigger.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTriggerClick(v);
+                addClick(v, 0);
             }
         });
             
@@ -87,6 +95,7 @@ public class RoutineActivity extends FragmentActivity {
         addAction.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+            	addClick(v, 1);
                 
             }
         });
@@ -101,11 +110,42 @@ public class RoutineActivity extends FragmentActivity {
             }
         });
         
+        // Trigger List Display
         triggers = routine.activeTriggerList();
         
         triggersAdapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_list_item_1, android.R.id.text1, triggers);
-        triggersList.setAdapter(triggersAdapter);
+        triggersListView.setAdapter(triggersAdapter);
+        triggersListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        
+        // List View Mode Listener and CAB
+        
+        triggersModeListener = new TriggersModeListener(activity, triggersSelected, triggersAdapter);
+        triggersListView.setMultiChoiceModeListener(triggersModeListener);
+        
+        triggersActionModeCallback = new EditActionModeCallback(triggersListView, triggersSelected);
+        
+        
+        triggersListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long id) {
+				if (triggersSelected.contains(position)) {
+					triggersListView.setItemChecked(position, false);
+					if (triggersActionMode != null && triggersSelected.size() == 0) {
+						triggersActionMode.finish();
+					}
+				} else {
+					// For multiple selections
+					if (triggersActionMode == null || triggersSelected.size() == 0) {
+						triggersActionMode = activity.startActionMode(triggersActionModeCallback);
+					}
+					triggersListView.setItemChecked(position, true);
+					
+				}
+
+			}
+        });
         
         
         
@@ -130,7 +170,9 @@ public class RoutineActivity extends FragmentActivity {
         }
     }
     
-    private void addTriggerClick(View v) {
+    private void addClick(View v, final int type) {
+    	// types: 0 = trigger, 1 = action
+    	
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
         }
@@ -140,11 +182,17 @@ public class RoutineActivity extends FragmentActivity {
         View popupView = layoutInflater.inflate(R.layout.popup_list, null);  
         popupWindow = new PopupWindow( popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
         
-        List<String> aTriggers = allTriggers;
-        
+        List<String> options;
+        if (type == 0) {
+        	options = Arrays.asList(Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA);
+            
+        } else {
+        	options = Arrays.asList(Routine.WIFI, Routine.MDATA, Routine.RINGER);
+        }
+        	
         final ListView listView = (ListView) popupView.findViewById(R.id.list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, android.R.id.text1, aTriggers);
+                android.R.layout.simple_list_item_1, android.R.id.text1, options);
         listView.setAdapter(adapter);
         // ListView Item Click Listener
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -158,8 +206,11 @@ public class RoutineActivity extends FragmentActivity {
                       
                     // Show Alert 
                    popupWindow.dismiss();
-                    
-                  popupOptions(view, itemValue);
+                  if (type == 0)  {
+                	  popupTriggerOptions(view, itemValue);
+                  } else {
+                	  popupActionOptions(view, itemValue);
+                  }
               }
 
         }); 
@@ -168,7 +219,7 @@ public class RoutineActivity extends FragmentActivity {
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
     }
     
-    private void popupOptions(View v, String s) {
+    private void popupTriggerOptions(View v, String s) {
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
         }
@@ -190,7 +241,7 @@ public class RoutineActivity extends FragmentActivity {
         
         RadioButton rb;
         
-        if (s.equals("Time")) {
+        if (s.equals(Routine.TIME)) {
             // Time
             final TimePicker timePicker = (TimePicker) popupView.findViewById(R.id.timePicker);
             timePicker.setVisibility(View.VISIBLE);
@@ -207,7 +258,7 @@ public class RoutineActivity extends FragmentActivity {
                 }
             });
             
-        } else if (s.equals("Day")) {
+        } else if (s.equals(Routine.DAY)) {
             // Day
             List<String> options = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
             Collections.reverse(options);
@@ -236,7 +287,7 @@ public class RoutineActivity extends FragmentActivity {
             });
             
             
-        } else if (s.equals("Location")) {
+        } else if (s.equals(Routine.LOCATION)) {
             // Location
             List<String> options = new ArrayList<String>();
             
@@ -300,9 +351,9 @@ public class RoutineActivity extends FragmentActivity {
                     if (sText.equals("On")) {
                         onoff = "true";
                     }
-                    if (string.equals("Wifi")) {
+                    if (string.equals(Routine.WIFI)) {
                         routine.setWifi(onoff);
-                    } else if (string.equals("Mobile Data")) {
+                    } else if (string.equals(Routine.MDATA)) {
                         routine.setmData(onoff);
                     }
                     
@@ -319,8 +370,164 @@ public class RoutineActivity extends FragmentActivity {
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
     }
     
+    private void popupActionOptions(View v, String s) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        hideSoftKeyboard();
+        
+        LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  
+        final View popupView = layoutInflater.inflate(R.layout.popup_options, null);  
+        popupWindow = new PopupWindow( popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+        
+        TextView desc = (TextView) popupView.findViewById(R.id.textDescription);
+        desc.setText("Set '" + s + "' to:");
+        Button buttonOK = (Button) popupView.findViewById(R.id.buttonOK);
+        
+        final RadioGroup radioGroup = (RadioGroup) popupView.findViewById(R.id.radioGroup);
+        
+        LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT);
+        
+        RadioButton rb;
+        
+        if (s.equals(Routine.RINGER)) {
+        	List<String> options = Arrays.asList("Silent and No Vibrate", "Silent and Vibrate", "Normal and No Vibrate", "Normal and Vibrate");
+            Collections.reverse(options);
+            int i = 0;
+            for (String l: options) {
+                rb = new RadioButton(activity);
+                rb.setText(l);
+                rb.setId(i);
+                radioGroup.addView(rb, 0, layoutParams);
+                i++;
+            }
+            radioGroup.check(i-1);
+            buttonOK.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Gets a reference to "selected" radio button
+                    int selected = radioGroup.getCheckedRadioButtonId();
+                    RadioButton b = (RadioButton) popupView.findViewById(selected);
+                    int ringer = Routine.ringerToInt((String) b.getText());
+                    routine.setEventCategory(Routine.RINGER);
+                    routine.setEvent("" + ringer);
+                    popupWindow.dismiss();
+                }
+            });
+        } else {
+            // On/Off
+        	// Wifi and mData
+            final String string = s;
+            List<String> options = Arrays.asList("On", "Off");
+            Collections.reverse(options);
+            int i = 0;
+            for (String l: options) {
+                rb = new RadioButton(activity);
+                rb.setText(l);
+                rb.setId(i);
+                radioGroup.addView(rb, 0, layoutParams);
+                i++;
+            }
+            radioGroup.check(i-1);
+            buttonOK.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Gets a reference to "selected" radio button
+                    int selected = radioGroup.getCheckedRadioButtonId();
+                    RadioButton b = (RadioButton) popupView.findViewById(selected);
+                    String sText = (String) b.getText();
+                    String onoff = "false";
+                    if (sText.equals("On")) {
+                        onoff = "true";
+                    }
+                    routine.setEventCategory(string);
+                    routine.setEvent(onoff);
+                    
+                    
+                    triggers.clear();
+                    triggers.addAll(routine.activeTriggerList());
+                    triggersAdapter.notifyDataSetChanged();
+                    popupWindow.dismiss();
+                }
+            });
+        }
+        
+        
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+    }
     
 
+
     
-    
+    private class TriggersModeListener extends EditMultiChoiceModeListener {
+		
+		private List<Integer> selected;
+		private ArrayAdapter<String> adapter;
+		private Activity activity;
+		
+		public TriggersModeListener(Activity activity,
+				List<Integer> selected, ArrayAdapter<String> adapter) {
+			super(selected);
+			this.activity = activity;
+			this.selected = selected;
+			this.adapter = adapter;
+		}
+		
+		
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			String s = "";
+			String trigger = "";
+			if (selected != null) {
+				Collections.sort(selected);
+				Collections.reverse(selected);
+				
+				
+			}
+			
+			switch (item.getItemId()) {
+				case R.id.action_edit:
+					if (selected != null && selected.size() == 1) {
+//						Intent intent = new Intent(activity, RoutineActivity.class);
+//						intent.putExtra("EditItem", selected.get(0));
+//		            	activity.startActivityForResult(intent, 0);
+					}
+					adapter.notifyDataSetChanged();
+					mode.finish();
+					return true;
+				case R.id.action_discard:
+					
+					if (selected != null) {
+						for (int i = 0; i < selected.size(); i++) {
+							s = (String) adapter.getItem(selected.get(i));
+							trigger = s.split(":")[0];
+							if (trigger.equals(Routine.TIME)) {
+								routine.setHour(-1);
+								routine.setMinute(-1);
+							} else if (trigger.equals(Routine.DAY)) {
+								routine.setDay("");
+							} else if (trigger.equals(Routine.LOCATION)) {
+								routine.setLocation("");
+							} else if (trigger.equals(Routine.WIFI)) {
+								routine.setWifi("");
+							} else if (trigger.equals(Routine.MDATA)) {
+								routine.setmData("");
+							}
+
+							adapter.remove(s);
+						}
+						adapter.notifyDataSetChanged();
+						mode.finish();
+					}
+					return true;
+				default:
+					return false;
+					
+			}
+			
+		}
+	}
 }

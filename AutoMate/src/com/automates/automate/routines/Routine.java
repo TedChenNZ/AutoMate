@@ -23,6 +23,7 @@ public class Routine {
 	public static final String LOCATION = "Location";
 	public static final String WIFI = "Wifi";
 	public static final String MDATA = "Mobile Data";
+	public static final String RINGER = "Ringer";
 			
     private String day;
     private String event;
@@ -263,7 +264,36 @@ public class Routine {
        }
        return d;
    }
-
-
+   
+   public static int ringerToInt(String ringer) {
+	   
+       Map<String,Integer> mp = new HashMap<String,Integer>();
+       
+       mp.put("Silent and No Vibrate",0);
+       mp.put("Silent and Vibrate",1);
+       mp.put("Normal and No Vibrate",2);
+       mp.put("Normal and Vibrate",3);
+       
+       return mp.get(ringer).intValue();
+   }
+   
+   public static String intToRinger(String ringer) {
+	   String r = "";
+	   
+       Map<String,Integer> mp = new HashMap<String,Integer>();
+       
+       mp.put("Silent and No Vibrate",0);
+       mp.put("Silent and Vibrate",1);
+       mp.put("Normal and No Vibrate",2);
+       mp.put("Normal and Vibrate",3);
+       
+       for (Entry<String, Integer> entry : mp.entrySet()) {
+           if (entry.getValue().equals(ringer)) {
+               r = entry.getKey();
+           }
+       }
+       return r;
+   }
+   
 
 }

@@ -74,7 +74,7 @@ public final class PhoneState {
 		}
 		
 		// Update variables
-		soundProfile = SoundProfiles.getMode(context);
+		soundProfile = RingerProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
 		wifiBSSID = Wifi.getWifiBSSID(context);
@@ -137,11 +137,11 @@ public final class PhoneState {
 
 	public static String getEventAction(String event) {
 		String action = "";
-		if (event.equals("Wifi")) {
+		if (event.equals(Routine.WIFI)) {
 			action = String.valueOf(wifiBSSID);
-		} else if (event.equals("Data")) {
+		} else if (event.equals(Routine.MDATA)) {
 			action = String.valueOf(dataEnabled);
-		} else if (event.equals("Ringer")) {
+		} else if (event.equals(Routine.RINGER)) {
 //			action = String.valueOf(soundProfile);
 			action = "Changed";
 		}

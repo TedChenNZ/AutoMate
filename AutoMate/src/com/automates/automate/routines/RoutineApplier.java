@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
-import com.automates.automate.routines.settings.SoundProfiles;
+import com.automates.automate.routines.settings.RingerProfiles;
 import com.automates.automate.routines.settings.Wifi;
 
 public class RoutineApplier extends Service implements PropertyChangeListener{
@@ -46,7 +46,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
     private void apply(Routine r) {
 	// TODO Auto-generated method stub
 	Log.d(TAG, "Actioning routine " + r.getName());
-	if(r.getEventCategory().equalsIgnoreCase("Wifi")){
+	if(r.getEventCategory().equalsIgnoreCase(Routine.WIFI)){
 	    if(r.getEvent().equalsIgnoreCase("false")){
 		Wifi.setWifiEnabled(context, false);
 		Log.d(TAG, "Wifi turned off");
@@ -56,8 +56,8 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		Log.d(TAG, "Wifi turned on");
 	    }
 	}
-	else if(r.getEventCategory().equalsIgnoreCase("Ringer")){
-	    SoundProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
+	else if(r.getEventCategory().equalsIgnoreCase(Routine.RINGER)){
+	    RingerProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
 	    Log.d(TAG, "Ringer changed to " + r.getEvent());
 	}
 

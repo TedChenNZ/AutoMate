@@ -5,13 +5,13 @@ import android.media.AudioManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
-public class SoundProfiles {
+public class RingerProfiles {
     public static final int SILENT_NO_VIBRATE = 0;
     public static final int SILENT_VIBRATE = 1;
     public static final int NORMAL_NO_VIBRATE = 2;
     public static final int NORMAL_VIBRATE = 3;
     
-    public SoundProfiles() {}
+    public RingerProfiles() {}
     
 	public static void setSoundProfile(Context context, int soundProfile) {
         final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
