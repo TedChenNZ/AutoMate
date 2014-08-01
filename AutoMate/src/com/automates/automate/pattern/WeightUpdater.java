@@ -70,8 +70,8 @@ public class WeightUpdater implements WeightManager {
 	    }
 	}
 
-	p.setWeight(newWeight);
 	p.setId(id);
+	p.setWeight(newWeight);
 //	Log.d("PatternController", "New weight is: " + newWeight);
 
 	return p;
