@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="list_item_title">#fff</color>
-    <color name="list_background">#7FCBE2</color>
-    <color name="list_background_pressed">#7FCBE2</color>
+    <color name="drawer_background">#303030</color>
+    <color name="drawer_background_pressed">#2eb2f0</color>
     <color name="list_divider">#272727</color>
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
     <color name="black">#000</color>
     <color name="grey">#666</color>
     <color name="transparent">#00000000</color>
-    <color name="list_location_normal">#00000000</color>
-    <color name="list_location_pressed">#7FCBE2</color>
+    <color name="list_background">#00ffffff</color>
+    <color name="list_background_pressed">#7FCBE2</color>
     <color name="active">#177245</color>
     <color name="blue">#33B6EA</color>
     <color name="orange">#FF9B2F</color>

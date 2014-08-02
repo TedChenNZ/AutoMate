@@ -1,9 +1,7 @@
-package com.automates.automate.locations;
+package com.automates.automate.adapter;
 
 import java.util.List;
 
-import com.automates.automate.PhoneState;
-import com.automates.automate.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
+import com.automates.automate.R;
+import com.automates.automate.routines.Routine;
 
-	private List<UserLocation> objects;
+public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
+	private List<Routine> objects;
 	private View v;
 
-	public UserLocationsArrayAdapter(Context context, int resource, List<UserLocation> objects) {
+	public RoutinesArrayAdapter(Context context, int resource, List<Routine> objects) {
 		super(context, resource, objects);
 		this.objects = objects;
 	}
@@ -36,7 +36,7 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 		// to inflate it basically means to render, or show, the view.
 		if (v == null) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inflater.inflate(R.layout.list_item_location, null);
+			v = inflater.inflate(R.layout.list_item_description, null);
 		}
 
 		/*
@@ -46,34 +46,25 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 		 * 
 		 * Therefore, i refers to the current Item object.
 		 */
-		UserLocation i = objects.get(position);
+		Routine routine = objects.get(position);
 
-		if (i != null) {
+		if (routine != null) {
 
 			// This is how you obtain a reference to the TextViews.
 			// These TextViews are created in the XML files we defined.
 
 			TextView name = (TextView) v.findViewById(R.id.name);
-			name.setText(i.getName());
+			name.setText(routine.getName());
 			TextView details = (TextView) v.findViewById(R.id.details);
-			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
-			details.setText(d);
 			
-			List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
+			String description = ""; 
+			description = routine.eventString() + " " + routine.triggerString();
 
-			if (currentList.contains(i)) {
-				name.setTextColor(v.getResources().getColor(R.color.active));
-			} else {
-				name.setTextColor(v.getResources().getColor(R.color.black));
-
-			}
-
-			
+			details.setText(description);
 		}
 
 		// the view must be returned to our activity
 		return v;
 
 	}
-
 }

@@ -1,4 +1,4 @@
-package com.automates.automate.locations;
+package com.automates.automate.adapter;
 
 import java.util.List;
 

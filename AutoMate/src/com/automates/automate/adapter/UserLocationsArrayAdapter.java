@@ -1,6 +1,11 @@
-package com.automates.automate.routines;
+package com.automates.automate.adapter;
 
 import java.util.List;
+
+import com.automates.automate.PhoneState;
+import com.automates.automate.R;
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationsList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,13 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.automates.automate.R;
+public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 
-public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
-	private List<Routine> objects;
+	private List<UserLocation> objects;
 	private View v;
 
-	public RoutinesArrayAdapter(Context context, int resource, List<Routine> objects) {
+	public UserLocationsArrayAdapter(Context context, int resource, List<UserLocation> objects) {
 		super(context, resource, objects);
 		this.objects = objects;
 	}
@@ -35,7 +39,7 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 		// to inflate it basically means to render, or show, the view.
 		if (v == null) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inflater.inflate(R.layout.list_item_location, null);
+			v = inflater.inflate(R.layout.list_item_description, null);
 		}
 
 		/*
@@ -45,7 +49,7 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 		 * 
 		 * Therefore, i refers to the current Item object.
 		 */
-		Routine i = objects.get(position);
+		UserLocation i = objects.get(position);
 
 		if (i != null) {
 
@@ -55,37 +59,24 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 			TextView name = (TextView) v.findViewById(R.id.name);
 			name.setText(i.getName());
 			TextView details = (TextView) v.findViewById(R.id.details);
-//			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
-			String d = "";
-			d = d + ", " + i.getEvent();
-			d = d + ", " + i.getEventCategory();
-			d = d + ", " + i.getLocation();
-			d = d + ", " + i.getWifi();
-			d = d + ", " + i.getmData();
-			d = d + ", " + i.getDay();
-			d = d + ", " + i.getHour();
-			d = d + ", " + i.getMinute();
-			d = d + ", " + i.getStatusCode(); 
-			
-			
-//			 Current crap
-			
-			
-			
-//			List<Routine> currentList = ((RoutinesList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
-
-//			if (currentList.contains(i)) {
-//				name.setTextColor(v.getResources().getColor(R.color.active));
-//			} else {
-//				name.setTextColor(v.getResources().getColor(R.color.black));
-//
-//			}
-
+			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
 			details.setText(d);
+			
+			List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
+
+			if (currentList.contains(i)) {
+				name.setTextColor(v.getResources().getColor(R.color.active));
+			} else {
+				name.setTextColor(v.getResources().getColor(R.color.black));
+
+			}
+
+			
 		}
 
 		// the view must be returned to our activity
 		return v;
 
 	}
+
 }

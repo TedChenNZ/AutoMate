@@ -87,7 +87,7 @@ public class RingerProfiles {
         return ringerMap.get(ringer).intValue();
     }
     
-    public static String intToRinger(String ringer) {
+    public static String intToRinger(int ringer) {
  	   String r = "";
        for (Entry<String, Integer> entry : ringerMap.entrySet()) {
            if (entry.getValue().equals(ringer)) {

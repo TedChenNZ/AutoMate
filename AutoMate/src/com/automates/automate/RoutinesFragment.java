@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.automates.automate.locations.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.RoutinesArrayAdapter;
 import com.automates.automate.routines.Routine;
-import com.automates.automate.routines.RoutinesArrayAdapter;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -47,7 +47,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
         View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
         
         // Adapter
-        routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_location, PhoneState.getRoutinesList());
+        routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getRoutinesList());
         
         // List View Initialize
         routinesListView = (ListView) rootView.findViewById(R.id.routinesListView);

@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.automates.automate.locations.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
@@ -30,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -55,6 +57,8 @@ public class RoutineActivity extends FragmentActivity {
     private List<String> triggers;
     private List<String> actions;
     private FragmentActivity activity;
+
+    private RelativeLayout loading;
     
     // trigger list
     private ListView triggersListView;
@@ -79,7 +83,7 @@ public class RoutineActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routine_activity);
+        setContentView(R.layout.activity_routine);
         activity = this;
         textName = (EditText) findViewById(R.id.textName);
         addTrigger = (Button) findViewById(R.id.addTrigger);
@@ -87,6 +91,7 @@ public class RoutineActivity extends FragmentActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
         triggersListView = (ListView) findViewById(R.id.triggersList);
         actionsListView = (ListView) findViewById(R.id.actionsList);
+        loading = (RelativeLayout) findViewById(R.id.darken);
         
         editing = false;
         
@@ -172,8 +177,10 @@ public class RoutineActivity extends FragmentActivity {
         // Trigger List Display
         triggers = routine.activeTriggerList();
         
-        triggersAdapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, android.R.id.text1, triggers);
+//        triggersAdapter = new ArrayAdapter<String>(activity,
+//                android.R.layout.simple_list_item_1, android.R.id.text1, triggers);
+        triggersAdapter = new SimpleArrayAdapter(activity,
+                R.layout.list_item_description, triggers);
         triggersListView.setAdapter(triggersAdapter);
         triggersListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         
@@ -209,8 +216,10 @@ public class RoutineActivity extends FragmentActivity {
         
         // Action List Display
         // Adapter
-        actionsAdapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, android.R.id.text1, actions);
+//        actionsAdapter = new ArrayAdapter<String>(activity,
+//                android.R.layout.simple_list_item_1, android.R.id.text1, actions);
+        actionsAdapter = new SimpleArrayAdapter(activity,
+                R.layout.list_item_simple, actions);
         actionsListView.setAdapter(actionsAdapter);
         // List View Initialize
         actionsListView.setAdapter(actionsAdapter);
@@ -261,6 +270,7 @@ public class RoutineActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (popupWindow != null && popupWindow.isShowing()) {
+        	loading.setVisibility(View.INVISIBLE);
             popupWindow.dismiss();
         } else {
             super.onBackPressed();
@@ -273,6 +283,7 @@ public class RoutineActivity extends FragmentActivity {
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
         }
+        loading.setVisibility(View.VISIBLE);
         hideSoftKeyboard();
         
         LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  
@@ -288,8 +299,8 @@ public class RoutineActivity extends FragmentActivity {
         }
         	
         final ListView listView = (ListView) popupView.findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, android.R.id.text1, options);
+        ArrayAdapter<String> adapter = new SimpleArrayAdapter(activity,
+                R.layout.list_item_simple, options);
         listView.setAdapter(adapter);
         // ListView Item Click Listener
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -351,7 +362,9 @@ public class RoutineActivity extends FragmentActivity {
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
+                    
                 }
             });
             
@@ -380,6 +393,7 @@ public class RoutineActivity extends FragmentActivity {
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
                 }
             });
@@ -420,6 +434,7 @@ public class RoutineActivity extends FragmentActivity {
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
                     
                 }
@@ -458,6 +473,7 @@ public class RoutineActivity extends FragmentActivity {
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
                 }
             });
@@ -514,8 +530,9 @@ public class RoutineActivity extends FragmentActivity {
                     routine.setEvent("" + ringer);
                     
                     actions.clear();
-                    actions.add(Settings.RINGER + ": " + ringer);
+                    actions.add(Settings.RINGER + ": " + RingerProfiles.intToRinger(ringer));
                     actionsAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
                 }
             });
@@ -552,6 +569,7 @@ public class RoutineActivity extends FragmentActivity {
                     actions.clear();
                     actions.add(string+ ": " + onoff);
                     actionsAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
                 }
             });
