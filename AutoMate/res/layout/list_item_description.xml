@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:background="@drawable/list_location_selector"
+    android:background="@drawable/list_selector"
     android:padding="6dip">
     <!-- Name -->
 
@@ -15,7 +15,7 @@
        android:singleLine="true"
        android:text="@string/add"
        android:textColor="@color/black"
-       android:textSize="20sp"
+       android:textAppearance="?android:attr/textAppearanceMedium" 
        android:textStyle="bold" />
 
    <TextView

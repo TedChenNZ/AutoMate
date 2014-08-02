@@ -34,7 +34,7 @@ public final class PhoneState {
 	private static long time = 0;
 	private static GPSTracker gpsTracker;
 	private static RoutineApplier routineApplier;
-	private static List<UserLocation> locationsList;
+	private static UserLocationsList locationsList;
 	private static AlarmManager alarmManager;
 	private static String wifiBSSID;
 	private static List<Routine> routinesList;
@@ -218,10 +218,10 @@ public final class PhoneState {
 	public static AlarmManager getAlarmManager() {
 		return alarmManager;
 	}
-	public static List<UserLocation> getLocationsList() {
+	public static UserLocationsList getLocationsList() {
 		return locationsList;
 	}
-	public static void setLocationsList(List<UserLocation> locationsList) {
+	public static void setLocationsList(UserLocationsList locationsList) {
 		PhoneState.locationsList = locationsList;
 	}
 	public static String getWifiBSSID() {

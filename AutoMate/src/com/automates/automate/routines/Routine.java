@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 
 public class Routine {
@@ -51,17 +52,17 @@ public class Routine {
 
     public Routine(int id, String name, String event, String eventCategory, int hour, int minute,
 	    String day, String location, String wifi, String mData, int statusCode) {
-	this.id = id;
-	this.name = name;
-	this.event = event;
-	this.eventCategory = eventCategory;
-	this.hour = hour;
-	this.minute = minute;
-	this.day = day;
-	this.location = location;
-	this.wifi = wifi;
-	this.mData = mData;
-	this.statusCode = statusCode;
+		this.id = id;
+		this.name = name;
+		this.event = event;
+		this.eventCategory = eventCategory;
+		this.hour = hour;
+		this.minute = minute;
+		this.day = day;
+		this.location = location;
+		this.wifi = wifi;
+		this.mData = mData;
+		this.statusCode = statusCode;
     }
 
 
@@ -182,15 +183,64 @@ public class Routine {
 		+ ", statusCode=" + statusCode + "]";
     }
 
-    public String readableForm() {
-	return "Set " + eventCategory + " to " + "event" + " at " + hour + ":" + "minute" + " depending on conditions."; 
+    public String eventString() {
+    	String e = "";
+    	if (eventCategory.equals(Settings.RINGER)) {
+    		e = RingerProfiles.intToRinger(Integer.parseInt(event));
+    	} else if (eventCategory.equals(Settings.WIFI) || eventCategory.equals(Settings.MDATA)) {
+    		e = onOrOff(event);
+    	}
+    	return "Set " + eventCategory + " to " + e; 
+    }
+    
+    public String triggerString() {
+    	String s = "";
+    	//int id, String name, String event, String eventCategory, int hour, int minute,
+	    //String day, String location, String wifi, String mData, int statusCode
+    	if (!day.equals("") && day != null) {
+    		s = s + "on " + intToDay(Integer.parseInt(day)) + " ";
+    	}
+    	if ((hour != -1) && (minute != -1)) {
+    		s = s + "at " + hour + ":" + minute + " ";
+    	}
+    	if (!location.equals("") && location != null) {
+    		s = s + "at " + PhoneState.getLocationsList().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
+    	}
+    	
+    	if (!wifi.equals("") && wifi != null) {
+    		s = s + "if Wifi is " + onOrOff(wifi) + " ";
+    		if (!mData.equals("") && mData != null) {
+    			s = s + "and ";
+    		}
+    	}
+    	if (!mData.equals("") && mData != null) {
+    		if (!(!wifi.equals("") && wifi != null)) {
+    			s = s + "if ";
+    		}
+    		s = s + "Mobile Data is " + onOrOff(mData) + " ";
+    	}
+    	
+//    	//s = s.substring(0, 1).toUpperCase(Locale.getDefault()) + s.substring(1);
+    	if (s.length() > 0) {
+    	      s = s.substring(0, s.length()-1);
+    	}
+
+    	return s;
+    }
+    
+    private String onOrOff(String bool) {
+    	if (bool.equals("false") || bool == null) {
+    		return "Off";
+    	} else {
+    		return "On";
+    	}
     }
     
     public List<String> activeTriggerList() {
     	List<String> triggerList = new ArrayList<String>();
     	//Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA
     	if (this.getHour() != -1 && this.getMinute() != -1) {
-    		triggerList.add(Settings.TIME + ": " + this.getHour() + ":" + this.getMinute());
+    		triggerList.add(Settings.TIME + ": " + String.format("%02d",  this.getHour()) + ":" + this.getMinute());
     	}
     	if (this.getDay() != null && !this.getDay().equals("")) {
     		// TODO: FIX TIS FOR MULTIPLE DAYS
@@ -214,10 +264,10 @@ public class Routine {
     		triggerList.add(Settings.LOCATION + ": " + s);
     	}
     	if (this.getWifi() != null && !this.getWifi().equals("")) {
-    		triggerList.add(Settings.WIFI + ": " + this.getWifi());
+    		triggerList.add(Settings.WIFI + ": " + onOrOff(this.getWifi()));
     	}
     	if (this.getmData() != null && !this.getmData().equals("")) {
-    		triggerList.add(Settings.MDATA + ": " + this.getmData());
+    		triggerList.add(Settings.MDATA + ": " + onOrOff(this.getmData()));
     	}
     	
     	return triggerList;
@@ -240,7 +290,6 @@ public class Routine {
        return d;
    }
    
-
    
 
 }

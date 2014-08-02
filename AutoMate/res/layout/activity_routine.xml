@@ -37,8 +37,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/textTriggers"
-	        android:layout_above="@+id/textActions" 
-	        android:listSelector="@drawable/list_selector" 
+	        android:layout_above="@+id/textActions"
 	        >
 	    </ListView>
 	
@@ -57,8 +56,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textActions"
-	        android:listSelector="@drawable/list_selector" >
+	        android:layout_below="@+id/textActions" >
 	    </ListView>
 	    
     </RelativeLayout>
@@ -88,4 +86,20 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/add_trigger" />
+    
+        <RelativeLayout
+        android:id="@+id/darken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/semi_transparent"
+        android:visibility="invisible"
+        android:clickable="true"
+    	android:focusable="true"
+         >
+         </RelativeLayout>
 </RelativeLayout>

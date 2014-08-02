@@ -58,7 +58,7 @@ public class LocationActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_activity);
+        setContentView(R.layout.activity_location);
  
         // Getting reference to the buttons
         mBtnFind = (Button) findViewById(R.id.btn_show);
@@ -98,20 +98,17 @@ public class LocationActivity extends FragmentActivity {
         	etPlace.setText(userloc.getLocationName());
         	etRadius.setText(""+userloc.getRadius());
         	etName.setText(userloc.getName());
-            // Setting click event listener for the edit button
-        	btnAdd.setText("Save");
-            btnAdd.setOnClickListener(new editListener());
             
         } else {
 //	        GPSTracker gps = PhoneState.getGPSTracker();
 //	        Location loc = gps.getLastLocation();
 //	        LatLng currentLoc = new LatLng(loc.getLatitude(), loc.getLongitude());
 //	        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
-//	        
-	        // Setting click event listener for the add button
-	        btnAdd.setOnClickListener(new addListener());
+	        
         }
 
+        // Setting click event listener for the save button
+        btnAdd.setOnClickListener(new saveListener());
         
         // Setting click event listener for the find button
         mBtnFind.setOnClickListener(new OnClickListener() {
@@ -390,7 +387,7 @@ public class LocationActivity extends FragmentActivity {
     /**
      *Listener for add button
      */
-    private class addListener implements OnClickListener {
+    private class saveListener implements OnClickListener {
     	
         @Override
         public void onClick(View v) {
@@ -405,7 +402,7 @@ public class LocationActivity extends FragmentActivity {
             }
             for (UserLocation u: PhoneState.getLocationsList()) {
             	Log.d("LocationActivity", u.getName() + " " + name);
-            	if (u.getName().trim().equals(name)) {
+            	if (u.getName().equals(name)) {
                     Toast.makeText(getBaseContext(), "The Name '" + name + "' is already in use", Toast.LENGTH_SHORT).show();
                     return;
             	}
@@ -425,7 +422,11 @@ public class LocationActivity extends FragmentActivity {
 
             
             userloc.setName(name);
-            PhoneState.getLocationsList().add(userloc);
+            if (EditItem != -1) {
+            	PhoneState.getLocationsList().set(EditItem, userloc);
+            } else {
+            	PhoneState.getLocationsList().add(userloc);
+            }
             
             // Return to previous activity
         	Intent resultIntent = new Intent();
@@ -435,37 +436,5 @@ public class LocationActivity extends FragmentActivity {
         }
     }
     
-    /**
-     * Listener for edit button
-     */
-    private class editListener implements OnClickListener {
-    	@Override
-        public void onClick(View v) {
-        	hideSoftKeyboard();
-            
-        	// Check if a place has been found
-        	if (userloc.getLocation() == null | userloc.getRadius() == null) {
-        		Toast.makeText(getBaseContext(), "No Location has been searched yet", Toast.LENGTH_SHORT).show();
-                return;
-        	}
-        	
-        	// Get the name
-            String name = etName.getText().toString();
-
-            if(name==null || name.equals("")){
-                Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            
-            userloc.setName(name);
-            PhoneState.getLocationsList().set(EditItem, userloc);
-            
-            // Return to previous activity
-        	Intent resultIntent = new Intent();
-        	setResult(Activity.RESULT_OK, resultIntent);
-        	finish();
-            
-        }
-    }
 
 }

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.automates.automate.locations.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.UserLocationsArrayAdapter;
 import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsArrayAdapter;
 import com.automates.automate.locations.UserLocationsList;
 
 import android.app.Activity;
@@ -49,7 +49,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
         View rootView = inflater.inflate(R.layout.fragment_locations, container, false);
         
         // Adapter
-        locationsAdapter = new UserLocationsArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_location, PhoneState.getLocationsList());
+        locationsAdapter = new UserLocationsArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getLocationsList());
         
         // Locations List View Initialize
         locationsListView = (ListView) rootView.findViewById(R.id.locationsListView);
@@ -185,14 +185,18 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
 		int index = 0;
 		for (UserLocation ul : list) {
 			for (UserLocation cul: currentList) {
-				View v = locationsListView.getChildAt(index - locationsListView.getFirstVisiblePosition());
-				if(v != null) {
-					TextView name = (TextView) v.findViewById(R.id.name);
-					if (ul.getId() == cul.getId()) {
-						name.setTextColor(getResources().getColor(R.color.active));
-					} else {
-						name.setTextColor(getResources().getColor(R.color.black));
+				try {
+					View v = locationsListView.getChildAt(index - locationsListView.getFirstVisiblePosition());
+					if(v != null) {
+						TextView name = (TextView) v.findViewById(R.id.name);
+						if (ul.getId() == cul.getId()) {
+							name.setTextColor(getResources().getColor(R.color.active));
+						} else {
+							name.setTextColor(getResources().getColor(R.color.black));
+						}
 					}
+				} catch (Exception e) {
+					
 				}
 				index = index + 1;
 			}

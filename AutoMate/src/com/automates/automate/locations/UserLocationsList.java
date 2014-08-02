@@ -56,6 +56,23 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 		return currentULList;
 	}
 	
+	public UserLocation getUserLocationFromName(String location) {
+        for (UserLocation ul: this) {
+            if (ul.getName().equals(location)) {
+                return ul;
+            }
+        }
+        return null;
+	}
+	
+	public UserLocation getUserLocationFromID(int id) {
+        for (UserLocation ul: this) {
+            if (ul.getId() == id) {
+                return ul;
+            }
+        }
+        return null;
+	}
 
 
 
