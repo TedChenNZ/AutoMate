@@ -33,6 +33,7 @@ public class WeightUpdater implements WeightManager {
 	oldWeight = oldP.getWeight();
 	oldWeekWeight = oldP.getWeekWeight();
 	timeDiff = actualTime - oldP.getActualTime();
+	this.p.setStatusCode(oldP.getStatusCode());
     }
 
     public Pattern updatePattern() {
