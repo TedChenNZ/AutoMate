@@ -10,6 +10,9 @@ import com.automates.automate.locations.EditMultiChoiceModeListener;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.settings.RingerProfiles;
+import com.automates.automate.settings.Settings;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -278,10 +281,10 @@ public class RoutineActivity extends FragmentActivity {
         
         List<String> options;
         if (type == 0) {
-        	options = Arrays.asList(Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA);
+        	options = Arrays.asList(Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA);
             
         } else {
-        	options = Arrays.asList(Routine.WIFI, Routine.MDATA, Routine.RINGER);
+        	options = Arrays.asList(Settings.WIFI, Settings.MDATA, Settings.RINGER);
         }
         	
         final ListView listView = (ListView) popupView.findViewById(R.id.list);
@@ -335,7 +338,7 @@ public class RoutineActivity extends FragmentActivity {
         
         RadioButton rb;
         
-        if (s.equals(Routine.TIME)) {
+        if (s.equals(Settings.TIME)) {
             // Time
             final TimePicker timePicker = (TimePicker) popupView.findViewById(R.id.timePicker);
             timePicker.setVisibility(View.VISIBLE);
@@ -352,9 +355,10 @@ public class RoutineActivity extends FragmentActivity {
                 }
             });
             
-        } else if (s.equals(Routine.DAY)) {
+        } else if (s.equals(Settings.DAY)) {
             // Day
-            List<String> options = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+        	List<String> options = new ArrayList<String>();
+        	options.addAll(Routine.daysMap.keySet());
             Collections.reverse(options);
             int i = 0;
             for (String l: options) {
@@ -381,7 +385,7 @@ public class RoutineActivity extends FragmentActivity {
             });
             
             
-        } else if (s.equals(Routine.LOCATION)) {
+        } else if (s.equals(Settings.LOCATION)) {
             // Location
             List<String> options = new ArrayList<String>();
             
@@ -445,9 +449,9 @@ public class RoutineActivity extends FragmentActivity {
                     if (sText.equals("On")) {
                         onoff = "true";
                     }
-                    if (string.equals(Routine.WIFI)) {
+                    if (string.equals(Settings.WIFI)) {
                         routine.setWifi(onoff);
-                    } else if (string.equals(Routine.MDATA)) {
+                    } else if (string.equals(Settings.MDATA)) {
                         routine.setmData(onoff);
                     }
                     
@@ -486,8 +490,9 @@ public class RoutineActivity extends FragmentActivity {
         
         RadioButton rb;
         
-        if (s.equals(Routine.RINGER)) {
-        	List<String> options = Arrays.asList("Silent and No Vibrate", "Silent and Vibrate", "Normal and No Vibrate", "Normal and Vibrate");
+        if (s.equals(Settings.RINGER)) {
+        	List<String> options = new ArrayList<String>();
+        	options.addAll(RingerProfiles.ringerMap.keySet());
             Collections.reverse(options);
             int i = 0;
             for (String l: options) {
@@ -504,12 +509,12 @@ public class RoutineActivity extends FragmentActivity {
                     // Gets a reference to "selected" radio button
                     int selected = radioGroup.getCheckedRadioButtonId();
                     RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    int ringer = Routine.ringerToInt((String) b.getText());
-                    routine.setEventCategory(Routine.RINGER);
+                    int ringer = RingerProfiles.ringerToInt((String) b.getText());
+                    routine.setEventCategory(Settings.RINGER);
                     routine.setEvent("" + ringer);
                     
                     actions.clear();
-                    actions.add(Routine.RINGER + ": " + ringer);
+                    actions.add(Settings.RINGER + ": " + ringer);
                     actionsAdapter.notifyDataSetChanged();
                     popupWindow.dismiss();
                 }
@@ -606,16 +611,16 @@ public class RoutineActivity extends FragmentActivity {
 						for (int i = 0; i < selected.size(); i++) {
 							s = (String) adapter.getItem(selected.get(i));
 							trigger = s.split(":")[0];
-							if (trigger.equals(Routine.TIME)) {
+							if (trigger.equals(Settings.TIME)) {
 								routine.setHour(-1);
 								routine.setMinute(-1);
-							} else if (trigger.equals(Routine.DAY)) {
+							} else if (trigger.equals(Settings.DAY)) {
 								routine.setDay("");
-							} else if (trigger.equals(Routine.LOCATION)) {
+							} else if (trigger.equals(Settings.LOCATION)) {
 								routine.setLocation("");
-							} else if (trigger.equals(Routine.WIFI)) {
+							} else if (trigger.equals(Settings.WIFI)) {
 								routine.setWifi("");
-							} else if (trigger.equals(Routine.MDATA)) {
+							} else if (trigger.equals(Settings.MDATA)) {
 								routine.setmData("");
 							}
 

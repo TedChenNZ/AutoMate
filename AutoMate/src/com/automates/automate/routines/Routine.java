@@ -1,29 +1,17 @@
 package com.automates.automate.routines;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-
 import com.automates.automate.PhoneState;
-import com.automates.automate.R;
-import com.automates.automate.RoutineActivity;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.settings.Settings;
 
 public class Routine {
-	public static final String TIME = "Time";
-	public static final String DAY = "Day";
-	public static final String LOCATION = "Location";
-	public static final String WIFI = "Wifi";
-	public static final String MDATA = "Mobile Data";
-	public static final String RINGER = "Ringer";
+
 			
     private String day;
     private String event;
@@ -36,7 +24,18 @@ public class Routine {
     private String name;
     private int statusCode;
     private String wifi;
-
+    
+    public static final Map<String,Integer> daysMap;
+    static {
+    	daysMap = new LinkedHashMap<String,Integer>();
+        daysMap.put("Sunday",0);
+        daysMap.put("Monday",1);
+        daysMap.put("Tuesday",2);
+        daysMap.put("Wednesday",3);
+        daysMap.put("Thursday",4);
+        daysMap.put("Friday",5);
+        daysMap.put("Saturday",6);
+    }
 
     public Routine() {
     	this.name = "";
@@ -189,13 +188,13 @@ public class Routine {
     
     public List<String> activeTriggerList() {
     	List<String> triggerList = new ArrayList<String>();
-    	//Routine.TIME, Routine.DAY, Routine.LOCATION, Routine.WIFI, Routine.MDATA
+    	//Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA
     	if (this.getHour() != -1 && this.getMinute() != -1) {
-    		triggerList.add(Routine.TIME + ": " + this.getHour() + ":" + this.getMinute());
+    		triggerList.add(Settings.TIME + ": " + this.getHour() + ":" + this.getMinute());
     	}
     	if (this.getDay() != null && !this.getDay().equals("")) {
     		// TODO: FIX TIS FOR MULTIPLE DAYS
-    		triggerList.add(Routine.DAY + ": " + intToDay(Integer.parseInt(getDay())));
+    		triggerList.add(Settings.DAY + ": " + intToDay(Integer.parseInt(getDay())));
     	}
     	
     	if (this.getLocation() != null && !this.getLocation().equals("")) {
@@ -212,44 +211,28 @@ public class Routine {
     			
     		}
             
-    		triggerList.add(Routine.LOCATION + ": " + s);
+    		triggerList.add(Settings.LOCATION + ": " + s);
     	}
     	if (this.getWifi() != null && !this.getWifi().equals("")) {
-    		triggerList.add(Routine.WIFI + ": " + this.getWifi());
+    		triggerList.add(Settings.WIFI + ": " + this.getWifi());
     	}
     	if (this.getmData() != null && !this.getmData().equals("")) {
-    		triggerList.add(Routine.MDATA + ": " + this.getmData());
+    		triggerList.add(Settings.MDATA + ": " + this.getmData());
     	}
     	
     	return triggerList;
     }
 
     public static int dayToInt(String day) {
-        Map<String,Integer> mp = new HashMap<String,Integer>();
+
         
-        mp.put("Sunday",0);
-        mp.put("Monday",1);
-        mp.put("Tuesday",2);
-        mp.put("Wednesday",3);
-        mp.put("Thursday",4);
-        mp.put("Friday",5);
-        mp.put("Saturday",6);
-        
-        return mp.get(day).intValue();
+        return daysMap.get(day).intValue();
    }
     
    public static String intToDay(int day) {
-       Map<String,Integer> mp = new HashMap<String,Integer>();
        String d = "";
-       mp.put("Sunday",0);
-       mp.put("Monday",1);
-       mp.put("Tuesday",2);
-       mp.put("Wednesday",3);
-       mp.put("Thrusday",4);
-       mp.put("Friday",5);
-       mp.put("Saturday",6);
-       
-       for (Entry<String, Integer> entry : mp.entrySet()) {
+
+       for (Entry<String, Integer> entry : daysMap.entrySet()) {
            if (entry.getValue().equals(day)) {
                d = entry.getKey();
            }
@@ -257,35 +240,7 @@ public class Routine {
        return d;
    }
    
-   public static int ringerToInt(String ringer) {
-	   
-       Map<String,Integer> mp = new HashMap<String,Integer>();
-       
-       mp.put("Silent and No Vibrate",0);
-       mp.put("Silent and Vibrate",1);
-       mp.put("Normal and No Vibrate",2);
-       mp.put("Normal and Vibrate",3);
-       
-       return mp.get(ringer).intValue();
-   }
-   
-   public static String intToRinger(String ringer) {
-	   String r = "";
-	   
-       Map<String,Integer> mp = new HashMap<String,Integer>();
-       
-       mp.put("Silent and No Vibrate",0);
-       mp.put("Silent and Vibrate",1);
-       mp.put("Normal and No Vibrate",2);
-       mp.put("Normal and Vibrate",3);
-       
-       for (Entry<String, Integer> entry : mp.entrySet()) {
-           if (entry.getValue().equals(ringer)) {
-               r = entry.getKey();
-           }
-       }
-       return r;
-   }
+
    
 
 }

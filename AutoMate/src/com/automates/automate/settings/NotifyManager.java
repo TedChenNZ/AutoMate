@@ -1,4 +1,4 @@
-package com.automates.automate.routines.settings;
+package com.automates.automate.settings;
 
 import android.app.Activity;
 import android.app.Notification;

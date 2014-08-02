@@ -63,7 +63,7 @@
             android:label="@string/app_name" >
         </activity>
 
-        <receiver android:name="com.automates.automate.routines.settings.IntentReceiver" >
+        <receiver android:name="com.automates.automate.settings.IntentReceiver" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

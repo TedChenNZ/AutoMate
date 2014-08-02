@@ -1,4 +1,4 @@
-package com.automates.automate.routines.settings;
+package com.automates.automate.settings;
 
 import java.lang.reflect.Method;
 

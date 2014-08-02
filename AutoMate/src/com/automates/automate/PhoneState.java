@@ -18,7 +18,7 @@ import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineApplier;
 import com.automates.automate.routines.RoutineList;
 import com.automates.automate.routines.TimelyChecker;
-import com.automates.automate.routines.settings.*;
+import com.automates.automate.settings.*;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 
@@ -137,11 +137,11 @@ public final class PhoneState {
 
 	public static String getEventAction(String event) {
 		String action = "";
-		if (event.equals(Routine.WIFI)) {
+		if (event.equals(Settings.WIFI)) {
 			action = String.valueOf(wifiBSSID);
-		} else if (event.equals(Routine.MDATA)) {
+		} else if (event.equals(Settings.MDATA)) {
 			action = String.valueOf(dataEnabled);
-		} else if (event.equals(Routine.RINGER)) {
+		} else if (event.equals(Settings.RINGER)) {
 //			action = String.valueOf(soundProfile);
 			action = "Changed";
 		}

@@ -1,4 +1,8 @@
-package com.automates.automate.routines.settings;
+package com.automates.automate.settings;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -10,6 +14,15 @@ public class RingerProfiles {
     public static final int SILENT_VIBRATE = 1;
     public static final int NORMAL_NO_VIBRATE = 2;
     public static final int NORMAL_VIBRATE = 3;
+    
+    public static final Map<String,Integer> ringerMap;
+    static {
+    	ringerMap = new LinkedHashMap<String,Integer>();
+    	ringerMap.put("Silent and No Vibrate",SILENT_NO_VIBRATE);
+    	ringerMap.put("Silent and Vibrate",SILENT_VIBRATE);
+    	ringerMap.put("Normal and No Vibrate",NORMAL_NO_VIBRATE);
+    	ringerMap.put("Normal and Vibrate",NORMAL_VIBRATE);
+    }
     
     public RingerProfiles() {}
     
@@ -68,6 +81,20 @@ public class RingerProfiles {
         }
         
         return result;
+    }
+    
+    public static int ringerToInt(String ringer) {
+        return ringerMap.get(ringer).intValue();
+    }
+    
+    public static String intToRinger(String ringer) {
+ 	   String r = "";
+       for (Entry<String, Integer> entry : ringerMap.entrySet()) {
+           if (entry.getValue().equals(ringer)) {
+               r = entry.getKey();
+           }
+       }
+       return r;
     }
     
 }

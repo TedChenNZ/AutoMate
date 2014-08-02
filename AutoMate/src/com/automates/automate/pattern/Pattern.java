@@ -5,7 +5,7 @@ import java.util.Calendar;
 import com.automates.automate.PhoneState;
 import com.automates.automate.RoutineActivity;
 import com.automates.automate.routines.Routine;
-import com.automates.automate.routines.settings.NotifyManager;
+import com.automates.automate.settings.NotifyManager;
 
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
