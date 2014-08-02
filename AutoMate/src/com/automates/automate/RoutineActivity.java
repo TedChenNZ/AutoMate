@@ -107,7 +107,7 @@ public class RoutineActivity extends FragmentActivity {
         	for (Routine r: PhoneState.getRoutinesList()) {
         		if (routineID == r.getId()) {
         			routine = r;
-        			actions.add(r.getEventCategory() + ": " + r.getEvent());
+        			actions.add(r.actionsString());
         			textName.setText(r.getName());
         			editing = true;
         		}
@@ -528,7 +528,7 @@ public class RoutineActivity extends FragmentActivity {
                     routine.setEvent("" + ringer);
                     
                     actions.clear();
-                    actions.add(Settings.RINGER + ": " + RingerProfiles.intToRinger(ringer));
+                    actions.add(routine.actionsString());
                     actionsAdapter.notifyDataSetChanged();
                     loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
@@ -565,7 +565,7 @@ public class RoutineActivity extends FragmentActivity {
                     
                     
                     actions.clear();
-                    actions.add(string+ ": " + onoff);
+                    actions.add(routine.actionsString());
                     actionsAdapter.notifyDataSetChanged();
                     loading.setVisibility(View.INVISIBLE);
                     popupWindow.dismiss();
@@ -713,4 +713,5 @@ public class RoutineActivity extends FragmentActivity {
 			
 		}
 	}
+    
 }
