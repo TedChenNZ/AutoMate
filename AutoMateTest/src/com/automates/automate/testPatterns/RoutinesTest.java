@@ -39,6 +39,14 @@ public class RoutinesTest extends TestCase {
 
     public Pattern p = new Pattern("WiFi", "Off", 45, 1406126739751L, 4, "Home", "false", "false", 0, 1, 0);
     public Routine r = new Routine(1, "rName1", "WiFi", "Off", 13, 22, "4", "Home", "false", "false", 1);
+//    
+//    public Routine offAtNight = new Routine(1, "Sound off at night", "Ringer", "0", 22, 0, "", "", "", "", 1);
+//    public Routine WifiOffAtNight = new Routine(1, "Wifi off at night", "Wifi", "false", 22, 0, "", "", "", "", 1);
+//    public Routine onInMorning = new Routine(1, "Sound on in morning", "Ringer", "4", 7, 0, "", "", "", "", 1);
+//    public Routine WifiOnInMorning = new Routine(1, "Wifi on at night", "Wifi", "on", 7, 0, "", "", "", "", 1);
+//    public Routine WifiOnAtHome = new Routine(1, "Wifi on at home", "Wifi", "on", -1, -1, "", "Home", "", "", 1);
+    
+
 
     public void testPhoneConditions() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 	assertTrue(checkPhoneConditions(r));
