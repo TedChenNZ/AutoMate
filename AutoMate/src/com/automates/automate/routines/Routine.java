@@ -236,11 +236,23 @@ public class Routine {
     	}
     }
     
+    public String actionsString() {
+    	if (eventCategory == null || event == null) {
+    		return null;
+    	}
+    	if (eventCategory.equals(Settings.RINGER)) {
+    		return Settings.RINGER + ": " + RingerProfiles.intToRinger(Integer.parseInt(event));
+    	} else if (eventCategory.equals(Settings.WIFI) || eventCategory.equals(Settings.MDATA)) {
+    		return eventCategory + ": " + onOrOff(event);
+    	}
+    	return null;
+    }
+    
     public List<String> activeTriggerList() {
     	List<String> triggerList = new ArrayList<String>();
     	//Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA
     	if (this.getHour() != -1 && this.getMinute() != -1) {
-    		triggerList.add(Settings.TIME + ": " + String.format("%02d",  this.getHour()) + ":" + this.getMinute());
+    		triggerList.add(Settings.TIME + ": " + String.format("%02d",  this.getHour()) + ":" + String.format("%02d",  this.getMinute()));
     	}
     	if (this.getDay() != null && !this.getDay().equals("")) {
     		// TODO: FIX TIS FOR MULTIPLE DAYS
