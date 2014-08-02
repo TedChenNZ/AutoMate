@@ -59,6 +59,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="com.automates.automate.NotifyManager"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.automates.automate.FirstRunActivity"
             android:label="@string/app_name" >
         </activity>
@@ -77,10 +81,10 @@
         </receiver>
 
         <service
-            android:name="com.automates.automate.locations.LocationService"
+            android:name="com.automates.automate.locations.GPSTracker"
             android:enabled="true"
             android:exported="false"
-            android:label="LocationService" />
+            android:label="GPSTrackerService" />
     </application>
 
 </manifest>

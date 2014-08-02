@@ -28,10 +28,11 @@ public final class PhoneState {
 	private static Location location;
 	private static boolean dataEnabled;
 	private static boolean wifiEnabled;
+	private static long time = 0;
 	private static int soundProfile;
+	private static Context phoneContext;
 	private static PatternDB patternDB;
 	private static RoutineDB routineDB;
-	private static long time = 0;
 	private static GPSTracker gpsTracker;
 	private static RoutineApplier routineApplier;
 	private static UserLocationsList locationsList;
@@ -53,6 +54,7 @@ public final class PhoneState {
 
 	public static void update(Context context) {
 		// Initialize variables if they are not already initialized
+	    phoneContext = context;
 		if (patternDB == null) {
 			patternDB = new PatternDB(context);
 		}
@@ -246,6 +248,9 @@ public final class PhoneState {
 
 	public void addChangeListener(PropertyChangeListener newListener) {
 		listeners.add(newListener);
+	}
+	public static Context getContext() {
+	    return phoneContext;
 	}
 	
 	

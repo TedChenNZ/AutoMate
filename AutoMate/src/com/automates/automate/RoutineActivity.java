@@ -11,6 +11,7 @@ import com.automates.automate.adapter.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.settings.NotifyManager;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 
@@ -35,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -253,8 +253,6 @@ public class RoutineActivity extends FragmentActivity {
         
         
 
-            
-        
     }
     
     /**

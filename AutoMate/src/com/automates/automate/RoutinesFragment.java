@@ -9,6 +9,7 @@ import java.util.List;
 import com.automates.automate.adapter.EditMultiChoiceModeListener;
 import com.automates.automate.adapter.RoutinesArrayAdapter;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.settings.NotifyManager;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -92,6 +93,10 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
             public void onClick(View v) {
             	Intent intent = new Intent(getActivity(), RoutineActivity.class);
             	startActivityForResult(intent, 0);
+
+//                NotifyManager nM = new NotifyManager();
+//                nM.notification("subject", "body", 0);
+            
             }
 		});
         

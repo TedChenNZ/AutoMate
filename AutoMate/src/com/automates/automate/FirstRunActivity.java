@@ -1,5 +1,7 @@
 package com.automates.automate;
 
+import com.automates.automate.routines.Routine;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -78,6 +80,9 @@ public class FirstRunActivity extends Activity {
 						location = "School";
 						intent.putExtra("FIRSTRUN", location);   
 		            	startActivityForResult(intent, 0);
+						break;
+					case 5:
+					    PhoneState.getRoutineDb().addRoutine(new Routine(1, "Silent at Work", "Ringer", "0", -1, -1, "", "Work", "", "", 1));
 						break;
 					default:
 						
