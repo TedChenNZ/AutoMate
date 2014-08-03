@@ -61,7 +61,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 			}
 		}
 		else if(r.getEventCategory().equalsIgnoreCase(Settings.RINGER)){
-			RingerProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
+			RingerProfiles.setSoundProfile(context, Integer.parseInt(r.getEvent()));
 			Log.d(TAG, "Ringer changed to " + r.getEvent());
 		}
 		else if(r.getEventCategory().equalsIgnoreCase(Settings.MDATA)){
