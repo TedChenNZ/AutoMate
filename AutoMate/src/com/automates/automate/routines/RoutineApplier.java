@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.text.format.Time;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
@@ -22,11 +23,14 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	List<Routine> routines;
 	public Context context;
-	private final static String TAG = "RoutineDB";
+	private final static String TAG = "RoutineApplier";
+	private final static long MIN_RECENT = 1000*60*30L; // 30 minutes
+	private SparseArray<Long> appliedRoutines;
 
 	public RoutineApplier(Context context){
 		PhoneState.getInstance().addChangeListener(this);
 		this.context = context;
+		appliedRoutines = new SparseArray<Long>();
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		if (routines != null) {
 			Log.d(TAG, "Checking applications");
 			for(Routine r : routines){
-				if(checkPhoneConditions(r)){
+				if(!checkAppliedRecently(r) && checkPhoneConditions(r)){
 					apply(r);
 				}
 			}
@@ -74,6 +78,8 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 				Log.d(TAG, "Data turned on");
 			}
 		}
+		
+		appliedRoutines.put(r.getId(), System.currentTimeMillis());
 
 	}
 
@@ -104,6 +110,16 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		}
 		return conditions;
 	}
-
+	
+	private boolean checkAppliedRecently(Routine r) {
+		boolean applied = false;
+		if (appliedRoutines.get(r.getId()) != null) {
+			if ((System.currentTimeMillis() - appliedRoutines.get(r.getId())) < MIN_RECENT) {
+				applied = true;
+			}
+		}
+		return applied;
+	}
+	
 }
 
