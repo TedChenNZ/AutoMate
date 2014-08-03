@@ -89,7 +89,7 @@ public class Pattern {
 	    r.setHour(c.get(Calendar.HOUR_OF_DAY));
 	    r.setMinute(c.get(Calendar.MINUTE));
 
-	    r.setDay("" + this.day);
+//	    r.setDay("" + this.day);
 	    r.setLocation(this.location);
 	    r.setmData(this.mData);
 	    r.setWifi(this.wifi);
