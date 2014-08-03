@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
+import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 import com.automates.automate.settings.Wifi;
@@ -62,6 +63,16 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		else if(r.getEventCategory().equalsIgnoreCase(Settings.RINGER)){
 			RingerProfiles.setSoundProfile(this, Integer.parseInt(r.getEvent()));
 			Log.d(TAG, "Ringer changed to " + r.getEvent());
+		}
+		else if(r.getEventCategory().equalsIgnoreCase(Settings.MDATA)){
+			if(r.getEvent().equalsIgnoreCase("false")){
+				Data.setDataEnabled(context, false);
+				Log.d(TAG, "Data turned off");
+			}
+			else{
+				Data.setDataEnabled(context, true);
+				Log.d(TAG, "Data turned on");
+			}
 		}
 
 	}
