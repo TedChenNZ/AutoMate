@@ -36,6 +36,9 @@ public class Routine {
         daysMap.put("Thursday",4);
         daysMap.put("Friday",5);
         daysMap.put("Saturday",6);
+        daysMap.put("Weekdays", 12345);
+        daysMap.put("Weekend", 06);
+        daysMap.put("Everyday", 0123456);
     }
 
     public Routine() {
