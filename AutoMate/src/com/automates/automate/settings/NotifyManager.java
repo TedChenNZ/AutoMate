@@ -31,7 +31,7 @@ public class NotifyManager extends Activity {
 
 	Context context = PhoneState.getContext();
 	int NOT_ID = 1;
-	int icon = R.drawable.ic_routines;
+	int icon = R.drawable.ic_launcher;
 	CharSequence tickerText = "Automate - Pattern recognised!";
 	long when = System.currentTimeMillis();
 
