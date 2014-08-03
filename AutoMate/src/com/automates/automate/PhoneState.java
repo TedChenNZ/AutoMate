@@ -182,8 +182,6 @@ public final class PhoneState {
 				s = s + ul.getId() + ",";
 			}
 			s = s.substring(0, s.length() - 1);
-
-			Log.d(TAG, s);
 			return s;
 		}
 		return location.toString();

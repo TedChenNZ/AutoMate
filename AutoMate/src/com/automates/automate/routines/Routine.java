@@ -47,7 +47,7 @@ public class Routine {
     	this.wifi = "";
     	this.mData = "";
     	this.minute = -1;
-    	this.hour = 01;
+    	this.hour = -1;
     }
 
     public Routine(int id, String name, String event, String eventCategory, int hour, int minute,
