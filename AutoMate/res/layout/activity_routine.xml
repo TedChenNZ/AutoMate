@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:focusable="true"
-	android:focusableInTouchMode="true">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+        
+    >
 
     <EditText
         android:id="@+id/textName"
@@ -15,54 +17,72 @@
         android:ems="10"
         android:hint="@string/enter_name"
         android:inputType="text" >
-
     </EditText>
-
+    
+    <TextView
+        android:id="@+id/textEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/checkBoxEnabled"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textName"
+        android:text="@string/enabled"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+    	android:layout_marginLeft="12dp" />
+    
+     <CheckBox
+        android:id="@+id/checkBoxEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+    	android:layout_below="@+id/textName" />
+     
+    
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/addAction"
-        android:layout_below="@+id/textName" >
-	    <TextView
-	        android:id="@+id/textTriggers"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:text="@string/triggers"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	
-	    <ListView
-	        android:id="@+id/triggersList"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textTriggers"
-	        android:layout_above="@+id/textActions"
-	        >
-	    </ListView>
-	
-	    <TextView
-	        android:id="@+id/textActions"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_centerVertical="true"
-	        android:text="@string/actions"
-	        android:textAppearance="?android:attr/textAppearanceLarge" 
-	        />
-	
-	    <ListView
-	        android:id="@+id/actionsList"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/textActions" >
-	    </ListView>
-	    
+        android:layout_below="@+id/textEnabled"
+        android:layout_marginLeft="12dp" >
+
+        <TextView
+            android:id="@+id/textTriggers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/triggers"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/triggersList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textActions"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textTriggers" >
+        </ListView>
+
+        <TextView
+            android:id="@+id/textActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/actions"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/actionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textActions" >
+        </ListView>
     </RelativeLayout>
-    
-    
-	<Button
+
+    <Button
         android:id="@+id/addAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,20 +106,24 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/add_trigger" />
-    
-        <RelativeLayout
+
+    <RelativeLayout
         android:id="@+id/darken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:background="@color/semi_transparent"
-        android:visibility="invisible"
         android:clickable="true"
-    	android:focusable="true"
-         >
-         </RelativeLayout>
+        android:focusable="true"
+        android:visibility="invisible" >
+
+
+
+    </RelativeLayout>
+
+
+
 </RelativeLayout>

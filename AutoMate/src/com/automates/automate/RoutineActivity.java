@@ -11,7 +11,6 @@ import com.automates.automate.adapter.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
-import com.automates.automate.settings.NotifyManager;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 
@@ -27,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,6 +57,8 @@ public class RoutineActivity extends FragmentActivity {
     private List<String> triggers;
     private List<String> actions;
     private FragmentActivity activity;
+    
+    private CheckBox checkboxEnabled;
 
     private RelativeLayout loading;
     
@@ -92,6 +94,7 @@ public class RoutineActivity extends FragmentActivity {
         triggersListView = (ListView) findViewById(R.id.triggersList);
         actionsListView = (ListView) findViewById(R.id.actionsList);
         loading = (RelativeLayout) findViewById(R.id.darken);
+        checkboxEnabled = (CheckBox) findViewById(R.id.checkBoxEnabled);
         
         editing = false;
         
@@ -109,6 +112,9 @@ public class RoutineActivity extends FragmentActivity {
         			routine = r;
         			actions.add(r.actionsString());
         			textName.setText(r.getName());
+        			if (r.getStatusCode() == StatusCode.IMPLEMENTED) {
+        				checkboxEnabled.setChecked(true);
+        			}
         			editing = true;
         		}
         	}
@@ -154,7 +160,11 @@ public class RoutineActivity extends FragmentActivity {
                     return;
                 }
                 routine.setName(name);
-                routine.setStatusCode(StatusCode.IMPLEMENTED);
+                if (checkboxEnabled.isChecked()) {
+                	routine.setStatusCode(StatusCode.IMPLEMENTED);
+                } else {
+                	routine.setStatusCode(StatusCode.DECLINED);
+                }
                 if (editing) {
                 	for (int i = 0; i < PhoneState.getRoutinesList().size(); i++) {
                 		Routine r = PhoneState.getRoutinesList().get(i);
