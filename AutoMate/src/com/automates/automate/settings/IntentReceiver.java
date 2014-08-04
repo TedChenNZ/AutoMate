@@ -25,10 +25,9 @@ public class IntentReceiver extends BroadcastReceiver {
 		if (event != null && learning) {
 			Log.d("IntentReceiver", "event: " + event);
 			String eventAction = PhoneState.getEventAction(event);
+			Log.d("IntentReciever", "eventAction: " + eventAction);
 			PatternControl pg = new PatternController(event,eventAction);
 			pg.updateDatabase();
-
-			PhoneState.logIntent(event);
 		}
 
 	}

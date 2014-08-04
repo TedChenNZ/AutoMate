@@ -170,14 +170,14 @@ public class RoutineActivity extends FragmentActivity {
                 
                 if (checkboxEnabled.isChecked()) {
                 	routine.setStatusCode(StatusCode.IMPLEMENTED);
-                    if (patternID !=1) {
+                    if (patternID != -1) {
                     	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
                     	p.setStatusCode(StatusCode.IMPLEMENTED);
                     	PhoneState.getPatternDb().updatePattern(p);
                     }
                 } else {
                 	routine.setStatusCode(StatusCode.DECLINED);
-                	if (patternID !=1) {
+                	if (patternID != -1) {
                     	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
                     	p.setStatusCode(StatusCode.DECLINED);
                     	PhoneState.getPatternDb().updatePattern(p);
