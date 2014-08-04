@@ -7,7 +7,9 @@ import java.util.List;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.util.SparseArray;
@@ -36,7 +38,11 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		checkRoutines();
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean routines = sharedPrefs.getBoolean("pref_routines", true);
+		if (routines) {
+			checkRoutines();
+		};
 	}
 
 	public void checkRoutines(){
