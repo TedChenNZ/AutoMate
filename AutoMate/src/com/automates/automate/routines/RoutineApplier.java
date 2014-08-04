@@ -14,6 +14,7 @@ import android.util.SparseArray;
 
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
+import com.automates.automate.pattern.WeightManager;
 import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
@@ -24,7 +25,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 	List<Routine> routines;
 	public Context context;
 	private final static String TAG = "RoutineApplier";
-	private final static long MIN_RECENT = 1000*60*30L; // 30 minutes
+	private final static long MIN_RECENT = WeightManager.timeDivision;
 	private SparseArray<Long> appliedRoutines;
 
 	public RoutineApplier(Context context){
