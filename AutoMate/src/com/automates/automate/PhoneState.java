@@ -14,7 +14,6 @@ import android.util.Log;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationsList;
-import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineApplier;
 import com.automates.automate.routines.RoutineList;
 import com.automates.automate.routines.TimelyChecker;
@@ -38,7 +37,7 @@ public final class PhoneState {
 	private static UserLocationsList locationsList;
 	private static AlarmManager alarmManager;
 	private static String wifiBSSID;
-	private static List<Routine> routinesList;
+	private static RoutineList routinesList;
 
 	private static PhoneState instance = null;
 	private PhoneState() {
@@ -227,7 +226,7 @@ public final class PhoneState {
 	public static String getWifiBSSID() {
 		return wifiBSSID;
 	}
-	public static List<Routine> getRoutinesList() {
+	public static RoutineList getRoutinesList() {
 		return routinesList;
 	}
 	

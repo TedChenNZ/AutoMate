@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
 import com.automates.automate.model.NavDrawerItem;
+import com.automates.automate.pattern.Pattern;
  
 public class MainActivity extends Activity {
 //	private static final String TAG = "MainActivity";
@@ -124,7 +125,11 @@ public class MainActivity extends Activity {
         // Initialize Phone State (includes GPS service)
         PhoneState.update(this);
         
-        
+//        {
+//        	// Test Notification
+//        	Pattern p = PhoneState.getPatternDb().getAllPatterns().get(0);
+//        	p.addToRoutineDB();
+//        }
         
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);

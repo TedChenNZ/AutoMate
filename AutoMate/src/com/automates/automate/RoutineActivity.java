@@ -9,6 +9,7 @@ import java.util.List;
 import com.automates.automate.adapter.EditMultiChoiceModeListener;
 import com.automates.automate.adapter.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
+import com.automates.automate.pattern.Pattern;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.settings.RingerProfiles;
@@ -19,7 +20,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -62,6 +62,8 @@ public class RoutineActivity extends FragmentActivity {
 
     private RelativeLayout loading;
     
+    private int patternID;
+    
     // trigger list
     private ListView triggersListView;
     private ArrayAdapter<String> triggersAdapter;
@@ -101,11 +103,10 @@ public class RoutineActivity extends FragmentActivity {
         routine = new Routine();
         actions = new ArrayList<String>();
         
-        // intent
+        // Intent
         Intent intent = getIntent();
         final int routineID = intent.getIntExtra("routineID", -1);
-        Log.d("RoutineActivity", ""+routineID);
-
+        
         if (routineID != -1) {
         	for (Routine r: PhoneState.getRoutinesList()) {
         		if (routineID == r.getId()) {
@@ -114,12 +115,16 @@ public class RoutineActivity extends FragmentActivity {
         			textName.setText(r.getName());
         			if (r.getStatusCode() == StatusCode.IMPLEMENTED) {
         				checkboxEnabled.setChecked(true);
+        			} else {
+        				checkboxEnabled.setChecked(false);
         			}
         			editing = true;
         		}
         	}
         	
         }
+        
+        patternID = intent.getIntExtra("patternID", -1);
         
         
     
@@ -160,10 +165,23 @@ public class RoutineActivity extends FragmentActivity {
                     return;
                 }
                 routine.setName(name);
+                
+
+                
                 if (checkboxEnabled.isChecked()) {
                 	routine.setStatusCode(StatusCode.IMPLEMENTED);
+                    if (patternID !=1) {
+                    	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+                    	p.setStatusCode(StatusCode.IMPLEMENTED);
+                    	PhoneState.getPatternDb().updatePattern(p);
+                    }
                 } else {
                 	routine.setStatusCode(StatusCode.DECLINED);
+                	if (patternID !=1) {
+                    	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+                    	p.setStatusCode(StatusCode.DECLINED);
+                    	PhoneState.getPatternDb().updatePattern(p);
+                    }
                 }
                 if (editing) {
                 	for (int i = 0; i < PhoneState.getRoutinesList().size(); i++) {
@@ -177,6 +195,8 @@ public class RoutineActivity extends FragmentActivity {
                 } else {
                 	PhoneState.getRoutinesList().add(routine);
                 }
+                
+
                 
                 Intent resultIntent = new Intent();
             	setResult(Activity.RESULT_OK, resultIntent);

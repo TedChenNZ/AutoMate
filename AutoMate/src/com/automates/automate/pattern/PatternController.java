@@ -7,6 +7,7 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.automates.automate.PhoneState;
+import com.automates.automate.settings.Settings;
 
 public class PatternController implements PatternControl {
     private Pattern p = new Pattern();
@@ -28,7 +29,14 @@ public class PatternController implements PatternControl {
 	p.setLocation(PhoneState.getSetLocation());
 	p.setWifi(PhoneState.getWifiBSSID());
 	p.setData(Boolean.toString(PhoneState.isDataEnabled()));
-
+	
+	if (p.getEventCategory().equals(Settings.WIFI)) {
+		p.setWifi("");
+	}
+	if (p.getEventCategory().equals(Settings.MDATA)) {
+		p.setData("");
+	}
+	
 	timeSet();
 	//TODO weight and status code checking
 	p.setWeekWeight(WeightManager.initialZeroWeight);
@@ -63,7 +71,7 @@ public class PatternController implements PatternControl {
 	d.setSeconds(0);
 	d.setMinutes(0);
 	d.setHours(0);
-	int day = d.getDay();
+	//int day = d.getDay();
 
 	long startOfDay = d.getTime();
 

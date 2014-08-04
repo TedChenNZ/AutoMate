@@ -34,6 +34,11 @@ public class RoutineList extends ArrayList<Routine>  {
 		routineDB.updateRoutine(ul);
 		return super.set(index, ul);
 	}
-
+	
+	public Routine addRoutine(Routine r) {
+		Routine routine = routineDB.addRoutine(r);
+		super.add(routine);
+		return routine;
+	}
 
 }

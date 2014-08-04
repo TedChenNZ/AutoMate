@@ -69,6 +69,10 @@ public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 			} else if (routine.getStatusCode() == StatusCode.IMPLEMENTED) {
 				name.setText(routine.getName());
 				name.setTypeface(null, Typeface.BOLD);
+			} else if (routine.getStatusCode() == StatusCode.IN_DEV){
+				name.setText(routine.getName() + " (Awaiting User Approval)");
+				name.setTypeface(null, Typeface.NORMAL);
+				
 			}
 		}
 

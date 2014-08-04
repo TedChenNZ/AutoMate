@@ -3,7 +3,6 @@ package com.automates.automate.pattern;
 import java.util.Calendar;
 
 import com.automates.automate.PhoneState;
-import com.automates.automate.RoutineActivity;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.settings.NotifyManager;
 
@@ -94,7 +93,7 @@ public class Pattern {
 	    r.setmData(this.mData);
 	    r.setWifi(this.wifi);
 	    r.setStatusCode(StatusCode.IN_DEV);
-	    Routine r2 = PhoneState.getRoutineDb().addRoutine(r);
+	    Routine r2 = PhoneState.getRoutinesList().addRoutine(r);
 	    activate(r2);
     }
 
@@ -102,8 +101,9 @@ public class Pattern {
 	// TODO Auto-generated method stub
 	//ask user if location/wifi/data are conditions NOTIFICATION
 	//alarm manager to do something for time based.
+//    	this.setStatusCode(StatusCode.AWAITING_APPROVAL);
 	NotifyManager nM = new NotifyManager();
-	nM.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", r.getId());
+	nM.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", r.getId(), this.getId());
 
     }
 

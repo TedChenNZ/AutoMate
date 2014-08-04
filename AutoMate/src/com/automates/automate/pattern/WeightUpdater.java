@@ -1,6 +1,5 @@
 package com.automates.automate.pattern;
 
-import android.util.Log;
 import com.automates.automate.pattern.WeightManager;
 
 import com.automates.automate.PhoneState;
