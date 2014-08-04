@@ -207,7 +207,12 @@ public class Routine {
     		s = s + "at " + hour + ":" + minute + " ";
     	}
     	if (!location.equals("") && location != null) {
-    		s = s + "at " + PhoneState.getLocationsList().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
+    		try {
+    			s = s + "at " + PhoneState.getLocationsList().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
+    	
+    		} catch (NumberFormatException e) {
+    			
+    		}
     	}
     	
     	if (!wifi.equals("") && wifi != null) {
