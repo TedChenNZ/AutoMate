@@ -19,6 +19,10 @@ public class PatternController implements PatternControl {
 	p.setEventCategory(actionCategory);
 	generatePattern();
     }
+    
+    public PatternController(Pattern p) {
+    	this.p = p;
+    }
 
     /* (non-Javadoc)
      * @see com.automates.automate.data.PatternControl#generatePattern()
