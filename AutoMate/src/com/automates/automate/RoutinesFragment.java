@@ -9,8 +9,6 @@ import java.util.List;
 import com.automates.automate.adapter.EditMultiChoiceModeListener;
 import com.automates.automate.adapter.RoutinesArrayAdapter;
 import com.automates.automate.routines.Routine;
-import com.automates.automate.settings.NotifyManager;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;

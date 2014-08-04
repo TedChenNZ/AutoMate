@@ -184,7 +184,7 @@ public final class PhoneState {
 			s = s.substring(0, s.length() - 1);
 			return s;
 		}
-		return location.toString();
+		return "";
 	}
 
 	// Getters
