@@ -2,21 +2,18 @@ package com.automates.automate.testPatterns;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
-import android.content.Context;
 import android.test.AndroidTestCase;
-import android.test.IsolatedContext;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 
+import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.Pattern;
-import com.automates.automate.pattern.PatternControl;
 import com.automates.automate.pattern.PatternController;
-import com.automates.automate.sqlite.PatternDB;
 
 public class PatternSimulator extends AndroidTestCase {
-	private PatternDB patternDB;
+	
     private static final String TEST_FILE_PREFIX = "test_";
+    private RenamingDelegatingContext context;
     
 	public PatternSimulator() {
 		
@@ -27,13 +24,13 @@ public class PatternSimulator extends AndroidTestCase {
 	@Override
 	protected void setUp() throws Exception {
 	    super.setUp();
-	    RenamingDelegatingContext context 
+	    context 
 	        = new RenamingDelegatingContext(getContext(), TEST_FILE_PREFIX);
-	    patternDB = new PatternDB(context);
+//	    patternDB = new PatternDB(context);
+	    PhoneState.update(context);
 	    List<Pattern> patternList = getPatternSimulation();
 	    for (Pattern p: patternList) {
 		    PatternController pg = new PatternController(p);
-		    pg.setWeightsandStatusCode();
 			pg.updateDatabase();
 	    }
 	}
@@ -83,6 +80,26 @@ public class PatternSimulator extends AndroidTestCase {
 	    list.add(p);
 		
 		return list;
+	}
+	
+	public void testRoutineAmount() {
+		int amount = PhoneState.getRoutineDb().getAllRoutines().size();
+		assertEquals(1, amount);
+	}
+	
+	public void testPatternAmount() {
+		int amount = PhoneState.getPatternDb().getAllPatterns().size();
+		assertEquals(2, amount);
+	}
+	public void testPattern1() {
+		double weight = PhoneState.getPatternDb().getAllPatterns().get(0).getWeight();
+		assertEquals(2.0, weight);
+	}
+	
+	public void testPattern2() {
+		double weight = PhoneState.getPatternDb().getAllPatterns().get(1).getWeight();
+		assertEquals(1.0, weight);
+		Log.d("PatternSimulator", "PhoneState.getPatternDb().getAllPatterns()");
 	}
 
 }

@@ -43,16 +43,11 @@ public class PatternController implements PatternControl {
 	
 	timeSet();
 	//TODO weight and status code checking
-	setWeightsandStatusCode();
+	p.setWeekWeight(WeightManager.initialZeroWeight);
+	p.setWeight(WeightManager.initialWeight);
+	p.setStatusCode(StatusCode.IN_DEV);
 	return p;
 
-    }
-    
-    public Pattern setWeightsandStatusCode() {
-    	p.setWeekWeight(WeightManager.initialZeroWeight);
-    	p.setWeight(WeightManager.initialWeight);
-    	p.setStatusCode(StatusCode.IN_DEV);
-    	return p;
     }
 
     /* (non-Javadoc)
@@ -98,7 +93,7 @@ public class PatternController implements PatternControl {
      */
     @Override
     public void updateDatabase() {
-	Log.d(TAG, p.toString());
+//	Log.d(TAG, p.toString());
 	int id = getInstanceFromDB();
 	if(id != -1){
 	    Pattern newP = new WeightUpdater(p, id).updatePattern();
