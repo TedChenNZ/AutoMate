@@ -43,11 +43,16 @@ public class PatternController implements PatternControl {
 	
 	timeSet();
 	//TODO weight and status code checking
-	p.setWeekWeight(WeightManager.initialZeroWeight);
-	p.setWeight(WeightManager.initialWeight);
-	p.setStatusCode(StatusCode.IN_DEV);
+	setWeightsandStatusCode();
 	return p;
 
+    }
+    
+    public Pattern setWeightsandStatusCode() {
+    	p.setWeekWeight(WeightManager.initialZeroWeight);
+    	p.setWeight(WeightManager.initialWeight);
+    	p.setStatusCode(StatusCode.IN_DEV);
+    	return p;
     }
 
     /* (non-Javadoc)
