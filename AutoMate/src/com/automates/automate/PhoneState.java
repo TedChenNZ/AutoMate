@@ -97,15 +97,15 @@ public final class PhoneState {
 	}
 	
 	public static String checkConnectivityIntent() {
-		String wifi = Logger.getWifiBSSID();
+//		String wifi = Logger.getWifiBSSID();
 		boolean mdata = Logger.getMData();
 		if (mdata != dataEnabled) {
 			return Settings.MDATA;
 
 		} else {
-			if (!wifi.equals(wifiBSSID)) {
-				return Settings.WIFI;
-			}
+//			if (!wifi.equals(wifiBSSID)) {
+//				return Settings.WIFI;
+//			}
 		}
 		return null;
 	}
