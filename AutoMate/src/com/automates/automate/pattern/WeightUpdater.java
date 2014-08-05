@@ -1,7 +1,8 @@
 package com.automates.automate.pattern;
 
-import com.automates.automate.pattern.WeightManager;
+import android.text.format.Time;
 
+import com.automates.automate.pattern.WeightManager;
 import com.automates.automate.PhoneState;
 
 public class WeightUpdater implements WeightManager {
@@ -63,6 +64,7 @@ public class WeightUpdater implements WeightManager {
 	else{
 	    if(daysPast != 0){
 		newWeight = oldWeight + WeightManager.initialWeight/daysPast;
+		timeSet();
 	    }
 	    else{
 //		Log.d("PatternController", "Should never hit this");
@@ -75,5 +77,12 @@ public class WeightUpdater implements WeightManager {
 //	Log.d("PatternController", "New weight is: " + newWeight);
 
 	return p;
+    }
+    
+    private void timeSet(){
+	Time time = new Time();
+	time.setToNow();
+	p.setDay(time.weekDay);
+	p.setActualTime(PhoneState.getTime());
     }
 }
