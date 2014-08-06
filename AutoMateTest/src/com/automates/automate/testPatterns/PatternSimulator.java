@@ -41,42 +41,42 @@ public class PatternSimulator extends AndroidTestCase {
 	    
 	    
 	    // Mon, 04 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407142800000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407142800000L, 1, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    // Mon, 04 Aug 2014 10:00:00 GMT
-	    p = new Pattern("WiFi", "On", 45, 1407664800000L, 4, "Work", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "On", 10, 1407664800000L, 1, "Work", "false", "false", 0, 1, 0);
 	    list.add(p);
 
 	    
 	    // Tue, 05 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407229200000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407229200000L, 2, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    // Tue, 05 Aug 2014 10:05:36 GMT
-	    p = new Pattern("WiFi", "On", 45, 1407233136000L, 4, "Work", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "On", 10, 1407233136000L, 2, "Work", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    
 	    // Wed, 06 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407315600000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407315600000L, 3, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    
 	    
 	    // Thur, 07 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407402000000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407402000000L, 4, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    
 	    
 	    // Fri, 08 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407488400000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407488400000L, 5, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    
 	    
 	    // Sat, 09 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407574800000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407574800000L, 6, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 	    
 	    
 	    // Sun, 10 Aug 2014 09:00:00 GMT
-	    p = new Pattern("WiFi", "Off", 45, 1407661200000L, 4, "Home", "false", "false", 0, 1, 0);
+	    p = new Pattern("WiFi", "Off", 9, 1407661200000L, 0, "Home", "false", "false", 0, 1, 0);
 	    list.add(p);
 		
 		return list;
