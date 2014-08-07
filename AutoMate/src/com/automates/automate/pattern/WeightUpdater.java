@@ -1,6 +1,7 @@
 package com.automates.automate.pattern;
 
 import android.text.format.Time;
+import android.util.Log;
 
 import com.automates.automate.pattern.WeightManager;
 import com.automates.automate.PhoneState;
@@ -21,15 +22,16 @@ public class WeightUpdater implements WeightManager {
 	private final double dayInMS = 86400000;
 
 
-	public WeightUpdater(Pattern p, int id){
+	public WeightUpdater(Pattern p, Pattern oldP){
 		this.p = p;
-		this.id = id;
+		this.oldP = oldP;
+		this.id = oldP.getId();
 		actualTime = p.getActualTime();
-		oldPset(id);
+		oldPset();
 	}
 
-	private void oldPset(int id){
-		oldP = PhoneState.getPatternDb().getPattern(id);
+	private void oldPset(){
+//		oldP = PhoneState.getPatternDb().getPattern(id);
 		oldWeight = oldP.getWeight();
 		oldWeekWeight = oldP.getWeekWeight();
 		timeDiff = actualTime - oldP.getActualTime();
@@ -64,7 +66,7 @@ public class WeightUpdater implements WeightManager {
 		else{
 			if(daysPast != 0){
 				newWeight = oldWeight + WeightManager.initialWeight/daysPast;
-				timeSet();
+//				timeSet();
 			}
 			else{
 				//		Log.d("PatternController", "Should never hit this");
@@ -74,7 +76,6 @@ public class WeightUpdater implements WeightManager {
 
 		p.setId(id);
 		p.setWeight(newWeight);
-		//	Log.d("PatternController", "New weight is: " + newWeight);
 
 		return p;
 	}
