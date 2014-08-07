@@ -14,7 +14,7 @@
         android:layout_alignParentRight="true"
         android:text="@string/find"
         bootstrapbutton:bb_type="primary"
-        bootstrapbutton:bb_size="small" 
+        bootstrapbutton:bb_size="default" 
         />
 
     <fragment

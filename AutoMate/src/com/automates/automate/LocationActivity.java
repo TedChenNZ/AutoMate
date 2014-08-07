@@ -44,7 +44,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  
 public class LocationActivity extends FragmentActivity {
  
-    private Button mBtnFind;
+    private com.beardedhen.androidbootstrap.BootstrapButton mBtnFind;
     private GoogleMap mMap;
     private EditText etPlace;
     private EditText etRadius;
@@ -65,7 +65,7 @@ public class LocationActivity extends FragmentActivity {
         setContentView(R.layout.activity_location);
  
         // Getting reference to the buttons
-        mBtnFind = (Button) findViewById(R.id.btn_show);
+        mBtnFind = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.btn_show);
         btnAdd = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.btn_add);
         
         // Getting reference to EditText
