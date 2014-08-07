@@ -23,7 +23,7 @@ public class PatternDB extends SQLiteOpenHelper implements PatternManager{
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "PatternDB";
+    public static final String DATABASE_NAME = "PatternDB";
     // For logging purposes - tag
     private final static String TAG = "PatternDB";
  

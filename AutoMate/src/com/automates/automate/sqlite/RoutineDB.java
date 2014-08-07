@@ -23,7 +23,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "RoutineDB";
+    public static final String DATABASE_NAME = "RoutineDB";
     // For logging purposes - tag
     private final static String TAG = "RoutineDB";
  

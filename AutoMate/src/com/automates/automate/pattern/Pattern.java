@@ -1,7 +1,6 @@
 package com.automates.automate.pattern;
 
 import java.util.Calendar;
-
 import com.automates.automate.PhoneState;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.settings.NotifyManager;
@@ -82,11 +81,11 @@ public class Pattern {
 	    r.setName("Routine " + this.id);
 	    r.setEvent(this.event);
 	    r.setEventCategory(this.eventCategory);
-
 	    Calendar c = Calendar.getInstance();
 	    c.setTimeInMillis(this.actualTime);
 	    r.setHour(c.get(Calendar.HOUR_OF_DAY));
 	    r.setMinute(c.get(Calendar.MINUTE));
+	    
 
 //	    r.setDay("" + this.day);
 	    r.setLocation(this.location);
