@@ -13,7 +13,6 @@ public class TimelyChecker extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
-		Log.d("TimelyChecker", "in timely checker");
 		Time time = new Time();
 		time.setToNow();
 		Log.d("TimelyChecker", "Time is " + time.hour + ":" + time.minute + ", day is " + time.weekDay);

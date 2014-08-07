@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-        
-    >
+    android:focusableInTouchMode="true" >
 
     <EditText
         android:id="@+id/textName"
@@ -18,7 +18,7 @@
         android:hint="@string/enter_name"
         android:inputType="text" >
     </EditText>
-    
+
     <TextView
         android:id="@+id/textEnabled"
         android:layout_width="wrap_content"
@@ -26,20 +26,19 @@
         android:layout_alignBottom="@+id/checkBoxEnabled"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textName"
-        android:text="@string/enabled"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginLeft="12dp"
         android:gravity="center"
-    	android:layout_marginLeft="12dp" />
-    
-     <CheckBox
+        android:text="@string/enabled"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
         android:id="@+id/checkBoxEnabled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-    	android:layout_below="@+id/textName"
-    	android:checked="true" />
-     
-    
+        android:layout_below="@+id/textName"
+        android:checked="true" />
+
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
@@ -83,30 +82,33 @@
         </ListView>
     </RelativeLayout>
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/addAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/addTrigger"
-        android:text="@string/add_action" />
+        android:text="@string/add_action"
+        bootstrapbutton:bb_type="primary" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/addAction"
-        android:text="@string/save" />
+        android:text="@string/save"
+        bootstrapbutton:bb_type="success" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/addTrigger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/add_trigger" />
+        android:text="@string/add_trigger"
+        bootstrapbutton:bb_type="primary" />
 
     <RelativeLayout
         android:id="@+id/darken"
@@ -120,11 +122,6 @@
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible" >
-
-
-
     </RelativeLayout>
-
-
 
 </RelativeLayout>

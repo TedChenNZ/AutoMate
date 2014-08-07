@@ -10,8 +10,10 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
  
+
 import org.json.JSONObject;
  
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,8 +31,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
  
+
 import com.automates.automate.locations.GeocodeJSONParser;
 import com.automates.automate.locations.UserLocation;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -45,7 +49,7 @@ public class LocationActivity extends FragmentActivity {
     private EditText etPlace;
     private EditText etRadius;
     private EditText etName;
-    private Button btnAdd;
+    private com.beardedhen.androidbootstrap.BootstrapButton btnAdd;
     private RelativeLayout loading;
     
     private UserLocation userloc = new UserLocation();
@@ -62,7 +66,7 @@ public class LocationActivity extends FragmentActivity {
  
         // Getting reference to the buttons
         mBtnFind = (Button) findViewById(R.id.btn_show);
-        btnAdd = (Button) findViewById(R.id.btn_add);
+        btnAdd = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.btn_add);
         
         // Getting reference to EditText
         etPlace = (EditText) findViewById(R.id.et_place);

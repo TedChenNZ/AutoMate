@@ -23,8 +23,8 @@ public class FirstRunActivity extends Activity {
 	private Animation animFadeout;
 	private RelativeLayout layout;
 	private int screen;
-	private Button yes;
-	private Button no;
+	private com.beardedhen.androidbootstrap.BootstrapButton yes;
+	private com.beardedhen.androidbootstrap.BootstrapButton no;
 	private Activity activity;
 	private TextView continues;
 	
@@ -46,8 +46,8 @@ public class FirstRunActivity extends Activity {
         
         screen = 0;
         
-        yes = (Button) findViewById(R.id.yes);
-        no = (Button) findViewById(R.id.no);
+        yes = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.yes);
+        no = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.no);
         
         
         // set listener for screen

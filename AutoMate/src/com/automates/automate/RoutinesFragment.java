@@ -84,7 +84,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
         
         
         // Setting click event listener for the add button
-        Button addRoutine = (Button) rootView.findViewById(R.id.addRoutine);
+        com.beardedhen.androidbootstrap.BootstrapButton addRoutine = (com.beardedhen.androidbootstrap.BootstrapButton) rootView.findViewById(R.id.addRoutine);
         addRoutine.setOnClickListener(new OnClickListener() {
         	
             @Override

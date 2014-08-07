@@ -48,9 +48,9 @@ import android.widget.PopupWindow;
 public class RoutineActivity extends FragmentActivity {
     private EditText textName;
 
-    private Button addTrigger;
-    private Button addAction;
-    private Button saveButton;
+    private com.beardedhen.androidbootstrap.BootstrapButton addTrigger;
+    private com.beardedhen.androidbootstrap.BootstrapButton addAction;
+    private com.beardedhen.androidbootstrap.BootstrapButton saveButton;
     private PopupWindow popupWindow;
     
     private Routine routine;
@@ -90,9 +90,9 @@ public class RoutineActivity extends FragmentActivity {
         setContentView(R.layout.activity_routine);
         activity = this;
         textName = (EditText) findViewById(R.id.textName);
-        addTrigger = (Button) findViewById(R.id.addTrigger);
-        addAction = (Button) findViewById(R.id.addAction);
-        saveButton = (Button) findViewById(R.id.saveButton);
+        addTrigger = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.addTrigger);
+        addAction = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.addAction);
+        saveButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.saveButton);
         triggersListView = (ListView) findViewById(R.id.triggersList);
         actionsListView = (ListView) findViewById(R.id.actionsList);
         loading = (RelativeLayout) findViewById(R.id.darken);

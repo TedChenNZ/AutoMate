@@ -1,6 +1,7 @@
 package com.automates.automate;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -21,7 +22,6 @@ import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
 import com.automates.automate.model.NavDrawerItem;
-import com.automates.automate.pattern.Pattern;
  
 public class MainActivity extends Activity {
 //	private static final String TAG = "MainActivity";

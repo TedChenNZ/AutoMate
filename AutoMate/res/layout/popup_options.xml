@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
     android:layout_width="400dp"
-	android:layout_height="wrap_content"
-    android:orientation="vertical" 
+    android:layout_height="wrap_content"
     android:background="@drawable/popupbg"
-    >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textView2"
@@ -21,25 +22,23 @@
         android:text="@string/add"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
-    
- <RadioGroup
+
+    <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:listSelector="@drawable/list_selector" >
- 		
-</RadioGroup>
+    </RadioGroup>
 
- <Button
-     android:id="@+id/buttonOK"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:text="@string/OK" />
+    <Button
+        android:id="@+id/buttonOK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/OK" />
 
 </LinearLayout>

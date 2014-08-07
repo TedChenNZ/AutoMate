@@ -92,7 +92,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
         
         
         // Setting click event listener for the add button
-        Button addLocation = (Button) rootView.findViewById(R.id.addLocation);
+        com.beardedhen.androidbootstrap.BootstrapButton addLocation = (com.beardedhen.androidbootstrap.BootstrapButton) rootView.findViewById(R.id.addLocation);
         addLocation.setOnClickListener(new OnClickListener() {
         	
             @Override
