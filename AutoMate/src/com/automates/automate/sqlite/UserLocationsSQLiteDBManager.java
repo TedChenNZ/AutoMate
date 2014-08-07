@@ -17,7 +17,7 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper implements Us
 	// Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "UserLocationsDB";
+    public static final String DATABASE_NAME = "UserLocationsDB";
     
     // Table Data
     private static final String TABLE_NAME = "user_locations";
