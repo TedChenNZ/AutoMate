@@ -71,13 +71,13 @@ public class MainActivity extends Activity {
  
         // adding nav drawer items to array
         // Routines
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, "22"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // Locations
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // Action Sets
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "50+"));
+//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // Log
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // Help
@@ -135,12 +135,12 @@ public class MainActivity extends Activity {
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         
         // Set firstrun back to true for debugging purposes
-//        {
-//        	// Code to run once
-//            SharedPreferences.Editor editor = wmbPreference.edit();
-//            editor.putBoolean("FIRSTRUN", true);
-//            editor.commit();
-//        }
+        {
+        	// Code to run once
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", true);
+            editor.commit();
+        }
         
         if (isFirstRun)
         {
