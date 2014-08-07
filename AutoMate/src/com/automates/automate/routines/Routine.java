@@ -208,7 +208,7 @@ public class Routine {
     		}
     	}
     	if ((hour != -1) && (minute != -1)) {
-    		s = s + "at " + hour + ":" + minute + " ";
+    		s = s + "at " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + " ";
     	}
     	if (!location.equals("") && location != null) {
     		try {

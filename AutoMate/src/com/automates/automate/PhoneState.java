@@ -81,7 +81,8 @@ public final class PhoneState {
 		soundProfile = RingerProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
 		dataEnabled = Data.getDataEnabled(context);
-		wifiBSSID = Wifi.getWifiBSSID(context);
+//		wifiBSSID = Wifi.getWifiBSSID(context);
+		wifiBSSID = String.valueOf(wifiEnabled);
 		time = System.currentTimeMillis();
 		location = gpsTracker.getLastLocation();
 		
