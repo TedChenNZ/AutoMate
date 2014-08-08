@@ -22,6 +22,7 @@ import android.widget.ListView;
 
 import com.automates.automate.adapter.NavDrawerListAdapter;
 import com.automates.automate.model.NavDrawerItem;
+import com.automates.automate.pattern.Pattern;
  
 public class MainActivity extends Activity {
 //	private static final String TAG = "MainActivity";
@@ -66,22 +67,22 @@ public class MainActivity extends Activity {
  
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
- 
+
         navDrawerItems = new ArrayList<NavDrawerItem>();
  
         // adding nav drawer items to array
         // Routines
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], R.drawable.ic_action_repeat));
         // Locations
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], R.drawable.ic_action_place));
         // Action Sets
 //        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // Log
 //        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // Settings
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], R.drawable.ic_action_settings));
         // Help
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], R.drawable.ic_action_help));
          
  
         // Recycle the typed array
@@ -135,12 +136,12 @@ public class MainActivity extends Activity {
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         
         // Set firstrun back to true for debugging purposes
-        {
-        	// Code to run once
-            SharedPreferences.Editor editor = wmbPreference.edit();
-            editor.putBoolean("FIRSTRUN", true);
-            editor.commit();
-        }
+//        {
+//        	// Code to run once
+//            SharedPreferences.Editor editor = wmbPreference.edit();
+//            editor.putBoolean("FIRSTRUN", true);
+//            editor.commit();
+//        }
         
         if (isFirstRun)
         {
@@ -219,10 +220,12 @@ public class MainActivity extends Activity {
             fragment = new LocationsFragment();
             break;
         case 2:
-            fragment = new ActionSetFragment();
+//            fragment = new ActionSetFragment();
+        	fragment = new SettingsFragment();
             break;
         case 3:
-            fragment = new LogFragment();
+//            fragment = new LogFragment();
+        	fragment = new HelpFragment();
             break;
         case 4:
             fragment = new SettingsFragment();

@@ -51,6 +51,7 @@ public class RoutineActivity extends FragmentActivity {
     private com.beardedhen.androidbootstrap.BootstrapButton addTrigger;
     private com.beardedhen.androidbootstrap.BootstrapButton addAction;
     private com.beardedhen.androidbootstrap.BootstrapButton saveButton;
+    private com.beardedhen.androidbootstrap.BootstrapButton dismissButton;
     private PopupWindow popupWindow;
     
     private Routine routine;
@@ -126,6 +127,29 @@ public class RoutineActivity extends FragmentActivity {
         
         patternID = intent.getIntExtra("patternID", -1);
         
+    	dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
+
+        if (patternID != -1) {
+        	dismissButton.setVisibility(View.VISIBLE);
+        	dismissButton.setOnClickListener(new OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+        			PhoneState.getRoutinesList().remove(routine);
+        			Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+                	p.setStatusCode(StatusCode.DECLINED);
+                	PhoneState.getPatternDb().updatePattern(p);
+                	
+//                    Intent resultIntent = new Intent();
+//                	setResult(Activity.RESULT_OK, resultIntent);
+        			finish();
+        		}
+        	});
+        } else {
+        	LayoutParams params = dismissButton.getLayoutParams();
+        	params.height = 0;
+        	dismissButton.setLayoutParams(params);
+        }
+        
         
     
         addTrigger.setOnClickListener(new OnClickListener() {
@@ -179,7 +203,7 @@ public class RoutineActivity extends FragmentActivity {
                 	routine.setStatusCode(StatusCode.DECLINED);
                 	if (patternID != -1) {
                     	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
-                    	p.setStatusCode(StatusCode.DECLINED);
+                    	p.setStatusCode(StatusCode.IMPLEMENTED);
                     	PhoneState.getPatternDb().updatePattern(p);
                     }
                 }

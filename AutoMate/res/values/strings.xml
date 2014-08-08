@@ -11,8 +11,6 @@
     <string-array name="nav_drawer_items">
         <item >Routines</item>
         <item >Locations</item>
-        <item >Action Sets</item>
-        <item >Log</item>
         <item >Settings</item>
         <item >Help</item>
     </string-array>
@@ -68,4 +66,7 @@
     <string name="trigger">Trigger</string>
     <string name="OK">OK</string>
     <string name="enabled">Enabled</string>
+    <string name="dismiss">Dismiss</string>
+    
+    <string name="Help"><b>Routine</b>\nA trigger-action pair to be automated\n\n<b>Trigger</b>\nConditions that are to be met\n\n<b>Action</b>\nA behaviour that will be performed</string>
 </resources>

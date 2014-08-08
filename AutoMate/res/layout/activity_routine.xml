@@ -86,30 +86,45 @@
         android:id="@+id/addAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/addTrigger"
         android:text="@string/add_action"
-        bootstrapbutton:bb_type="primary" />
+        bootstrapbutton:bb_type="primary"
+        
+        android:layout_above="@+id/dismissButton" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/addAction"
         android:text="@string/save"
-        bootstrapbutton:bb_type="success" />
+        bootstrapbutton:bb_type="success"
+        
+        android:layout_above="@+id/dismissButton" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/addTrigger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/add_trigger"
-        bootstrapbutton:bb_type="primary" />
-
+        bootstrapbutton:bb_type="primary"
+        
+        
+        android:layout_above="@+id/dismissButton" />
+    
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/dismissButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/dismiss"
+        bootstrapbutton:bb_type="danger"
+        android:minHeight="0dip"/>
+    
     <RelativeLayout
         android:id="@+id/darken"
         android:layout_width="wrap_content"
@@ -123,5 +138,5 @@
         android:focusable="true"
         android:visibility="invisible" >
     </RelativeLayout>
-
+    
 </RelativeLayout>
