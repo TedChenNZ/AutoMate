@@ -1,6 +1,7 @@
 package com.automates.automate;
 
 import com.automates.automate.routines.Routine;
+import com.automates.automate.settings.Settings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,6 +28,7 @@ public class FirstRunActivity extends Activity {
 	private com.beardedhen.androidbootstrap.BootstrapButton no;
 	private Activity activity;
 	private TextView continues;
+	private boolean work;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class FirstRunActivity extends Activity {
 				switch(screen) {
 					case 3:
 						location = "Work";
+						work = true;
 						intent.putExtra("FIRSTRUN", location);   
 		            	startActivityForResult(intent, 0);
 						break;
@@ -82,8 +85,12 @@ public class FirstRunActivity extends Activity {
 		            	startActivityForResult(intent, 0);
 						break;
 					case 5:
-					    PhoneState.getRoutineDb().addRoutine(new Routine(1, "Silent at Work", "Ringer", "0", -1, -1, "", "Work", "", "", 1));
-						break;
+//						int locationID = PhoneState.getLocationsList().getUserLocationFromName("Work").getId();
+					    int locationID = 2;
+						PhoneState.getRoutinesList().addRoutine(new Routine(1, "Silent at Work", "0", Settings.RINGER, -1, -1, "", String.valueOf(locationID), "", "", 1));
+						screen++;
+						updateScreen();
+					    break;
 					default:
 						
 						break;
@@ -97,6 +104,9 @@ public class FirstRunActivity extends Activity {
         	
         	@Override
         	public void onClick(View v) {
+				if (screen == 3) {
+					work = false;
+				}
         		screen++;
         		updateScreen();
         	}
@@ -143,10 +153,16 @@ public class FirstRunActivity extends Activity {
 				no.startAnimation(animFadein);
 				break;
 			case 5:
-				welcome.setText("Would you like your phone to be silent at work?");
-				welcome.startAnimation(animFadein);
-				yes.startAnimation(animFadein);
-				no.startAnimation(animFadein);
+
+				if (work) {
+					welcome.setText("Would you like your phone to be silent at work?");
+					welcome.startAnimation(animFadein);
+					yes.startAnimation(animFadein);
+					no.startAnimation(animFadein);
+				} else {
+					screen++;
+					updateScreen();
+				}
 				break;
 			default:
 		        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
