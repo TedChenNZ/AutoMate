@@ -26,14 +26,14 @@ public class IntentReceiver extends BroadcastReceiver {
 	    Log.d("IntentReceiver", "event: " + event);
 	    String eventAction = PhoneState.getEventAction(event);
 	    Log.d("IntentReceiver", "eventAction: " + eventAction);
-	    if(!randomBug(event, eventAction)){
+	    if(!connectivityCheck(event, eventAction)){
 		PatternControl pg = new PatternController(event,eventAction);
 		pg.updateDatabase();
 	    }
 	}
 
     }
-    private boolean randomBug(String event, String eventAction) {
+    private boolean connectivityCheck(String event, String eventAction) {
 	if(event.equalsIgnoreCase(Settings.MDATA) && eventAction.equalsIgnoreCase("true")){
 	    if(PhoneState.getWifiBSSID().equals("true")){
 		return true;
