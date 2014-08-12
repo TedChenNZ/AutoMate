@@ -478,12 +478,16 @@ public class RoutineActivity extends FragmentActivity {
                     // Gets a reference to "selected" radio button
                     int selected = radioGroup.getCheckedRadioButtonId();
                     RadioButton b = (RadioButton) popupView.findViewById(selected);
+                    try {
                     String location = (String) b.getText();
                     for (UserLocation ul: PhoneState.getLocationsList()) {
                         if (ul.getName().equals(location)) {
                             routine.setLocation("" + ul.getId());
                             break;
                         }
+                    }
+                    } catch (NullPointerException e) {
+                    	
                     }
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());

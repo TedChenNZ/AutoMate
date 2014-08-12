@@ -214,9 +214,9 @@ public class Routine {
     		try {
     			s = s + "at " + PhoneState.getLocationsList().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
     	
-    		} catch (NumberFormatException e) {
-    			
-    		}
+    		} catch (Exception e) {
+    			s = s + "at UNDEFINED LOCATION " + location;
+    		} 
     	}
     	
     	if (!wifi.equals("") && wifi != null) {
