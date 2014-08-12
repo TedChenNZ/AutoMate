@@ -128,28 +128,27 @@ public class MainActivity extends Activity {
         
 //        {
 //        	// Test Notification
+//        	try {
 //        	Pattern p = PhoneState.getPatternDb().getAllPatterns().get(0);
 //        	p.addToRoutineDB();
+//        	} catch (Exception e) {
+//        		
+//        	}
 //        }
-        
+//        
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         
-        // Set firstrun back to true for debugging purposes
+//        // Set firstrun back to true for debugging purposes
 //        {
 //        	// Code to run once
 //            SharedPreferences.Editor editor = wmbPreference.edit();
 //            editor.putBoolean("FIRSTRUN", true);
 //            editor.commit();
 //        }
-        
+//        
         if (isFirstRun)
-        {
-//        	// Set FIRSTRUN to false
-//            SharedPreferences.Editor editor = wmbPreference.edit();
-//            editor.putBoolean("FIRSTRUN", false);
-//            editor.commit();
-            
+        {          
             // Code to run once
             Log.d("MainActivity", "First Run");
             Intent intent = new Intent(this, FirstRunActivity.class);

@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -128,19 +129,20 @@ public class RoutineActivity extends FragmentActivity {
         patternID = intent.getIntExtra("patternID", -1);
         
     	dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
-
-        if (patternID != -1) {
+    	
+        if (routine.getStatusCode() == StatusCode.AWAITING_APPROVAL || routine.getStatusCode() == StatusCode.IN_DEV) {
         	dismissButton.setVisibility(View.VISIBLE);
         	dismissButton.setOnClickListener(new OnClickListener() {
         		@Override
         		public void onClick(View v) {
         			PhoneState.getRoutinesList().remove(routine);
-        			Pattern p = PhoneState.getPatternDb().getPattern(patternID);
-                	p.setStatusCode(StatusCode.DECLINED);
-                	PhoneState.getPatternDb().updatePattern(p);
-                	
-//                    Intent resultIntent = new Intent();
-//                	setResult(Activity.RESULT_OK, resultIntent);
+        			if (patternID != -1) {
+	        			Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+	                	p.setStatusCode(StatusCode.DECLINED);
+	                	PhoneState.getPatternDb().updatePattern(p);
+        			}
+                    Intent resultIntent = new Intent();
+                	setResult(Activity.RESULT_OK, resultIntent);
         			finish();
         		}
         	});
