@@ -14,6 +14,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.automates.automate.Logger;
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.pattern.WeightManager;
@@ -87,6 +88,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		}
 		
 		appliedRoutines.put(r.getId(), System.currentTimeMillis());
+		Logger.logRoutine(r);
 
 	}
 
