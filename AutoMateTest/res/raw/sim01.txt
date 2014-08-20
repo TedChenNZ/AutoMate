@@ -1,0 +1,14 @@
+11/08/2014 09:00:00, Wifi, false, Home
+11/08/2014 10:02:03, Wifi, true, Work
+11/08/2014 10:03:04, Ringer, 1, Work
+11/08/2014 17:01:03, Wifi, false, Unknown
+11/08/2014 17:02:01, Ringer, 3, Unknown
+11/08/2014 18:00:47, Wifi, true, Home
+
+12/08/2014 09:00:00, Wifi, false, Home
+12/08/2014 10:10:03, Wifi, true, Work
+12/08/2014 10:10:40, Ringer, 1, Work
+
+13/08/2014 09:00:00, Wifi, false, Home
+
+14/08/2014 09:00:00, Wifi, false, Home 
