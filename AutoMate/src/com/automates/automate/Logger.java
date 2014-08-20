@@ -5,9 +5,9 @@ import com.automates.automate.routines.Routine;
 public final class Logger {
 	
 	private static Logger instance = null;
-	private static String wifiBSSID;
-	private static boolean mdata;
-	private static Routine routine;
+	private String wifiBSSID;
+	private boolean mdata;
+	private Routine routine;
 	
 	private Logger() {
 		// Exists only to defeat instantiation.
@@ -20,21 +20,21 @@ public final class Logger {
 		return instance;
 	}
 	
-	public static void logConnectivity(String w, boolean d)
+	public void logConnectivity(String w, boolean d)
 	{
 		wifiBSSID = w;
 		mdata = d;
 	}
-	public static void logRoutine(Routine r) {
+	public void logRoutine(Routine r) {
 		routine = r;
 	}
-	public static String getWifiBSSID() {
+	public String getWifiBSSID() {
 		return wifiBSSID;
 	}
-	public static boolean getMData() {
+	public boolean getMData() {
 		return mdata;
 	}
-	public static Routine getRoutine() {
+	public Routine getRoutine() {
 		return routine;
 	}
 }

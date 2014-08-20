@@ -61,6 +61,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	private void apply(Routine r) {
 		// TODO Auto-generated method stub
+		Logger.getInstance().logRoutine(r);
 		Log.d(TAG, "Actioning routine " + r.getName());
 		if(r.getEventCategory().equalsIgnoreCase(Settings.WIFI)){
 			if(r.getEvent().equalsIgnoreCase("false")){
@@ -88,7 +89,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		}
 		
 		appliedRoutines.put(r.getId(), System.currentTimeMillis());
-		Logger.logRoutine(r);
+		
 
 	}
 

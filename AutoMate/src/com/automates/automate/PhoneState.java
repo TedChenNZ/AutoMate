@@ -76,7 +76,7 @@ public final class PhoneState {
 		
 		
 		// Update variables
-		Logger.logConnectivity(wifiBSSID, dataEnabled);
+		Logger.getInstance().logConnectivity(wifiBSSID, dataEnabled);
 		
 		soundProfile = RingerProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
@@ -99,7 +99,7 @@ public final class PhoneState {
 	
 	public static String checkConnectivityIntent() {
 //		String wifi = Logger.getWifiBSSID();
-		boolean mdata = Logger.getMData();
+		boolean mdata = Logger.getInstance().getMData();
 		if (mdata != dataEnabled) {
 			return Settings.MDATA;
 

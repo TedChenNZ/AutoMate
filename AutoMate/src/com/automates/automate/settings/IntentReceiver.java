@@ -28,7 +28,7 @@ public class IntentReceiver extends BroadcastReceiver {
 			String eventAction = PhoneState.getEventAction(event);
 			Log.d("IntentReceiver", "eventAction: " + eventAction);
 			// Stop pattern learning for routines made by the app
-			if (Logger.getRoutine().getEventCategory().equals(eventAction)) {
+			if (Logger.getInstance().getRoutine().getEventCategory().equals(eventAction)) {
 				return;
 			}
 			if(!connectivityCheck(event, eventAction)){
