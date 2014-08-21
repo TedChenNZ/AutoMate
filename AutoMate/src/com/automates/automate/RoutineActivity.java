@@ -40,6 +40,7 @@ import android.widget.Toast;
 import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
@@ -540,6 +541,13 @@ public class RoutineActivity extends FragmentActivity {
         
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        menu.findItem(R.id.action_settings).setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
     }
     
     private void popupActionOptions(View v, String s) {

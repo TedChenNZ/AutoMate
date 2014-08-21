@@ -11,8 +11,12 @@ import java.util.HashMap;
 import java.util.List;
  
 
+
+
 import org.json.JSONObject;
  
+
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +27,7 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +36,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
  
+
+
 
 import com.automates.automate.locations.GeocodeJSONParser;
 import com.automates.automate.locations.UserLocation;
@@ -201,7 +208,13 @@ public class LocationActivity extends FragmentActivity {
     }
     
 
-
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        menu.findItem(R.id.action_settings).setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
+    }
+    
     private void showRadius(UserLocation ul, GoogleMap gm) {
     	
     	if (ul.getRadius() != null && markerOptions != null && markerOptions.getPosition() != null) {
