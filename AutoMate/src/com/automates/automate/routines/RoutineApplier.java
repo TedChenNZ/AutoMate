@@ -14,6 +14,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.automates.automate.Logger;
 import com.automates.automate.PhoneState;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.pattern.WeightManager;
@@ -60,6 +61,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	private void apply(Routine r) {
 		// TODO Auto-generated method stub
+		Logger.getInstance().logRoutine(r);
 		Log.d(TAG, "Actioning routine " + r.getName());
 		if(r.getEventCategory().equalsIgnoreCase(Settings.WIFI)){
 			if(r.getEvent().equalsIgnoreCase("false")){
@@ -87,6 +89,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		}
 		
 		appliedRoutines.put(r.getId(), System.currentTimeMillis());
+		
 
 	}
 
