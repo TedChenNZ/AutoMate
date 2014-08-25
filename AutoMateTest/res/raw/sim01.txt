@@ -8,7 +8,20 @@
 12/08/2014 09:00:00, Wifi, false, Home
 12/08/2014 10:10:03, Wifi, true, Work
 12/08/2014 10:10:40, Ringer, 1, Work
+12/08/2014 17:01:03, Wifi, false, Unknown
+12/08/2014 17:03:01, Ringer, 3, Unknown
+12/08/2014 18:30:47, Wifi, true, Home
 
 13/08/2014 09:00:00, Wifi, false, Home
+13/08/2014 10:11:13, Wifi, true, Work
+13/08/2014 10:17:40, Ringer, 1, Work
+13/08/2014 17:01:04, Wifi, false, Unknown
+13/08/2014 17:05:01, Ringer, 3, Unknown
+13/08/2014 18:10:47, Wifi, true, Home
 
-14/08/2014 09:00:00, Wifi, false, Home 
+14/08/2014 09:00:00, Wifi, false, Home
+14/08/2014 09:58:26, Wifi, true, Work
+14/08/2014 10:00:40, Ringer, 1, Work 
+14/08/2014 17:01:13, Wifi, false, Unknown
+14/08/2014 17:04:01, Ringer, 3, Unknown
+14/08/2014 18:20:47, Wifi, true, Home
