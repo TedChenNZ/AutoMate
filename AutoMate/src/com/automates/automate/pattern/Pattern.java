@@ -84,18 +84,22 @@ public class Pattern {
 	    Calendar c = Calendar.getInstance();
 	    c.setTimeInMillis(this.actualTime);
 	    r.setHour(c.get(Calendar.HOUR_OF_DAY));
-	    r.setMinute(c.get(Calendar.MINUTE));
+	    r.setMinute(round((c.get(Calendar.MINUTE)), 5));
 	    
 
 //	    r.setDay("" + this.day);
 	    r.setLocation(this.location);
-	    r.setmData(this.mData);
-	    r.setWifi(this.wifi);
+//	    r.setmData(this.mData);
+//	    r.setWifi(this.wifi);
 	    r.setStatusCode(StatusCode.IN_DEV);
 	    Routine r2 = PhoneState.getRoutinesList().addRoutine(r);
 	    activate(r2);
     }
-
+    
+    private int round(double i, int v) {
+    	return (int) (Math.round(i/v)*v);
+    	
+    }
     public void activate(Routine r) {
 	// TODO Auto-generated method stub
 	//ask user if location/wifi/data are conditions NOTIFICATION
