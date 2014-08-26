@@ -87,7 +87,7 @@ public class FirstRunActivity extends Activity {
 					case 5:
 //						int locationID = PhoneState.getLocationsList().getUserLocationFromName("Work").getId();
 					    int locationID = 2;
-						PhoneState.getRoutinesList().addRoutine(new Routine(1, "Silent at Work", "0", Settings.RINGER, -1, -1, "", String.valueOf(locationID), "", "", 1));
+						PhoneState.getRoutineManager().addRoutine(new Routine(1, "Silent at Work", "0", Settings.RINGER, -1, -1, "", String.valueOf(locationID), "", "", 1));
 						screen++;
 						updateScreen();
 					    break;

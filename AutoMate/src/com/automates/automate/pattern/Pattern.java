@@ -92,7 +92,7 @@ public class Pattern {
 //	    r.setmData(this.mData);
 //	    r.setWifi(this.wifi);
 	    r.setStatusCode(StatusCode.IN_DEV);
-	    Routine r2 = PhoneState.getRoutinesList().addRoutine(r);
+	    Routine r2 = PhoneState.getRoutineManager().addRoutine(r);
 	    activate(r2);
     }
     

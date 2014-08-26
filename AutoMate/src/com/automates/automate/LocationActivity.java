@@ -102,7 +102,7 @@ public class LocationActivity extends FragmentActivity {
         	etName.setText(FIRSTRUN);
         }
         if (EditItem != -1) {
-        	userloc = PhoneState.getLocationsList().get(EditItem);
+        	userloc = PhoneState.getLocationsList().get(EditItem).clone();
         	
         	showUserLocation(userloc, mMap, 15);
         	showRadius(userloc, mMap);
@@ -134,21 +134,6 @@ public class LocationActivity extends FragmentActivity {
                     Toast.makeText(getBaseContext(), "No Location is entered", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
-//                // Getting the radius entered
-//                String r = etRadius.getText().toString();
-//                
-//                if(r==null || r.equals("")){
-//                    Toast.makeText(getBaseContext(), "No Radius is entered", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-                
-//                try {
-//                	radius_to_parse = Integer.parseInt(r);
-//                } catch (NumberFormatException e) {
-//                	Toast.makeText(getBaseContext(), "Radius must be a number", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
                 
                 // Show loading icon
                 loading.setVisibility(View.VISIBLE);
@@ -207,13 +192,6 @@ public class LocationActivity extends FragmentActivity {
 
     }
     
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        menu.findItem(R.id.action_settings).setVisible(false);
-        return super.onPrepareOptionsMenu(menu);
-    }
     
     private void showRadius(UserLocation ul, GoogleMap gm) {
     	
@@ -419,7 +397,7 @@ public class LocationActivity extends FragmentActivity {
             }
             for (UserLocation u: PhoneState.getLocationsList()) {
             	Log.d("LocationActivity", u.getName() + " " + name);
-            	if (u.getName().equals(name)) {
+            	if (u.getName().equals(name) && userloc.getId() != u.getId()) {
                     Toast.makeText(getBaseContext(), "The Name '" + name + "' is already in use", Toast.LENGTH_SHORT).show();
                     return;
             	}

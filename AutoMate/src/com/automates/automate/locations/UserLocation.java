@@ -103,4 +103,15 @@ public class UserLocation {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	public UserLocation clone() {
+		UserLocation userloc = new UserLocation();
+    	userloc.setId(this.getId());
+    	userloc.setLocation(this.getLocation());
+    	userloc.setLocationName(this.getLocationName());
+    	userloc.setName(this.getName());
+    	userloc.setRadius(this.getRadius());
+    	return userloc;
+	}
 }

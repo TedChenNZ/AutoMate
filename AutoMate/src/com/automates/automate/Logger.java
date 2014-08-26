@@ -1,5 +1,7 @@
 package com.automates.automate;
 
+import android.util.SparseArray;
+
 import com.automates.automate.routines.Routine;
 
 public final class Logger {
@@ -7,15 +9,17 @@ public final class Logger {
 	private static Logger instance = null;
 	private String wifiBSSID;
 	private boolean mdata;
-	private Routine routine;
+	private SparseArray<Long> appliedRoutines;
 	
 	private Logger() {
 		// Exists only to defeat instantiation.
 		// Set to private -> no subclassing
+		appliedRoutines = new SparseArray<Long>();
 	}
 	public static Logger getInstance() {
 		if(instance == null) {
 			instance = new Logger();
+			
 		}
 		return instance;
 	}
@@ -25,17 +29,38 @@ public final class Logger {
 		wifiBSSID = w;
 		mdata = d;
 	}
-	public void logRoutine(Routine r) {
-		routine = r;
+	
+	public void logRoutine(int id) {
+		appliedRoutines.put(id, System.currentTimeMillis());
+
 	}
+	
+	
+	
 	public String getWifiBSSID() {
 		return wifiBSSID;
 	}
 	public boolean getMData() {
 		return mdata;
 	}
-	public Routine getRoutine() {
-		return routine;
+	
+	public SparseArray<Long> getAppliedRoutines() {
+		return appliedRoutines;
+	}
+	
+	public void setAppliedRoutines(SparseArray<Long> appliedRoutines) {
+		this.appliedRoutines = appliedRoutines;
+	}
+	
+	public SparseArray<Long> getAppliedRoutinesWithinTimeframe(long timeframe) {
+		SparseArray<Long> appliedRecently = new SparseArray<Long>();
+		for (int i = 0; i < appliedRoutines.size(); i++) {
+			
+			if ((System.currentTimeMillis() - appliedRoutines.valueAt(i)) < timeframe) {
+				appliedRecently.put(i, appliedRoutines.get(i));
+			}
+		}
+		return appliedRecently;
 	}
 }
 

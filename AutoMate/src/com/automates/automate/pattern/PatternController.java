@@ -12,7 +12,6 @@ import com.automates.automate.settings.Settings;
 public class PatternController implements PatternControl {
 	private Pattern p = new Pattern();
 
-	@SuppressWarnings("unused")
 	private final String TAG = "PatternController";
 
 	public PatternController(String actionCategory, String action) {

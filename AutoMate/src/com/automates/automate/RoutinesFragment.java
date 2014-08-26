@@ -48,7 +48,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 	View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
 
 	// Adapter
-	routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getRoutinesList());
+	routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getRoutineManager());
 
 	// List View Initialize
 	routinesListView = (ListView) rootView.findViewById(R.id.routinesListView);
@@ -110,7 +110,6 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
     }
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-	Log.d("RoutinesFragment", "PropertyChangeEvent recieved");
 
     }
 
@@ -127,7 +126,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 	switch(requestCode) { 
 	case (0) : { 
 	    if (resultCode == Activity.RESULT_OK) {
-		PhoneState.getRoutinesList();
+		PhoneState.getRoutineManager();
 		routinesAdapter.notifyDataSetChanged();
 		//	    	  	updateCurrentLocation();
 	    } 
@@ -171,7 +170,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 		    Collections.reverse(selected);
 		    for (int i = 0; i < selected.size(); i++) {
 			Routine r = (Routine) adapter.getItem(selected.get(i));
-			PhoneState.getRoutinesList().remove(r);
+			PhoneState.getRoutineManager().remove(r);
 		    }
 		    adapter.notifyDataSetChanged();
 		    mode.finish();

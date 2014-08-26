@@ -111,7 +111,7 @@ public class RoutineActivity extends FragmentActivity {
         final int routineID = intent.getIntExtra("routineID", -1);
         
         if (routineID != -1) {
-        	for (Routine r: PhoneState.getRoutinesList()) {
+        	for (Routine r: PhoneState.getRoutineManager()) {
         		if (routineID == r.getId()) {
         			routine = r;
         			actions.add(r.actionsString());
@@ -127,16 +127,19 @@ public class RoutineActivity extends FragmentActivity {
         	
         }
         
+        // Get pattern from intent if exists
         patternID = intent.getIntExtra("patternID", -1);
         
+        // Dismiss Button
     	dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
     	
-        if (routine.getStatusCode() == StatusCode.AWAITING_APPROVAL || routine.getStatusCode() == StatusCode.IN_DEV) {
+        if ((routine.getStatusCode() == StatusCode.AWAITING_APPROVAL)) {
         	dismissButton.setVisibility(View.VISIBLE);
+        	checkboxEnabled.setChecked(true); // Tick 'enabled'
         	dismissButton.setOnClickListener(new OnClickListener() {
         		@Override
         		public void onClick(View v) {
-        			PhoneState.getRoutinesList().remove(routine);
+        			PhoneState.getRoutineManager().remove(routine);
         			if (patternID != -1) {
 	        			Pattern p = PhoneState.getPatternDb().getPattern(patternID);
 	                	p.setStatusCode(StatusCode.DECLINED);
@@ -154,7 +157,7 @@ public class RoutineActivity extends FragmentActivity {
         }
         
         
-    
+        // Add Trigger Listener
         addTrigger.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +165,7 @@ public class RoutineActivity extends FragmentActivity {
             }
         });
             
-        
+        // Add Action Listener
         addAction.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,16 +214,16 @@ public class RoutineActivity extends FragmentActivity {
                     }
                 }
                 if (editing) {
-                	for (int i = 0; i < PhoneState.getRoutinesList().size(); i++) {
-                		Routine r = PhoneState.getRoutinesList().get(i);
+                	for (int i = 0; i < PhoneState.getRoutineManager().size(); i++) {
+                		Routine r = PhoneState.getRoutineManager().get(i);
             			if (r.getId() == routineID) {
-            				PhoneState.getRoutinesList().set(i, r);
+            				PhoneState.getRoutineManager().set(i, r);
             				break;
                 		}
                 	}
                 	
                 } else {
-                	PhoneState.getRoutinesList().add(routine);
+                	PhoneState.getRoutineManager().add(routine);
                 }
                 
 
@@ -541,13 +544,6 @@ public class RoutineActivity extends FragmentActivity {
         
         popupWindow.setOutsideTouchable(true);
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-    }
-    
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        menu.findItem(R.id.action_settings).setVisible(false);
-        return super.onPrepareOptionsMenu(menu);
     }
     
     private void popupActionOptions(View v, String s) {

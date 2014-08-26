@@ -29,12 +29,12 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 	public Context context;
 	private final static String TAG = "RoutineApplier";
 	private final static long MIN_RECENT = WeightManager.timeDivision;
-	private SparseArray<Long> appliedRoutines;
+	
 
 	public RoutineApplier(Context context){
 		PhoneState.getInstance().addChangeListener(this);
 		this.context = context;
-		appliedRoutines = new SparseArray<Long>();
+		
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 
 	private void apply(Routine r) {
 		// TODO Auto-generated method stub
-		Logger.getInstance().logRoutine(r);
+		Logger.getInstance().logRoutine(r.getId());
 		Log.d(TAG, "Actioning routine " + r.getName());
 		if(r.getEventCategory().equalsIgnoreCase(Settings.WIFI)){
 			if(r.getEvent().equalsIgnoreCase("false")){
@@ -87,8 +87,6 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 				Log.d(TAG, "Data turned on");
 			}
 		}
-		
-		appliedRoutines.put(r.getId(), System.currentTimeMillis());
 		
 
 	}
@@ -123,8 +121,8 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 	
 	private boolean checkAppliedRecently(Routine r) {
 		boolean applied = false;
-		if (appliedRoutines.get(r.getId()) != null) {
-			if ((System.currentTimeMillis() - appliedRoutines.get(r.getId())) < MIN_RECENT) {
+		if (Logger.getInstance().getAppliedRoutines().get(r.getId()) != null) {
+			if ((System.currentTimeMillis() - Logger.getInstance().getAppliedRoutines().get(r.getId())) < MIN_RECENT) {
 				applied = true;
 			}
 		}
