@@ -16,10 +16,9 @@ import com.automates.automate.routines.Routine;
 
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";
-	private final static int TIME_FRAME = 5 * 1000; // 5 seconds
+	private final static int TIME_FRAME = 10 * 1000; // 5 seconds
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d(TAG, intent.getAction());
 		PhoneState.update(context);
 		String eventCategory = PhoneState.getEventCategory(intent);
 
@@ -41,12 +40,15 @@ public class IntentReceiver extends BroadcastReceiver {
 	}
 	
 	private boolean checkIntentFromRoutine(String event) {
-		SparseArray<Long> appliedRecently = Logger.getInstance().getAppliedRoutinesWithinTimeframe(TIME_FRAME);
+		SparseArray<Long> appliedRecently = Logger.getInstance().getAppliedRoutinesWithinTimeframe(System.currentTimeMillis(), TIME_FRAME);
+		Log.d(TAG, "applied: " + Logger.getInstance().getAppliedRoutines());
+		Log.d(TAG, "appliedRecently: " + appliedRecently);
+
 		boolean fromRoutine = false;
 		Routine r = null;
 		for (int i = 0; i < appliedRecently.size(); i++) {
 			r = PhoneState.getRoutineManager().getRoutine(appliedRecently.keyAt(i));
-			
+			Log.d(TAG, "Routine: "+r);
 			if (r != null) {
 				if (r.getEventCategory().equals(event)) {
 					fromRoutine = true;
@@ -54,6 +56,8 @@ public class IntentReceiver extends BroadcastReceiver {
 				}
 			}
 		}
+		
+		
 		Log.d(TAG, "fromRoutine: " + fromRoutine);
 		return fromRoutine;
 	}

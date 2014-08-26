@@ -48,16 +48,13 @@ public final class Logger {
 		return appliedRoutines;
 	}
 	
-	public void setAppliedRoutines(SparseArray<Long> appliedRoutines) {
-		this.appliedRoutines = appliedRoutines;
-	}
 	
-	public SparseArray<Long> getAppliedRoutinesWithinTimeframe(long timeframe) {
+	public SparseArray<Long> getAppliedRoutinesWithinTimeframe(long time, long timeframe) {
 		SparseArray<Long> appliedRecently = new SparseArray<Long>();
 		for (int i = 0; i < appliedRoutines.size(); i++) {
 			
-			if ((System.currentTimeMillis() - appliedRoutines.valueAt(i)) < timeframe) {
-				appliedRecently.put(i, appliedRoutines.get(i));
+			if ((time - appliedRoutines.valueAt(i)) < timeframe) {
+				appliedRecently.put(appliedRoutines.keyAt(i), appliedRoutines.valueAt(i));
 			}
 		}
 		return appliedRecently;
