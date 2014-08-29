@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="21.0.0-rc1" >
+        <source path="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0-rc1\assets" />
+    </dataSet>
+    <dataSet config="5.2.08" >
+        <source path="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.2.08\assets" />
+    </dataSet>
+    <dataSet config="unspecified" >
+        <source path="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\AutoMate1\androidBootstrap\unspecified\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="X:\Documents\AutoMate1\autoMate\src\main\assets" >
+            <file
+                name="fontawesome-webfont.ttf"
+                path="X:\Documents\AutoMate1\autoMate\src\main\assets\fontawesome-webfont.ttf" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="X:\Documents\AutoMate1\autoMate\src\debug\assets" />
+    </dataSet>
+
+</merger>

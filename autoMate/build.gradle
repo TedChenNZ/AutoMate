@@ -1,13 +1,16 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "com.beardedhen.androidbootstrap"
-        minSdkVersion 7
+        applicationId "com.automates.automate"
+        minSdkVersion 14
         targetSdkVersion 18
+
+        testApplicationId "com.automates.automate.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
     buildTypes {
@@ -19,5 +22,7 @@ android {
 }
 
 dependencies {
+    compile project(':androidBootstrap')
     compile 'com.android.support:support-v4:20.0.0' 
+    compile 'com.google.android.gms:play-services:+'
 }

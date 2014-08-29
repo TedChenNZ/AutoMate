@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+	<PreferenceCategory
+            android:title="@string/services">
+            
+        <CheckBoxPreference
+                android:key="pref_routines"
+                android:title="@string/enable_routines"
+                android:summary="@string/routines_d"
+                android:defaultValue="true" />
+        
+        <CheckBoxPreference
+                android:key="pref_learning"
+                android:title="@string/enable_learning"
+                android:summary="@string/learning_d"
+                android:defaultValue="true" />
+ 
+    </PreferenceCategory>
+</PreferenceScreen>
+<!-- From: file:/X:/Documents/AutoMate1/autoMate/src/main/res/xml/preferences.xml -->
