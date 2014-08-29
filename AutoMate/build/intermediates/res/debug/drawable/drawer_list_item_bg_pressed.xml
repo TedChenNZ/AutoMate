@@ -1,7 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-  <gradient
-      android:startColor="@color/drawer_background_pressed"
-      android:endColor="@color/drawer_background_pressed"
-      android:angle="90" />
-</shape><!-- From: file:/X:/Documents/AutoMate1/autoMate/src/main/res/drawable/drawer_list_item_bg_pressed.xml -->
