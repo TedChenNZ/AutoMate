@@ -1,7 +1,5 @@
 package com.automates.automate.locations;
 
-import com.automates.automate.PhoneState;
-
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -14,6 +12,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+
+import com.automates.automate.PhoneState;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
 public class GPSTracker extends Service implements LocationListener {
@@ -42,7 +42,9 @@ public class GPSTracker extends Service implements LocationListener {
  
     // Declaring a Location Manager
     protected LocationManager locationManager;
- 
+    public GPSTracker() {
+        this.mContext = this.getApplicationContext();
+    }
     public GPSTracker(Context context) {
         this.mContext = context;
         locationManager = (LocationManager) mContext

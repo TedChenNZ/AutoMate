@@ -1,9 +1,9 @@
 package com.automates.automate.pattern;
 
-import java.util.Calendar;
 import com.automates.automate.PhoneState;
 import com.automates.automate.routines.Routine;
-import com.automates.automate.settings.NotifyManager;
+
+import java.util.Calendar;
 
 /**
  * This class defines the structure for a pattern to be entered into the database. Also contains methods to compare for unique patterns.
