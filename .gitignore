@@ -11,7 +11,6 @@
 # generated files
 bin/
 gen/
-build/
 
 # windows thumbnail files
 *.db
@@ -38,3 +37,8 @@ project.properties
 
 *.log
 *.prefs
+
+# Android Studio
+.idea
+.gradle
+build/
