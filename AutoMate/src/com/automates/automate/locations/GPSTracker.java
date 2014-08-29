@@ -35,23 +35,62 @@ public class GPSTracker extends Service implements LocationListener {
     private double longitude; // longitude
  
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 50; // meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 200; // meters
  
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 5; // 5 minutes
  
     // Declaring a Location Manager
     protected LocationManager locationManager;
  
     public GPSTracker(Context context) {
         this.mContext = context;
+        locationManager = (LocationManager) mContext
+                .getSystemService(LOCATION_SERVICE);
         getLocation();
     }
- 
+    
+    private Location getLocationNetworkProvider() {
+    	try {
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    MIN_TIME_BW_UPDATES,
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            Log.d(TAG, "getLocationNetworkProvider");
+            if (locationManager != null) {
+                lastLocation = locationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (lastLocation != null) {
+                    latitude = lastLocation.getLatitude();
+                    longitude = lastLocation.getLongitude();
+                }
+            }
+    	} catch (Exception e) {
+    		
+    	}
+    	return lastLocation;
+    }
+    
+    private Location getLocationGPS() {
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MIN_TIME_BW_UPDATES,
+                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+        Log.d(TAG, "getLocationGPS");
+        if (locationManager != null) {
+            lastLocation = locationManager
+                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (lastLocation != null) {
+                latitude = lastLocation.getLatitude();
+                longitude = lastLocation.getLongitude();
+            }
+        }
+        return lastLocation;
+    }
+    
     public Location getLocation() {
         try {
-            locationManager = (LocationManager) mContext
-                    .getSystemService(LOCATION_SERVICE);
+
  
             // getting GPS status
             isGPSEnabled = locationManager
@@ -67,37 +106,14 @@ public class GPSTracker extends Service implements LocationListener {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d(TAG, "Network");
-                    if (locationManager != null) {
-                        lastLocation = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (lastLocation != null) {
-                            latitude = lastLocation.getLatitude();
-                            longitude = lastLocation.getLongitude();
-                        }
-                    }
+                	getLocationNetworkProvider();
                 }
                 // else if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
-                    if (lastLocation == null) {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d(TAG, "GPS Enabled");
-                        if (locationManager != null) {
-                            lastLocation = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (lastLocation != null) {
-                                latitude = lastLocation.getLatitude();
-                                longitude = lastLocation.getLongitude();
-                            }
-                        }
-                    }
+
+                	if (lastLocation == null) {
+                		getLocationGPS();
+                	}
                 }
             }
  

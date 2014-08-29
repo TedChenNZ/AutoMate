@@ -48,7 +48,7 @@ public class UserLocationsList extends ArrayList<UserLocation> {
 		currentULList.clear();
 
 		for (int i = 0; i < size; i++) {
-			if (this.get(i).containsLocation(loc)) {
+			if (this.get(i).withinRadius(loc)) {
 				currentULList.add(this.get(i));
 			}
 		}

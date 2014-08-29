@@ -14,9 +14,14 @@ public class UserLocation {
 	private String name;
 	private LatLng location;
 	private Integer radius;
-	private String locationName = "";
+	private String locationName;
+//	private String wifi_ssid;
+//	private String wifi_bssid;
 	
 	public UserLocation() {
+		locationName = "";
+//		wifi_ssid = "";
+//		wifi_bssid = "";
 	}
 	
 	public UserLocation(String name, LatLng location, Integer radius, String locationName) {
@@ -24,14 +29,25 @@ public class UserLocation {
 		this.location = location;
 		this.radius = radius;
 		this.locationName = locationName;
+//		wifi_ssid = "";
+//		wifi_bssid = "";
 	}
+	
+//	public UserLocation(String name, LatLng location, Integer radius, String locationName, String wifi_ssid, String wifi_bssid) {
+//		this.name = name;
+//		this.location = location;
+//		this.radius = radius;
+//		this.locationName = locationName;
+//		this.wifi_ssid = wifi_ssid;
+//		this.wifi_bssid = wifi_bssid;
+//	}
 	
 	/**
 	 * Check if a given location is within the radius of this UserLocation
 	 * @param loc
 	 * @return boolean
 	 */
-	public boolean containsLocation(LatLng loc) {
+	public boolean withinRadius(LatLng loc) {
 		if (location == null) {
 			return false;
 		}
@@ -50,12 +66,12 @@ public class UserLocation {
 		return isWithinRadius;
 	}
 	
-	public boolean containsLocation(Location loc) {
+	public boolean withinRadius(Location loc) {
 		if (loc == null) {
 			return false;
 		}
 		LatLng l = new LatLng(loc.getLatitude(), loc.getLongitude());
-		return this.containsLocation(l);
+		return this.withinRadius(l);
 		
 	}
 
@@ -104,7 +120,21 @@ public class UserLocation {
 		this.id = id;
 	}
 	
-	
+//	public void setWifiSSID(String wifi_ssid) {
+//		this.wifi_ssid = wifi_ssid;
+//	}
+//	
+//	public String getWifiSSID() {
+//		return this.wifi_ssid;
+//	}
+//	
+//	public void setWifiBSSID(String wifi_bssid) {
+//		this.wifi_bssid = wifi_bssid;
+//	}
+//	
+//	public String getWifiBSSID() {
+//		return this.wifi_bssid;
+//	}
 	public UserLocation clone() {
 		UserLocation userloc = new UserLocation();
     	userloc.setId(this.getId());
@@ -112,6 +142,8 @@ public class UserLocation {
     	userloc.setLocationName(this.getLocationName());
     	userloc.setName(this.getName());
     	userloc.setRadius(this.getRadius());
+//    	userloc.setWifiSSID(this.getWifiSSID());
+//    	userloc.setWifiBSSID(this.getWifiBSSID());
     	return userloc;
 	}
 }

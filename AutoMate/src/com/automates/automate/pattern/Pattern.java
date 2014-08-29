@@ -106,7 +106,7 @@ public class Pattern {
 	//alarm manager to do something for time based.
 //    	this.setStatusCode(StatusCode.AWAITING_APPROVAL);
 	NotifyManager nM = new NotifyManager();
-	nM.notification("Pattern recognised", "AutoMate has recognised a pattern - tap on this notification to configure the routine!", r.getId(), this.getId());
+	nM.notification("Routine Recognised", "AutoMate has recognised a routine - tap on this notification to configure the routine!", r.getId(), this.getId());
 
     }
 
