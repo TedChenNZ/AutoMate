@@ -1,20 +1,22 @@
 package com.automates.automate.testPatterns;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
 import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.Pattern;
 import com.automates.automate.pattern.PatternGenerator;
+import com.automates.automate.pattern.PatternService;
+import com.automates.automate.routines.RoutineService;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 import com.automates.automate.sqlite.UserLocationDB;
+
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PatternSimulator extends InstrumentationTestCase {
 	private static final String TAG = "PatternSimulator";
@@ -32,11 +34,11 @@ public class PatternSimulator extends InstrumentationTestCase {
 		super.setUp();
 		context 
 		= new RenamingDelegatingContext(getInstrumentation().getTargetContext(), TEST_FILE_PREFIX);
-		PhoneService.update(context);
+		PhoneService.getInstance().update(context);
 		context.deleteDatabase(TEST_FILE_PREFIX + UserLocationDB.DATABASE_NAME);
 		context.deleteDatabase(TEST_FILE_PREFIX + PatternDB.DATABASE_NAME);
 		context.deleteDatabase(TEST_FILE_PREFIX + RoutineDB.DATABASE_NAME);
-		PhoneService.update(context);
+		PhoneService.getInstance().update(context);
 		List<Pattern> patternList = getPatternSimulation();
 		for (Pattern p: patternList) {
 			PatternGenerator pg = new PatternGenerator(p);
@@ -80,27 +82,27 @@ public class PatternSimulator extends InstrumentationTestCase {
 	}
 
 	public void testRoutineAmount() {
-		int amount = PhoneService.getRoutineDb().getAllRoutines().size();
+		int amount = RoutineService.getInstance().getAllRoutines().size();
 		assertEquals(3, amount);
 	}
 
 	public void testPatternAmount() {
-		int amount = PhoneService.getPatternDb().getAllPatterns().size();
+		int amount = PatternService.getInstance().getAllPatterns().size();
 		assertEquals(6, amount);
 	}
 
 	public void testPattern0() {
-		double weight = PhoneService.getPatternDb().getAllPatterns().get(0).getWeight();
+		double weight = PatternService.getInstance().getAllPatterns().get(0).getWeight();
 		assertTrue(2.0 <= weight);
 	}
 
 	public void testPattern1() {
-		double weight = PhoneService.getPatternDb().getAllPatterns().get(1).getWeight();
+		double weight = PatternService.getInstance().getAllPatterns().get(1).getWeight();
 		assertTrue(2.0 >= weight);
 	}
 
 	public void testRoutine0Time() {
-		int h = PhoneService.getRoutineDb().getAllRoutines().get(0).getHour();
+		int h = RoutineService.getInstance().getAllRoutines().get(0).getHour();
 		assertEquals(9, h);
 	}
 

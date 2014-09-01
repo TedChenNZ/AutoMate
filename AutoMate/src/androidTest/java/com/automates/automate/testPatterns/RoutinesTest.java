@@ -1,14 +1,15 @@
 package com.automates.automate.testPatterns;
 
-import java.lang.reflect.InvocationTargetException;
-
-import junit.framework.TestCase;
 import android.text.format.Time;
 
 import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.Pattern;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
+
+import junit.framework.TestCase;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class RoutinesTest extends TestCase {
 
@@ -29,9 +30,9 @@ public class RoutinesTest extends TestCase {
 	if (!r.getDay().equals(StatusCode.EMPTY) && r.getDay().indexOf(time.weekDay) == -1){conditions = false;};
 	if (r.getHour() != (StatusCode.DECLINED) && r.getHour() != time.hour){conditions = false;};
 	if (r.getMinute() != (StatusCode.DECLINED) && r.getMinute() != time.minute){conditions = false;};
-	if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneService.getSetLocation())){conditions = false;};
-	if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneService.isDataEnabled()))){conditions = false;};
-	if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneService.getWifiBSSID())){conditions = false;};
+	if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneService.getInstance().getSetLocation())){conditions = false;};
+	if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneService.getInstance().isDataEnabled()))){conditions = false;};
+	if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneService.getInstance().getWifiBSSID())){conditions = false;};
 
 
 	return conditions;
