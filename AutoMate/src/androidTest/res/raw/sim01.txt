@@ -1,27 +1,42 @@
-11/08/2014 09:00:00, Wifi, false, Home
+11/08/2014 09:21:23, Wifi, false, Home
 11/08/2014 10:02:03, Wifi, true, Work
 11/08/2014 10:03:04, Ringer, 1, Work
 11/08/2014 17:01:03, Wifi, false, Unknown
 11/08/2014 17:02:01, Ringer, 3, Unknown
 11/08/2014 18:00:47, Wifi, true, Home
 
-12/08/2014 09:00:00, Wifi, false, Home
+12/08/2014 09:29:10, Wifi, false, Home
 12/08/2014 10:10:03, Wifi, true, Work
 12/08/2014 10:10:40, Ringer, 1, Work
-12/08/2014 17:01:03, Wifi, false, Unknown
-12/08/2014 17:03:01, Ringer, 3, Unknown
-12/08/2014 18:30:47, Wifi, true, Home
+12/08/2014 16:02:23, Wifi, false, Unknown
+12/08/2014 16:03:11, Ringer, 3, Unknown
+12/08/2014 17:30:55, Wifi, true, Home
 
-13/08/2014 09:00:00, Wifi, false, Home
-13/08/2014 10:11:13, Wifi, true, Work
-13/08/2014 10:17:40, Ringer, 1, Work
-13/08/2014 17:01:04, Wifi, false, Unknown
-13/08/2014 17:05:01, Ringer, 3, Unknown
-13/08/2014 18:10:47, Wifi, true, Home
+13/08/2014 09:13:01, Wifi, false, Home
+13/08/2014 09:51:13, Wifi, true, Work
+13/08/2014 09:52:40, Ringer, 1, Work
+13/08/2014 16:02:14, Wifi, false, Unknown
+13/08/2014 16:06:21, Ringer, 3, Unknown
+13/08/2014 17:11:18, Wifi, true, Home
 
-14/08/2014 09:00:00, Wifi, false, Home
-14/08/2014 09:58:26, Wifi, true, Work
-14/08/2014 10:00:40, Ringer, 1, Work 
-14/08/2014 17:01:13, Wifi, false, Unknown
+14/08/2014 09:27:20, Wifi, false, Home
+14/08/2014 10:08:16, Wifi, true, Work
+14/08/2014 10:09:40, Ringer, 1, Work 
+14/08/2014 17:02:13, Wifi, false, Unknown
 14/08/2014 17:04:01, Ringer, 3, Unknown
-14/08/2014 18:20:47, Wifi, true, Home
+14/08/2014 18:20:03, Wifi, true, Home
+
+15/08/2014 09:18:02, Wifi, false, Home
+15/08/2014 10:00:26, Wifi, true, Work
+15/08/2014 10:00:40, Ringer, 1, Work 
+15/08/2014 17:01:13, Wifi, false, Unknown
+15/08/2014 17:04:01, Ringer, 3, Unknown
+15/08/2014 18:13:14, Wifi, true, Home
+
+16/08/2014 19:18:02, Wifi, false, Home
+16/08/2014 19:50:26, Wifi, true, Unknown
+16/08/2014 20:41:13, Wifi, false, Unknown
+16/08/2014 22:13:14, Wifi, true, Home
+
+17/08/2014 09:18:02, Ringer, 1, Home
+17/08/2014 13:04:01, Ringer, 3, Home
