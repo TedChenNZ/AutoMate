@@ -7,9 +7,6 @@ import android.util.Log;
 import com.automates.automate.locations.LocationTrackerService;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
-import com.automates.automate.pattern.PatternService;
-import com.automates.automate.routines.RoutineApplierService;
-import com.automates.automate.routines.RoutineService;
 import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
@@ -45,35 +42,11 @@ public final class PhoneService {
 		return instance;
 	}
 
-    // Initialise services
-    private void init(Context context) {
-        if (RoutineService.getInstance().getAllRoutines() == null) {
-            RoutineService.getInstance().init(context);
-        }
 
-        if (UserLocationService.getInstance().getAllUserLocations() == null) {
-            UserLocationService.getInstance().init(context);
-        }
-
-        if (PatternService.getInstance().getAllPatterns() == null) {
-            PatternService.getInstance().init(context);
-        }
-
-        if (LocationTrackerService.isInstantiated() == false) {
-            LocationTrackerService.getInstance().init(context);
-            LocationTrackerService.getInstance().getLocation();
-        }
-
-        if (RoutineApplierService.isInstantiated() == false) {
-            RoutineApplierService.getInstance().init(context);
-        }
-
-    }
 
 	public void update(Context context) {
 		// Initialize variables if they are not already initialized
 	    phoneContext = context;
-        init(context);
 		
 		// Update variables
 		Logger.getInstance().logConnectivity(wifiBSSID, dataEnabled);
@@ -110,8 +83,7 @@ public final class PhoneService {
 		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
 			event = Settings.RINGER;
 		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-			event = "BootUp";
-            return null;
+			event = Settings.BOOT;
 		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
 			event = Settings.WIFI;
 		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {

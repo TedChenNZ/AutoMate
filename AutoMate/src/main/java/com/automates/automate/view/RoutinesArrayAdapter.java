@@ -1,4 +1,4 @@
-package com.automates.automate.adapter;
+package com.automates.automate.view;
 
 import java.util.List;
 

@@ -16,8 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.UserLocationsArrayAdapter;
+import com.automates.automate.view.EditMultiChoiceModeListener;
+import com.automates.automate.view.UserLocationsArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 

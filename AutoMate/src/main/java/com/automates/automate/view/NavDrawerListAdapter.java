@@ -1,4 +1,4 @@
-package com.automates.automate.adapter;
+package com.automates.automate.view;
 
 
 
@@ -14,8 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.automates.automate.R;
-import com.automates.automate.model.NavDrawerItem;
- 
+
 public class NavDrawerListAdapter extends BaseAdapter {
      
     private Context context;

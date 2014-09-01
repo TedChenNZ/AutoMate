@@ -21,7 +21,12 @@ public class IntentReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		PhoneService.getInstance().update(context);
 		String eventCategory = PhoneService.getInstance().getEventCategory(intent);
-
+        if (eventCategory == Settings.BOOT) {
+            eventCategory = null;
+        }
+        if (!Initializer.isInitialized()) {
+            Initializer.init(context);
+        }
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean learning = sharedPrefs.getBoolean("pref_learning", true);
 		

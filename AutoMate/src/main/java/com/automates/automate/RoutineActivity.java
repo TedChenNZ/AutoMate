@@ -30,8 +30,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.SimpleArrayAdapter;
+import com.automates.automate.view.EditMultiChoiceModeListener;
+import com.automates.automate.view.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.pattern.Pattern;

@@ -18,8 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.automates.automate.adapter.NavDrawerListAdapter;
-import com.automates.automate.model.NavDrawerItem;
+import com.automates.automate.settings.Initializer;
+import com.automates.automate.view.NavDrawerListAdapter;
+import com.automates.automate.view.NavDrawerItem;
 
 import java.util.ArrayList;
 
@@ -122,7 +123,8 @@ public class MainActivity extends Activity {
             displayView(0);
         }
         
-        // Initialize Phone State (includes GPS service)
+        // Initialize Services
+        Initializer.init(this);
         PhoneService.getInstance().update(this);
         
 //        {
