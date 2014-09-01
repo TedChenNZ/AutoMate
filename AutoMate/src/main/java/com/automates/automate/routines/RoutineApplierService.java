@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.automates.automate.Logger;
 import com.automates.automate.PhoneService;
@@ -89,25 +90,30 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 		if(r.getEventCategory().equalsIgnoreCase(Settings.WIFI)){
 			if(r.getEvent().equalsIgnoreCase("false")){
 				Wifi.setWifiEnabled(context, false);
+                Toast.makeText(context, "AutoMate: Wifi has been turned off", Toast.LENGTH_SHORT).show();
 				Log.d(TAG, "Wifi turned off");
 			}
 			else{
 				Wifi.setWifiEnabled(context, true);
 				Log.d(TAG, "Wifi turned on");
+                Toast.makeText(context, "AutoMate: Wifi has been turned on", Toast.LENGTH_SHORT).show();
 			}
 		}
 		else if(r.getEventCategory().equalsIgnoreCase(Settings.RINGER)){
 			RingerProfiles.setSoundProfile(context, Integer.parseInt(r.getEvent()));
 			Log.d(TAG, "Ringer changed to " + r.getEvent());
+            Toast.makeText(context, "AutoMate: Ringer has been changed to " + r.getEvent(), Toast.LENGTH_SHORT).show();
 		}
 		else if(r.getEventCategory().equalsIgnoreCase(Settings.MDATA)){
 			if(r.getEvent().equalsIgnoreCase("false")){
 				Data.setDataEnabled(context, false);
 				Log.d(TAG, "Data turned off");
+                Toast.makeText(context, "AutoMate: Data has been turned off", Toast.LENGTH_SHORT).show();
 			}
 			else{
 				Data.setDataEnabled(context, true);
 				Log.d(TAG, "Data turned on");
+                Toast.makeText(context, "AutoMate: Data has been turned on", Toast.LENGTH_SHORT).show();
 			}
 		}
 		
