@@ -16,12 +16,14 @@ public class PatternGenerator {
 	public PatternGenerator(String actionCategory, String action) {
 		p.setEvent(action);
 		p.setEventCategory(actionCategory);
-        time = System.currentTimeMillis();
+        this.time = System.currentTimeMillis();
 		generatePattern();
 	}
 
 	public PatternGenerator(Pattern p) {
 		this.p = p;
+        time = p.getActualTime();
+        timeSet();
 	}
 
 	/* (non-Javadoc)
@@ -60,12 +62,10 @@ public class PatternGenerator {
 
 	private void timeSet(){
 		Time t = new Time();
-		t.setToNow();
+        t.set(time);
 		p.setDay(t.weekDay);
 		p.setActualTime(time);
 		timeTransform();
-
-
 	}
 
 	@SuppressWarnings("deprecation")
@@ -80,11 +80,8 @@ public class PatternGenerator {
 
 		long diff = time - startOfDay;
 		int intervals = (int) Math.ceil(diff/WeightManager.timeDivision);
-		String sRes = "" + intervals;
 
-		int result = Integer.parseInt(sRes);
-
-		p.setTime(result);
+		p.setTime(intervals);
 	}
 
 	/* (non-Javadoc)
