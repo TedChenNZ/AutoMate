@@ -1,17 +1,17 @@
 package com.automates.automate.sqlite;
 
  
-import java.util.LinkedList;
-import java.util.List;
- 
-import com.automates.automate.routines.Routine;
- 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.automates.automate.routines.Routine;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class manages the CRUD operations for the SQLite Database stored on the phone, it's a specific implementation for these routines.
@@ -92,7 +92,6 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
      */
     @Override
     public Routine addRoutine(Routine routine){
-        Log.d("addRoutine", routine.toString());
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
  

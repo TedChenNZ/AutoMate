@@ -10,8 +10,7 @@ import android.util.SparseArray;
 
 import com.automates.automate.Logger;
 import com.automates.automate.PhoneService;
-import com.automates.automate.pattern.PatternControl;
-import com.automates.automate.pattern.PatternController;
+import com.automates.automate.pattern.PatternGenerator;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineService;
 
@@ -33,7 +32,7 @@ public class IntentReceiver extends BroadcastReceiver {
 				return;
 			}
 			if(!connectivityCheck(eventCategory, eventAction)){
-				PatternControl pg = new PatternController(eventCategory,eventAction);
+				PatternGenerator pg = new PatternGenerator(eventCategory,eventAction);
 				pg.updateDatabase();
 			}
 		}

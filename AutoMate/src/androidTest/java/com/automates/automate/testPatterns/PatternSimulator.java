@@ -11,7 +11,7 @@ import android.test.RenamingDelegatingContext;
 
 import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.Pattern;
-import com.automates.automate.pattern.PatternController;
+import com.automates.automate.pattern.PatternGenerator;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 import com.automates.automate.sqlite.UserLocationDB;
@@ -39,7 +39,7 @@ public class PatternSimulator extends InstrumentationTestCase {
 		PhoneService.update(context);
 		List<Pattern> patternList = getPatternSimulation();
 		for (Pattern p: patternList) {
-			PatternController pg = new PatternController(p);
+			PatternGenerator pg = new PatternGenerator(p);
 			pg.updateDatabase();
 		}
 	}

@@ -25,8 +25,8 @@ public class RoutineService {
         return instance;
     }
 
-    public static void init(Context c) {
-        routineDB = new RoutineDB(c);
+    public static void init(Context context) {
+        routineDB = new RoutineDB(context);
         routineList = new ArrayList<Routine>();
         routineList.addAll(routineDB.getAllRoutines());
     }
@@ -43,9 +43,9 @@ public class RoutineService {
 		return routineList.remove(o);
 	}
 
-	public Routine set(int index, Routine ul) {
-		routineDB.updateRoutine(ul);
-		return routineList.set(index, ul);
+	public Routine set(int index, Routine r) {
+		routineDB.updateRoutine(r);
+		return routineList.set(index, r);
 	}
 	
 	public Routine addRoutine(Routine r) {

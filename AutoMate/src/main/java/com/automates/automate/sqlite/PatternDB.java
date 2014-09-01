@@ -1,17 +1,17 @@
 package com.automates.automate.sqlite;
 
  
-import java.util.LinkedList;
-import java.util.List;
- 
-import com.automates.automate.pattern.Pattern;
- 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.automates.automate.pattern.Pattern;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class manages the CRUD operations for the SQLite Database stored on the phone, it's a specific implementation for these patterns.
@@ -89,7 +89,7 @@ public class PatternDB extends SQLiteOpenHelper implements PatternManager{
     
     private static final String[] COLUMNS = {KEY_ID,KEY_EVENTCATEGORY,KEY_EVENT,KEY_TIME,KEY_ACTUALTIME,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_WEEKWEIGHT, KEY_WEIGHT,KEY_STATUSCODE};
  
-    public void addPattern(Pattern pattern){
+    public Pattern addPattern(Pattern pattern){
         Log.d("addPattern", pattern.toString());
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -109,13 +109,14 @@ public class PatternDB extends SQLiteOpenHelper implements PatternManager{
         values.put(KEY_STATUSCODE, pattern.getStatusCode());
  
         // 3. insert
-        db.insert(TABLE_PATTERNS, // table
+        long id = db.insert(TABLE_PATTERNS, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
  
         // 4. close
         db.close(); 
-        
+        pattern.setId((int) id);
+        return pattern;
     }
  
     public Pattern getPattern(int id){

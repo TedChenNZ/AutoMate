@@ -9,6 +9,7 @@ import android.util.Log;
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
+import com.automates.automate.pattern.PatternService;
 import com.automates.automate.routines.RoutineApplier;
 import com.automates.automate.routines.RoutineService;
 import com.automates.automate.routines.TimelyChecker;
@@ -16,7 +17,6 @@ import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 import com.automates.automate.settings.Wifi;
-import com.automates.automate.sqlite.PatternDB;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -34,8 +34,6 @@ public final class PhoneService {
 
 	private Context phoneContext;
 
-
-	private PatternDB patternDB;
 	private GPSTracker gpsTracker;
 	private RoutineApplier routineApplier;
 	private String wifiBSSID;
@@ -62,26 +60,25 @@ public final class PhoneService {
             UserLocationService.getInstance().init(context);
         }
 
+        if (PatternService.getInstance().getAllPatterns() == null) {
+            PatternService.getInstance().init(context);
+        }
+
+        if (gpsTracker == null) {
+            gpsTracker = new GPSTracker(context);
+        }
+
+        if (routineApplier == null) {
+            routineApplier = new RoutineApplier(context);
+            startRoutineChecking(context);
+        }
+
     }
 
 	public void update(Context context) {
 		// Initialize variables if they are not already initialized
 	    phoneContext = context;
         init(context);
-		if (patternDB == null) {
-			patternDB = new PatternDB(context);
-		}
-
-
-		if (gpsTracker == null) {
-			gpsTracker = new GPSTracker(context);
-		}
-		if (routineApplier == null) {
-			routineApplier = new RoutineApplier(context);
-			startRoutineChecking(context);
-		}
-
-		
 		
 		// Update variables
 		Logger.getInstance().logConnectivity(wifiBSSID, dataEnabled);
@@ -176,9 +173,6 @@ public final class PhoneService {
 	}
 	public int getSoundProfile() {
 		return soundProfile;
-	}
-	public PatternDB getPatternDb() {
-		return patternDB;
 	}
 	public GPSTracker getGPSTracker() {
 		return gpsTracker;

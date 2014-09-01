@@ -35,6 +35,7 @@ import com.automates.automate.adapter.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.pattern.Pattern;
+import com.automates.automate.pattern.PatternService;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineService;
@@ -141,9 +142,9 @@ public class RoutineActivity extends FragmentActivity {
         		public void onClick(View v) {
                     RoutineService.getInstance().remove(routine);
         			if (patternID != -1) {
-	        			Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
+	        			Pattern p = PatternService.getInstance().getPattern(patternID);
 	                	p.setStatusCode(StatusCode.DECLINED);
-	                	PhoneService.getInstance().getPatternDb().updatePattern(p);
+                        PatternService.getInstance().updatePattern(p);
         			}
                     Intent resultIntent = new Intent();
                 	setResult(Activity.RESULT_OK, resultIntent);
@@ -201,16 +202,16 @@ public class RoutineActivity extends FragmentActivity {
                 if (checkboxEnabled.isChecked()) {
                 	routine.setStatusCode(StatusCode.IMPLEMENTED);
                     if (patternID != -1) {
-                    	Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
+                    	Pattern p = PatternService.getInstance().getPattern(patternID);
                     	p.setStatusCode(StatusCode.IMPLEMENTED);
-                    	PhoneService.getInstance().getPatternDb().updatePattern(p);
+                        PatternService.getInstance().updatePattern(p);
                     }
                 } else {
                 	routine.setStatusCode(StatusCode.DECLINED);
                 	if (patternID != -1) {
-                    	Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
+                    	Pattern p = PatternService.getInstance().getPattern(patternID);
                     	p.setStatusCode(StatusCode.IMPLEMENTED);
-                    	PhoneService.getInstance().getPatternDb().updatePattern(p);
+                        PatternService.getInstance().updatePattern(p);
                     }
                 }
                 if (editing) {

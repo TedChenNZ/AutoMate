@@ -9,27 +9,27 @@ import com.automates.automate.settings.Settings;
 import java.util.Date;
 import java.util.List;
 
-public class PatternController implements PatternControl {
+public class PatternGenerator {
 	private Pattern p = new Pattern();
     private long time = 0;
 
 	private final String TAG = "PatternController";
 
-	public PatternController(String actionCategory, String action) {
+	public PatternGenerator(String actionCategory, String action) {
 		p.setEvent(action);
 		p.setEventCategory(actionCategory);
         time = System.currentTimeMillis();
 		generatePattern();
 	}
 
-	public PatternController(Pattern p) {
+	public PatternGenerator(Pattern p) {
 		this.p = p;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.automates.automate.data.PatternControl#generatePattern()
 	 */
-	@Override
+
 	public Pattern generatePattern(){
 
 		p.setLocation(PhoneService.getInstance().getSetLocation());
@@ -55,7 +55,7 @@ public class PatternController implements PatternControl {
 	/* (non-Javadoc)
 	 * @see com.automates.automate.data.PatternControl#getPattern()
 	 */
-	@Override
+
 	public Pattern getPattern(){
 		return p;
 	}
@@ -92,13 +92,13 @@ public class PatternController implements PatternControl {
 	/* (non-Javadoc)
 	 * @see com.automates.automate.data.PatternControl#updateDatabase()
 	 */
-	@Override
+
 	public void updateDatabase() {
 		Log.d(TAG, ""+ p.getId());
 		int id = getInstanceFromDB();
 		if(id != -1){
 			
-			Pattern oldP = PhoneService.getInstance().getPatternDb().getPattern(id);
+			Pattern oldP = PatternService.getInstance().getPattern(id);
 			Pattern newP = new WeightUpdater(p, oldP).updatePattern();
 //			Pattern newP = new WeightUpdater(p, id).updatePattern();
 			boolean threshold = newP.checkThreshold();
@@ -106,19 +106,19 @@ public class PatternController implements PatternControl {
 				newP.setStatusCode(StatusCode.IMPLEMENTED);
 				newP.addToRoutineDB();
 			}
-			PhoneService.getInstance().getPatternDb().updatePattern(newP);
+            PatternService.getInstance().updatePattern(newP);
 //			Log.d(TAG, "time: " + newP.getActualTime());
 //			Log.d(TAG, "updating pattern: " + newP.getWeight());
 		}
 		else{
 //			Log.d(TAG, "adding pattern");
-			PhoneService.getInstance().getPatternDb().addPattern(p);
+            PatternService.getInstance().addPattern(p);
 		}
 	}
 
 	private int getInstanceFromDB(){
 		int id = -1;
-		List<Pattern> ps = PhoneService.getInstance().getPatternDb().getAllPatterns();
+		List<Pattern> ps = PatternService.getInstance().getAllPatterns();
 		for(Pattern pList : ps){
 			if (pList.compare(p)){
 				id = pList.getId();
