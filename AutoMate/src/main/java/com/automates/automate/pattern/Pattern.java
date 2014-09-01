@@ -86,7 +86,7 @@ public class Pattern {
 	    r.setHour(c.get(Calendar.HOUR_OF_DAY));
 	    r.setMinute(round((c.get(Calendar.MINUTE)), 5));
 	    
-
+        r.setDay(Integer.toString(1234560));
 //	    r.setDay("" + this.day);
 	    r.setLocation(this.location);
 //	    r.setmData(this.mData);
