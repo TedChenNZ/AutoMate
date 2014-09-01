@@ -16,11 +16,13 @@ import android.util.Log;
 import com.automates.automate.PhoneService;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
-public class GPSTracker extends Service implements LocationListener {
+public class LocationTrackerService extends Service implements LocationListener {
 	private final static String TAG = "GPSTracker";
-	 
-    private final Context mContext;
- 
+    private static boolean instantiated = false;
+	private static LocationTrackerService instance = null;
+
+    private static Context mContext;
+
     // flag for GPS status
     private boolean isGPSEnabled = false;
  
@@ -41,17 +43,29 @@ public class GPSTracker extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 5; // 5 minutes
  
     // Declaring a Location Manager
-    protected LocationManager locationManager;
-    public GPSTracker() {
-        this.mContext = this.getApplicationContext();
+    protected static LocationManager locationManager;
+
+    private LocationTrackerService() {
     }
-    public GPSTracker(Context context) {
-        this.mContext = context;
+
+    public static LocationTrackerService getInstance() {
+        if (instance == null) {
+            instance = new LocationTrackerService();
+        }
+        return instance;
+    }
+
+    public static void init(Context context) {
+        mContext = context;
         locationManager = (LocationManager) mContext
                 .getSystemService(LOCATION_SERVICE);
-        getLocation();
+        instantiated = true;
     }
-    
+
+    public static boolean isInstantiated() {
+        return instantiated;
+    }
+
     private Location getLocationNetworkProvider() {
     	try {
             locationManager.requestLocationUpdates(
@@ -132,7 +146,7 @@ public class GPSTracker extends Service implements LocationListener {
      * */
     public void stopUsingGPS(){
         if(locationManager != null){
-            locationManager.removeUpdates(GPSTracker.this);
+            locationManager.removeUpdates(LocationTrackerService.this);
         }       
     }
      

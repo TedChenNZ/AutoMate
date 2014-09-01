@@ -1,5 +1,7 @@
 package com.automates.automate.routines;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -22,19 +24,41 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class RoutineApplier extends Service implements PropertyChangeListener{
+public class RoutineApplierService extends Service implements PropertyChangeListener{
+    private static boolean instantiated = false;
 
 	List<Routine> routines;
 	public Context context;
 	private final static String TAG = "RoutineApplier";
 	private final static long MIN_RECENT = WeightManager.timeDivision;
 	
+    private static RoutineApplierService instance = null;
+    private RoutineApplierService(){}
 
-	public RoutineApplier(Context context){
+    public static RoutineApplierService getInstance() {
+        if (instance == null) {
+            instance = new RoutineApplierService();
+        }
+        return instance;
+    }
+
+	public void init(Context context){
 		PhoneService.getInstance().addChangeListener(this);
 		this.context = context;
-		
+        startRoutineChecking(context);
+        instantiated = true;
 	}
+
+    public static boolean isInstantiated() {
+        return instantiated;
+    }
+
+    private void startRoutineChecking(Context context) {
+        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, TimelyChecker.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),30000,pendingIntent);
+    }
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
