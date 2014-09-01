@@ -18,7 +18,7 @@ public class TimelyChecker extends BroadcastReceiver{
 		Log.d("TimelyChecker", "Time is " + time.hour + ":" + time.minute + ", day is " + time.weekDay);
 		//PhoneState.getRoutineApplier().checkRoutines();
 		PhoneService.getInstance().update(context);
-		RoutineApplier rA = PhoneService.getInstance().getRoutineApplier();
+		RoutineApplierService rA = RoutineApplierService.getInstance();
 		if (rA != null) {
 			rA.checkRoutines();
 		} else {

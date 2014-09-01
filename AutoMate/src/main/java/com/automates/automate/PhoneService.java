@@ -1,18 +1,15 @@
 package com.automates.automate;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 
-import com.automates.automate.locations.GPSTracker;
+import com.automates.automate.locations.LocationTrackerService;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.pattern.PatternService;
-import com.automates.automate.routines.RoutineApplier;
+import com.automates.automate.routines.RoutineApplierService;
 import com.automates.automate.routines.RoutineService;
-import com.automates.automate.routines.TimelyChecker;
 import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
@@ -34,8 +31,6 @@ public final class PhoneService {
 
 	private Context phoneContext;
 
-	private GPSTracker gpsTracker;
-	private RoutineApplier routineApplier;
 	private String wifiBSSID;
 
 	private static PhoneService instance = null;
@@ -64,13 +59,13 @@ public final class PhoneService {
             PatternService.getInstance().init(context);
         }
 
-        if (gpsTracker == null) {
-            gpsTracker = new GPSTracker(context);
+        if (LocationTrackerService.isInstantiated() == false) {
+            LocationTrackerService.getInstance().init(context);
+            LocationTrackerService.getInstance().getLocation();
         }
 
-        if (routineApplier == null) {
-            routineApplier = new RoutineApplier(context);
-            startRoutineChecking(context);
+        if (RoutineApplierService.isInstantiated() == false) {
+            RoutineApplierService.getInstance().init(context);
         }
 
     }
@@ -88,18 +83,13 @@ public final class PhoneService {
 		dataEnabled = Data.getDataEnabled(context);
 //		wifiBSSID = Wifi.getWifiBSSID(context);
 		wifiBSSID = String.valueOf(wifiEnabled);
-		location = gpsTracker.getLastLocation();
+		location = LocationTrackerService.getInstance().getLastLocation();
 		
 		// Notify listeners
 		notifyListeners();
 	}
 
-	private void startRoutineChecking(Context context) {
-	    AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-	    Intent intent = new Intent(context, TimelyChecker.class);
-	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),30000,pendingIntent);
-	}
+
 	
 	public String checkConnectivityIntent() {
 //		String wifi = Logger.getWifiBSSID();
@@ -173,12 +163,6 @@ public final class PhoneService {
 	}
 	public int getSoundProfile() {
 		return soundProfile;
-	}
-	public GPSTracker getGPSTracker() {
-		return gpsTracker;
-	}
-	public RoutineApplier getRoutineApplier() {
-		return routineApplier;
 	}
 	public String getWifiBSSID() {
 		return wifiBSSID;

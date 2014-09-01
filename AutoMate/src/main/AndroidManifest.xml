@@ -81,7 +81,7 @@
         </receiver>
 
         <service
-            android:name="com.automates.automate.locations.GPSTracker"
+            android:name=".locations.LocationTrackerService"
             android:enabled="true"
             android:exported="false"
             android:label="GPSTrackerService" />
