@@ -70,7 +70,6 @@ public class PatternService {
                 patternList.set(i, pattern);
                 break;
             }
-            i++;
         }
         return id;
     }

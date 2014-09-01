@@ -1,7 +1,6 @@
 package com.automates.automate.pattern;
 
 import android.text.format.Time;
-import android.util.Log;
 
 import com.automates.automate.PhoneService;
 import com.automates.automate.settings.Settings;
@@ -13,7 +12,6 @@ public class PatternGenerator {
 	private Pattern p = new Pattern();
     private long time = 0;
 
-	private final String TAG = "PatternController";
 
 	public PatternGenerator(String actionCategory, String action) {
 		p.setEvent(action);
@@ -94,16 +92,15 @@ public class PatternGenerator {
 	 */
 
 	public void updateDatabase() {
-		Log.d(TAG, ""+ p.getId());
 		int id = getInstanceFromDB();
 		if(id != -1){
 			
 			Pattern oldP = PatternService.getInstance().getPattern(id);
 			Pattern newP = new WeightUpdater(p, oldP).updatePattern();
 //			Pattern newP = new WeightUpdater(p, id).updatePattern();
-			boolean threshold = newP.checkThreshold();
+			boolean threshold = newP.checkThresholdAndStatusCode();
 			if(threshold){
-				newP.setStatusCode(StatusCode.IMPLEMENTED);
+				newP.setStatusCode(StatusCode.AWAITING_APPROVAL);
 				newP.addToRoutineDB();
 			}
             PatternService.getInstance().updatePattern(newP);

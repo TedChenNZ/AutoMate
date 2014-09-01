@@ -200,8 +200,8 @@ public class Pattern {
 	this.weight = input;
     }
 
-    public boolean checkThreshold(){
-	if (this.weight >= WeightManager.suggestedWeight && this.statusCode != StatusCode.IMPLEMENTED){
+    public boolean checkThresholdAndStatusCode(){
+	if (this.weight >= WeightManager.suggestedWeight && this.statusCode == StatusCode.IN_DEV){
 	    return true;
 	}
 	return false;

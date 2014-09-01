@@ -37,9 +37,9 @@ public class NotificationActivity extends Activity {
 		int requestID = (int) System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
 	//	Context context = getApplicationContext();
-		Pattern p = PatternService.getInstance().getPattern(patternID);
-		p.setStatusCode(StatusCode.AWAITING_APPROVAL);
-        PatternService.getInstance().updatePattern(p);
+//		Pattern p = PatternService.getInstance().getPattern(patternID);
+//		p.setStatusCode(StatusCode.AWAITING_APPROVAL);
+//        PatternService.getInstance().updatePattern(p);
 	
 		Intent notificationIntent = new Intent(context, RoutineActivity.class);
 		notificationIntent.putExtra("routineID", routineID);

@@ -83,12 +83,12 @@ public class PatternSimulator extends InstrumentationTestCase {
 
 	public void testRoutineAmount() {
 		int amount = RoutineService.getInstance().getAllRoutines().size();
-		assertEquals(3, amount);
+		assertEquals(5, amount);
 	}
 
 	public void testPatternAmount() {
 		int amount = PatternService.getInstance().getAllPatterns().size();
-		assertEquals(6, amount);
+		assertEquals(16, amount);
 	}
 
 	public void testPattern0() {
