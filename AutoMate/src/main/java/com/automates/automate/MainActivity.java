@@ -18,9 +18,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.automates.automate.settings.Initializer;
-import com.automates.automate.view.NavDrawerListAdapter;
 import com.automates.automate.view.NavDrawerItem;
+import com.automates.automate.view.NavDrawerListAdapter;
 
 import java.util.ArrayList;
 
@@ -124,7 +123,6 @@ public class MainActivity extends Activity {
         }
         
         // Initialize Services
-        Initializer.init(this);
         PhoneService.getInstance().update(this);
         
 //        {

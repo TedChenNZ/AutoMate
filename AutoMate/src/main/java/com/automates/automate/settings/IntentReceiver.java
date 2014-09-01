@@ -24,9 +24,6 @@ public class IntentReceiver extends BroadcastReceiver {
         if (eventCategory == Settings.BOOT) {
             eventCategory = null;
         }
-        if (!Initializer.isInitialized()) {
-            Initializer.init(context);
-        }
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean learning = sharedPrefs.getBoolean("pref_learning", true);
 		

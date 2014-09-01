@@ -8,6 +8,7 @@ import com.automates.automate.locations.LocationTrackerService;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.settings.Data;
+import com.automates.automate.settings.Initializer;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 import com.automates.automate.settings.Wifi;
@@ -47,7 +48,9 @@ public final class PhoneService {
 	public void update(Context context) {
 		// Initialize variables if they are not already initialized
 	    phoneContext = context;
-		
+        if (!Initializer.isInitialized()) {
+            Initializer.init(context);
+        }
 		// Update variables
 		Logger.getInstance().logConnectivity(wifiBSSID, dataEnabled);
 		
