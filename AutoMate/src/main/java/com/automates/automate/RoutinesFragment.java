@@ -16,8 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.RoutinesArrayAdapter;
+import com.automates.automate.view.EditMultiChoiceModeListener;
+import com.automates.automate.view.RoutinesArrayAdapter;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineService;
 

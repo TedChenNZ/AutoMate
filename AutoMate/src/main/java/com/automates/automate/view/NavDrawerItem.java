@@ -1,4 +1,4 @@
-package com.automates.automate.model;
+package com.automates.automate.view;
 
 public class NavDrawerItem {
     
