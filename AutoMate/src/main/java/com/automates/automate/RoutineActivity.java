@@ -1,28 +1,19 @@
 package com.automates.automate;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.SimpleArrayAdapter;
-import com.automates.automate.locations.UserLocation;
-import com.automates.automate.pattern.Pattern;
-import com.automates.automate.pattern.StatusCode;
-import com.automates.automate.routines.Routine;
-import com.automates.automate.settings.RingerProfiles;
-import com.automates.automate.settings.Settings;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.view.ActionMode;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -31,20 +22,29 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.view.ActionMode;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.PopupWindow;
+
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.SimpleArrayAdapter;
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationService;
+import com.automates.automate.pattern.Pattern;
+import com.automates.automate.pattern.StatusCode;
+import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
+import com.automates.automate.settings.RingerProfiles;
+import com.automates.automate.settings.Settings;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @SuppressLint("InflateParams")
 public class RoutineActivity extends FragmentActivity {
@@ -111,7 +111,7 @@ public class RoutineActivity extends FragmentActivity {
         final int routineID = intent.getIntExtra("routineID", -1);
         
         if (routineID != -1) {
-        	for (Routine r: PhoneState.getRoutineManager()) {
+        	for (Routine r: RoutineService.getInstance().getAllRoutines()) {
         		if (routineID == r.getId()) {
         			routine = r;
         			actions.add(r.actionsString());
@@ -139,11 +139,11 @@ public class RoutineActivity extends FragmentActivity {
         	dismissButton.setOnClickListener(new OnClickListener() {
         		@Override
         		public void onClick(View v) {
-        			PhoneState.getRoutineManager().remove(routine);
+                    RoutineService.getInstance().remove(routine);
         			if (patternID != -1) {
-	        			Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+	        			Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
 	                	p.setStatusCode(StatusCode.DECLINED);
-	                	PhoneState.getPatternDb().updatePattern(p);
+	                	PhoneService.getInstance().getPatternDb().updatePattern(p);
         			}
                     Intent resultIntent = new Intent();
                 	setResult(Activity.RESULT_OK, resultIntent);
@@ -201,29 +201,29 @@ public class RoutineActivity extends FragmentActivity {
                 if (checkboxEnabled.isChecked()) {
                 	routine.setStatusCode(StatusCode.IMPLEMENTED);
                     if (patternID != -1) {
-                    	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+                    	Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
                     	p.setStatusCode(StatusCode.IMPLEMENTED);
-                    	PhoneState.getPatternDb().updatePattern(p);
+                    	PhoneService.getInstance().getPatternDb().updatePattern(p);
                     }
                 } else {
                 	routine.setStatusCode(StatusCode.DECLINED);
                 	if (patternID != -1) {
-                    	Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+                    	Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
                     	p.setStatusCode(StatusCode.IMPLEMENTED);
-                    	PhoneState.getPatternDb().updatePattern(p);
+                    	PhoneService.getInstance().getPatternDb().updatePattern(p);
                     }
                 }
                 if (editing) {
-                	for (int i = 0; i < PhoneState.getRoutineManager().size(); i++) {
-                		Routine r = PhoneState.getRoutineManager().get(i);
+                	for (int i = 0; i < RoutineService.getInstance().getAllRoutines().size(); i++) {
+                		Routine r = RoutineService.getInstance().getAllRoutines().get(i);
             			if (r.getId() == routineID) {
-            				PhoneState.getRoutineManager().set(i, r);
+                            RoutineService.getInstance().set(i, r);
             				break;
                 		}
                 	}
                 	
                 } else {
-                	PhoneState.getRoutineManager().add(routine);
+                    RoutineService.getInstance().add(routine);
                 }
                 
 
@@ -461,7 +461,7 @@ public class RoutineActivity extends FragmentActivity {
             // Location
             List<String> options = new ArrayList<String>();
             
-            for (UserLocation ul: PhoneState.getLocationsList()) {
+            for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
                 options.add(ul.getName());
             }
             
@@ -484,7 +484,7 @@ public class RoutineActivity extends FragmentActivity {
                     RadioButton b = (RadioButton) popupView.findViewById(selected);
                     try {
                     String location = (String) b.getText();
-                    for (UserLocation ul: PhoneState.getLocationsList()) {
+                    for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
                         if (ul.getName().equals(location)) {
                             routine.setLocation("" + ul.getId());
                             break;

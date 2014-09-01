@@ -1,9 +1,4 @@
 package com.automates.automate;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,56 +8,71 @@ import android.util.Log;
 
 import com.automates.automate.locations.GPSTracker;
 import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsList;
+import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.routines.RoutineApplier;
-import com.automates.automate.routines.RoutineManager;
+import com.automates.automate.routines.RoutineService;
 import com.automates.automate.routines.TimelyChecker;
-import com.automates.automate.settings.*;
+import com.automates.automate.settings.Data;
+import com.automates.automate.settings.RingerProfiles;
+import com.automates.automate.settings.Settings;
+import com.automates.automate.settings.Wifi;
 import com.automates.automate.sqlite.PatternDB;
-import com.automates.automate.sqlite.RoutineDB;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 // Singleton
-public final class PhoneState {
-	private static final String TAG = "PhoneState";
-	private static Location location;
-	private static boolean dataEnabled;
-	private static boolean wifiEnabled;
-	private static long time = 0;
-	private static int soundProfile;
-	private static Context phoneContext;
-	private static PatternDB patternDB;
-	private static RoutineDB routineDB;
-	private static GPSTracker gpsTracker;
-	private static RoutineApplier routineApplier;
-	private static UserLocationsList locationsList;
-	private static AlarmManager alarmManager;
-	private static String wifiBSSID;
-	private static RoutineManager routineManager;
+public final class PhoneService {
+	private final String TAG = "PhoneService";
+	private Location location;
+	private boolean dataEnabled;
+	private boolean wifiEnabled;
+	private int soundProfile;
 
-	private static PhoneState instance = null;
-	private PhoneState() {
+
+	private Context phoneContext;
+
+
+	private PatternDB patternDB;
+	private GPSTracker gpsTracker;
+	private RoutineApplier routineApplier;
+	private String wifiBSSID;
+
+	private static PhoneService instance = null;
+	private PhoneService() {
 		// Exists only to defeat instantiation.
 		// Set to private -> no subclassing
 	}
-	public static PhoneState getInstance() {
+	public static PhoneService getInstance() {
 		if(instance == null) {
-			instance = new PhoneState();
+			instance = new PhoneService();
 		}
 		return instance;
 	}
 
-	public static void update(Context context) {
+    // Initialise services
+    private void init(Context context) {
+        if (RoutineService.getInstance().getAllRoutines() == null) {
+            RoutineService.getInstance().init(context);
+        }
+
+        if (UserLocationService.getInstance().getAllUserLocations() == null) {
+            UserLocationService.getInstance().init(context);
+        }
+
+    }
+
+	public void update(Context context) {
 		// Initialize variables if they are not already initialized
 	    phoneContext = context;
+        init(context);
 		if (patternDB == null) {
 			patternDB = new PatternDB(context);
 		}
-		if (routineDB == null) {
-			routineDB = new RoutineDB(context);
-		}
-		if (locationsList == null) {
-			locationsList = new UserLocationsList(context);
-		}
+
+
 		if (gpsTracker == null) {
 			gpsTracker = new GPSTracker(context);
 		}
@@ -70,9 +80,7 @@ public final class PhoneState {
 			routineApplier = new RoutineApplier(context);
 			startRoutineChecking(context);
 		}
-		if (routineManager == null) {
-			routineManager = new RoutineManager(routineDB);
-		}
+
 		
 		
 		// Update variables
@@ -83,21 +91,20 @@ public final class PhoneState {
 		dataEnabled = Data.getDataEnabled(context);
 //		wifiBSSID = Wifi.getWifiBSSID(context);
 		wifiBSSID = String.valueOf(wifiEnabled);
-		time = System.currentTimeMillis();
 		location = gpsTracker.getLastLocation();
 		
 		// Notify listeners
 		notifyListeners();
 	}
 
-	private static void startRoutineChecking(Context context) {
+	private void startRoutineChecking(Context context) {
 	    AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	    Intent intent = new Intent(context, TimelyChecker.class);
 	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 	    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),30000,pendingIntent);
 	}
 	
-	public static String checkConnectivityIntent() {
+	public String checkConnectivityIntent() {
 //		String wifi = Logger.getWifiBSSID();
 		boolean mdata = Logger.getInstance().getMData();
 		if (mdata != dataEnabled) {
@@ -111,13 +118,13 @@ public final class PhoneState {
 		return null;
 	}
 
-	public static String getEventCategory(Intent intent) {
+	public String getEventCategory(Intent intent) {
 		String event = "";
 		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
 			event = Settings.RINGER;
 		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-			event = "Bootup";
-			return null;
+			event = "BootUp";
+            return null;
 		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
 			event = Settings.WIFI;
 		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
@@ -127,7 +134,7 @@ public final class PhoneState {
 		return event;
 	}
 
-	public static String getEventAction(String event) {
+	public String getEventAction(String event) {
 		String action = "";
 		if (event.equals(Settings.WIFI)) {
 			action = String.valueOf(wifiBSSID);
@@ -141,11 +148,11 @@ public final class PhoneState {
 	}
 
 
-	public static String getSetLocation() {
+	public String getSetLocation() {
 		if (location == null) {
 			return null;
 		}
-		List<UserLocation> currentList = ((UserLocationsList) locationsList).checkLocation(location);
+		List<UserLocation> currentList = UserLocationService.getInstance().checkLocation(location);
 		if (!(currentList.isEmpty())) {
 			String s = "";
 			for (UserLocation ul: currentList) {
@@ -158,47 +165,29 @@ public final class PhoneState {
 	}
 
 	// Getters
-	public static Location getLocation() {
+	public Location getLocation() {
 		return location;
 	}
-	public static boolean isDataEnabled() {
+	public boolean isDataEnabled() {
 		return dataEnabled;
 	}
-	public static boolean isWifiEnabled() {
+	public boolean isWifiEnabled() {
 		return wifiEnabled;
 	}
-	public static int getSoundProfile() {
+	public int getSoundProfile() {
 		return soundProfile;
 	}
-	public static long getTime() {
-		return time;
-	}
-	public static PatternDB getPatternDb() {
+	public PatternDB getPatternDb() {
 		return patternDB;
 	}
-	public static RoutineDB getRoutineDb() {
-		return routineDB;
-	}
-	public static GPSTracker getGPSTracker() {
+	public GPSTracker getGPSTracker() {
 		return gpsTracker;
 	}
-	public static RoutineApplier getRoutineApplier() {
+	public RoutineApplier getRoutineApplier() {
 		return routineApplier;
 	}
-	public static AlarmManager getAlarmManager() {
-		return alarmManager;
-	}
-	public static UserLocationsList getLocationsList() {
-		return locationsList;
-	}
-	public static void setLocationsList(UserLocationsList locationsList) {
-		PhoneState.locationsList = locationsList;
-	}
-	public static String getWifiBSSID() {
+	public String getWifiBSSID() {
 		return wifiBSSID;
-	}
-	public static RoutineManager getRoutineManager() {
-		return routineManager;
 	}
 	
 	
@@ -206,9 +195,9 @@ public final class PhoneState {
 	 * Listeners
 	 */
 	
-	private static List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
+	private List<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>();
 	
-	private static void notifyListeners() {
+	private void notifyListeners() {
 		for (PropertyChangeListener name : listeners) {
 			name.propertyChange(new PropertyChangeEvent(getInstance(), "Triggers", true, true));
 		}
@@ -217,7 +206,7 @@ public final class PhoneState {
 	public void addChangeListener(PropertyChangeListener newListener) {
 		listeners.add(newListener);
 	}
-	public static Context getContext() {
+	public Context getContext() {
 	    return phoneContext;
 	}
 	

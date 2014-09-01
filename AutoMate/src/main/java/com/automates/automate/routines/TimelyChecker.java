@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.automates.automate.PhoneState;
+import com.automates.automate.PhoneService;
 
 public class TimelyChecker extends BroadcastReceiver{
 
@@ -17,8 +17,8 @@ public class TimelyChecker extends BroadcastReceiver{
 		time.setToNow();
 		Log.d("TimelyChecker", "Time is " + time.hour + ":" + time.minute + ", day is " + time.weekDay);
 		//PhoneState.getRoutineApplier().checkRoutines();
-		PhoneState.update(context);
-		RoutineApplier rA = PhoneState.getRoutineApplier();
+		PhoneService.getInstance().update(context);
+		RoutineApplier rA = PhoneService.getInstance().getRoutineApplier();
 		if (rA != null) {
 			rA.checkRoutines();
 		} else {

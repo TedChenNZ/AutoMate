@@ -1,11 +1,5 @@
 package com.automates.automate.pattern;
 
-import android.text.format.Time;
-import android.util.Log;
-
-import com.automates.automate.pattern.WeightManager;
-import com.automates.automate.PhoneState;
-
 public class WeightUpdater implements WeightManager {
 
 	private Pattern p;
@@ -80,10 +74,4 @@ public class WeightUpdater implements WeightManager {
 		return p;
 	}
 
-	private void timeSet(){
-		Time time = new Time();
-		time.setToNow();
-		p.setDay(time.weekDay);
-		p.setActualTime(PhoneState.getTime());
-	}
 }

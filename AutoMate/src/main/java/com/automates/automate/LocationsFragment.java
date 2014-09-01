@@ -1,16 +1,5 @@
 package com.automates.automate;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.UserLocationsArrayAdapter;
-import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsList;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -19,14 +8,24 @@ import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.UserLocationsArrayAdapter;
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationService;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LocationsFragment extends Fragment implements PropertyChangeListener {
 //	private static final String TAG = "LocationsFragment";
@@ -49,7 +48,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
         View rootView = inflater.inflate(R.layout.fragment_locations, container, false);
         
         // Adapter
-        locationsAdapter = new UserLocationsArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getLocationsList());
+        locationsAdapter = new UserLocationsArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, UserLocationService.getInstance().getAllUserLocations());
         
         // Locations List View Initialize
         locationsListView = (ListView) rootView.findViewById(R.id.locationsListView);
@@ -104,7 +103,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
         
         updateCurrentLocation();
         // Listener
-        PhoneState.getInstance().addChangeListener(this);
+        PhoneService.getInstance().addChangeListener(this);
         return rootView;
     }
 	
@@ -158,7 +157,7 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
 						Collections.reverse(selected);
 						for (int i = 0; i < selected.size(); i++) {
 							UserLocation ul = (UserLocation) adapter.getItem(selected.get(i));
-							PhoneState.getLocationsList().remove(ul);
+                            UserLocationService.getInstance().remove(ul);
 						}
 						adapter.notifyDataSetChanged();
 						mode.finish();
@@ -180,8 +179,8 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
 	
 	
 	private void updateCurrentLocation() {
-		List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
-		List<UserLocation> list = PhoneState.getLocationsList();
+		List<UserLocation> currentList = UserLocationService.getInstance().checkLocation(PhoneService.getInstance().getLocation());
+		List<UserLocation> list = UserLocationService.getInstance().getAllUserLocations();
 		int index = 0;
 		for (UserLocation ul : list) {
 			for (UserLocation cul: currentList) {

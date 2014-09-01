@@ -13,7 +13,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.automates.automate.PhoneState;
+import com.automates.automate.PhoneService;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
 public class GPSTracker extends Service implements LocationListener {
@@ -206,7 +206,7 @@ public class GPSTracker extends Service implements LocationListener {
 //    	Log.d(TAG, l);
 //    	Toast.makeText(getApplicationContext(), l,
 //    			   Toast.LENGTH_LONG).show();
-    	PhoneState.update(mContext);
+    	PhoneService.getInstance().update(mContext);
 //    	PhoneState.logLocation();
     	
     }

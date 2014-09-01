@@ -59,7 +59,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".pattern.NotifyManager"
+            android:name=".pattern.NotificationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

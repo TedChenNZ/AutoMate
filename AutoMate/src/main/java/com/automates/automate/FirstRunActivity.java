@@ -1,8 +1,5 @@
 package com.automates.automate;
 
-import com.automates.automate.routines.Routine;
-import com.automates.automate.settings.Settings;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
+import com.automates.automate.settings.Settings;
 
 public class FirstRunActivity extends Activity {
 	private TextView welcome;
@@ -87,7 +87,7 @@ public class FirstRunActivity extends Activity {
 					case 5:
 //						int locationID = PhoneState.getLocationsList().getUserLocationFromName("Work").getId();
 					    int locationID = 2;
-						PhoneState.getRoutineManager().addRoutine(new Routine(1, "Silent at Work", "0", Settings.RINGER, -1, -1, "", String.valueOf(locationID), "", "", 1));
+                        RoutineService.getInstance().addRoutine(new Routine(1, "Silent at Work", "0", Settings.RINGER, -1, -1, "", String.valueOf(locationID), "", "", 1));
 						screen++;
 						updateScreen();
 					    break;
@@ -137,11 +137,11 @@ public class FirstRunActivity extends Activity {
             	startActivityForResult(intent, 0);
 				break;
 			case 3:
-				continues.setVisibility(4);
+				continues.setVisibility(View.INVISIBLE);
 				welcome.setText("Do you work away from home?");
 				welcome.startAnimation(animFadein);
-				yes.setVisibility(0);
-				no.setVisibility(0);
+				yes.setVisibility(View.VISIBLE);
+				no.setVisibility(View.VISIBLE);
 
 				yes.startAnimation(animFadein);
 				no.startAnimation(animFadein);

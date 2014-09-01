@@ -1,12 +1,5 @@
 package com.automates.automate.adapter;
 
-import java.util.List;
-
-import com.automates.automate.PhoneState;
-import com.automates.automate.R;
-import com.automates.automate.locations.UserLocation;
-import com.automates.automate.locations.UserLocationsList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.automates.automate.PhoneService;
+import com.automates.automate.R;
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationService;
+
+import java.util.List;
 
 public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 
@@ -62,7 +62,7 @@ public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 			String d = i.getLocationName() + " (" + i.getRadius() + "m)";
 			details.setText(d);
 			
-			List<UserLocation> currentList = ((UserLocationsList) PhoneState.getLocationsList()).checkLocation(PhoneState.getLocation());
+			List<UserLocation> currentList = UserLocationService.getInstance().checkLocation(PhoneService.getInstance().getLocation());
 
 			if (currentList.contains(i)) {
 				name.setTextColor(v.getResources().getColor(R.color.active));

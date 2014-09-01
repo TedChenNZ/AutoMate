@@ -1,7 +1,7 @@
 package com.automates.automate.pattern;
 
-import com.automates.automate.PhoneState;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
 
 import java.util.Calendar;
 
@@ -92,7 +92,7 @@ public class Pattern {
 //	    r.setmData(this.mData);
 //	    r.setWifi(this.wifi);
 	    r.setStatusCode(StatusCode.IN_DEV);
-	    Routine r2 = PhoneState.getRoutineManager().addRoutine(r);
+	    Routine r2 = RoutineService.getInstance().addRoutine(r);
 	    activate(r2);
     }
     
@@ -105,7 +105,7 @@ public class Pattern {
 	//ask user if location/wifi/data are conditions NOTIFICATION
 	//alarm manager to do something for time based.
 //    	this.setStatusCode(StatusCode.AWAITING_APPROVAL);
-	NotifyManager nM = new NotifyManager();
+	NotificationActivity nM = new NotificationActivity();
 	nM.notification("Routine Recognised", "AutoMate has recognised a routine - tap on this notification to configure the routine!", r.getId(), this.getId());
 
     }

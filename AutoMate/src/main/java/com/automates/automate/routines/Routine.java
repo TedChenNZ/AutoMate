@@ -1,15 +1,15 @@
 package com.automates.automate.routines;
 
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationService;
+import com.automates.automate.settings.RingerProfiles;
+import com.automates.automate.settings.Settings;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.automates.automate.PhoneState;
-import com.automates.automate.locations.UserLocation;
-import com.automates.automate.settings.RingerProfiles;
-import com.automates.automate.settings.Settings;
 
 public class Routine {
 
@@ -212,7 +212,7 @@ public class Routine {
     	}
     	if (!location.equals("") && location != null) {
     		try {
-    			s = s + "at " + PhoneState.getLocationsList().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
+    			s = s + "at " + UserLocationService.getInstance().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
     	
     		} catch (Exception e) {
     			s = s + "at UNDEFINED LOCATION " + location;
@@ -275,7 +275,7 @@ public class Routine {
     		String s = this.getLocation();
     		try {
     			int loc = Integer.parseInt(this.getLocation());
-    			for (UserLocation ul: PhoneState.getLocationsList()) {
+    			for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
                     if (ul.getId() == (loc)) {
                         s = ul.getName();
                         break;

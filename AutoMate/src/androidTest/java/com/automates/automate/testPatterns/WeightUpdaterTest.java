@@ -1,12 +1,6 @@
 package com.automates.automate.testPatterns;
 
-import java.lang.reflect.Field;
-
 import junit.framework.TestCase;
-
-import com.automates.automate.PhoneState;
-import com.automates.automate.pattern.Pattern;
-import com.automates.automate.pattern.WeightUpdater;
 
 //_______________________________________________________________________
 //IMPORTANT

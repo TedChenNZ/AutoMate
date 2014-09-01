@@ -9,24 +9,25 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.automates.automate.Logger;
-import com.automates.automate.PhoneState;
+import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.PatternControl;
 import com.automates.automate.pattern.PatternController;
 import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
 
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";
 	private final static int TIME_FRAME = 10 * 1000; // 5 seconds
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		PhoneState.update(context);
-		String eventCategory = PhoneState.getEventCategory(intent);
+		PhoneService.getInstance().update(context);
+		String eventCategory = PhoneService.getInstance().getEventCategory(intent);
 
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean learning = sharedPrefs.getBoolean("pref_learning", true);
 		
 		if (eventCategory != null && learning) {
-			String eventAction = PhoneState.getEventAction(eventCategory);
+			String eventAction = PhoneService.getInstance().getEventAction(eventCategory);
 			// Stop pattern learning for routines made by the app
 			if (checkIntentFromRoutine(eventCategory)) {
 				return;
@@ -47,7 +48,7 @@ public class IntentReceiver extends BroadcastReceiver {
 		boolean fromRoutine = false;
 		Routine r = null;
 		for (int i = 0; i < appliedRecently.size(); i++) {
-			r = PhoneState.getRoutineManager().getRoutine(appliedRecently.keyAt(i));
+			r = RoutineService.getInstance().getRoutine(appliedRecently.keyAt(i));
 			Log.d(TAG, "Routine: "+r);
 			if (r != null) {
 				if (r.getEventCategory().equals(event)) {
@@ -63,7 +64,7 @@ public class IntentReceiver extends BroadcastReceiver {
 	}
 	private boolean connectivityCheck(String event, String eventAction) {
 		if(event.equalsIgnoreCase(Settings.MDATA) && eventAction.equalsIgnoreCase("true")){
-			if(PhoneState.getWifiBSSID().equals("true")){
+			if(PhoneService.getInstance().getWifiBSSID().equals("true")){
 				return true;
 			}
 		}

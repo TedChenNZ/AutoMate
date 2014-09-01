@@ -1,9 +1,5 @@
 package com.automates.automate.routines;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +8,19 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
-import android.util.SparseArray;
 
 import com.automates.automate.Logger;
-import com.automates.automate.PhoneState;
+import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.pattern.WeightManager;
 import com.automates.automate.settings.Data;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
 import com.automates.automate.settings.Wifi;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class RoutineApplier extends Service implements PropertyChangeListener{
 
@@ -32,7 +31,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 	
 
 	public RoutineApplier(Context context){
-		PhoneState.getInstance().addChangeListener(this);
+		PhoneService.getInstance().addChangeListener(this);
 		this.context = context;
 		
 	}
@@ -47,7 +46,7 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 	}
 
 	public void checkRoutines(){
-		routines = PhoneState.getRoutineDb().getAllRoutines();
+		routines = RoutineService.getInstance().getAllRoutines();
 		if (routines != null) {
 			Log.d(TAG, "Checking applications");
 			for(Routine r : routines){
@@ -109,9 +108,9 @@ public class RoutineApplier extends Service implements PropertyChangeListener{
 		if (!r.getDay().equals(StatusCode.EMPTY) && r.getDay().indexOf(time.weekDay) == -1){conditions = false;};
 		if (r.getHour() != (StatusCode.DECLINED) && r.getHour() != time.hour){conditions = false;};
 		if (r.getMinute() != (StatusCode.DECLINED) && r.getMinute() != time.minute){conditions = false;};
-		if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneState.getSetLocation())){conditions = false;};
-		if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneState.isDataEnabled()))){conditions = false;};
-		if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneState.getWifiBSSID())){conditions = false;};
+		if (!r.getLocation().equals(StatusCode.EMPTY) && !r.getLocation().equals(PhoneService.getInstance().getSetLocation())){conditions = false;};
+		if (!r.getmData().equals(StatusCode.EMPTY) && !r.getmData().equals(Boolean.toString(PhoneService.getInstance().isDataEnabled()))){conditions = false;};
+		if (!r.getWifi().equals(StatusCode.EMPTY) && !r.getWifi().equals(PhoneService.getInstance().getWifiBSSID())){conditions = false;};
 
 		if(r.getStatusCode() != StatusCode.IMPLEMENTED){
 			conditions = false;

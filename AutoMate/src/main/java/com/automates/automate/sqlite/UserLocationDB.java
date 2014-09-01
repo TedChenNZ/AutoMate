@@ -1,11 +1,5 @@
 package com.automates.automate.sqlite;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.automates.automate.locations.UserLocation;
-import com.google.android.gms.maps.model.LatLng;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,7 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper implements UserLocationsManager {
+import com.automates.automate.locations.UserLocation;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserLocationDB extends SQLiteOpenHelper implements UserLocationsManager {
 	// Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -32,7 +32,7 @@ public class UserLocationsSQLiteDBManager extends SQLiteOpenHelper implements Us
  
     private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_LAT,KEY_LNG,KEY_RADIUS,KEY_LOCATION_NAME};
  
-    public UserLocationsSQLiteDBManager(Context context) {
+    public UserLocationDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
  

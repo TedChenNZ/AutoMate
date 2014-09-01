@@ -1,22 +1,24 @@
 package com.automates.automate.pattern;
 
-import java.util.Date;
-import java.util.List;
-
 import android.text.format.Time;
 import android.util.Log;
 
-import com.automates.automate.PhoneState;
+import com.automates.automate.PhoneService;
 import com.automates.automate.settings.Settings;
+
+import java.util.Date;
+import java.util.List;
 
 public class PatternController implements PatternControl {
 	private Pattern p = new Pattern();
+    private long time = 0;
 
 	private final String TAG = "PatternController";
 
 	public PatternController(String actionCategory, String action) {
 		p.setEvent(action);
 		p.setEventCategory(actionCategory);
+        time = System.currentTimeMillis();
 		generatePattern();
 	}
 
@@ -30,9 +32,9 @@ public class PatternController implements PatternControl {
 	@Override
 	public Pattern generatePattern(){
 
-		p.setLocation(PhoneState.getSetLocation());
-		p.setWifi(PhoneState.getWifiBSSID());
-		p.setData(Boolean.toString(PhoneState.isDataEnabled()));
+		p.setLocation(PhoneService.getInstance().getSetLocation());
+		p.setWifi(PhoneService.getInstance().getWifiBSSID());
+		p.setData(Boolean.toString(PhoneService.getInstance().isDataEnabled()));
 
 		if (p.getEventCategory().equals(Settings.WIFI)) {
 			p.setWifi("");
@@ -59,10 +61,10 @@ public class PatternController implements PatternControl {
 	}
 
 	private void timeSet(){
-		Time time = new Time();
-		time.setToNow();
-		p.setDay(time.weekDay);
-		p.setActualTime(PhoneState.getTime());
+		Time t = new Time();
+		t.setToNow();
+		p.setDay(t.weekDay);
+		p.setActualTime(time);
 		timeTransform();
 
 
@@ -70,8 +72,7 @@ public class PatternController implements PatternControl {
 
 	@SuppressWarnings("deprecation")
 	private void timeTransform(){
-		long current = PhoneState.getTime();
-		Date d = new Date(PhoneState.getTime());
+		Date d = new Date(time);
 		d.setSeconds(0);
 		d.setMinutes(0);
 		d.setHours(0);
@@ -79,7 +80,7 @@ public class PatternController implements PatternControl {
 
 		long startOfDay = d.getTime();
 
-		long diff = current - startOfDay;
+		long diff = time - startOfDay;
 		int intervals = (int) Math.ceil(diff/WeightManager.timeDivision);
 		String sRes = "" + intervals;
 
@@ -97,7 +98,7 @@ public class PatternController implements PatternControl {
 		int id = getInstanceFromDB();
 		if(id != -1){
 			
-			Pattern oldP = PhoneState.getPatternDb().getPattern(id);
+			Pattern oldP = PhoneService.getInstance().getPatternDb().getPattern(id);
 			Pattern newP = new WeightUpdater(p, oldP).updatePattern();
 //			Pattern newP = new WeightUpdater(p, id).updatePattern();
 			boolean threshold = newP.checkThreshold();
@@ -105,19 +106,19 @@ public class PatternController implements PatternControl {
 				newP.setStatusCode(StatusCode.IMPLEMENTED);
 				newP.addToRoutineDB();
 			}
-			PhoneState.getPatternDb().updatePattern(newP);
+			PhoneService.getInstance().getPatternDb().updatePattern(newP);
 //			Log.d(TAG, "time: " + newP.getActualTime());
 //			Log.d(TAG, "updating pattern: " + newP.getWeight());
 		}
 		else{
 //			Log.d(TAG, "adding pattern");
-			PhoneState.getPatternDb().addPattern(p);
+			PhoneService.getInstance().getPatternDb().addPattern(p);
 		}
 	}
 
 	private int getInstanceFromDB(){
 		int id = -1;
-		List<Pattern> ps = PhoneState.getPatternDb().getAllPatterns();
+		List<Pattern> ps = PhoneService.getInstance().getPatternDb().getAllPatterns();
 		for(Pattern pList : ps){
 			if (pList.compare(p)){
 				id = pList.getId();

@@ -1,4 +1,32 @@
 package com.automates.automate;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.automates.automate.locations.GeocodeJSONParser;
+import com.automates.automate.locations.UserLocation;
+import com.automates.automate.locations.UserLocationService;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,45 +37,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
- 
-
-
-
-import org.json.JSONObject;
- 
-
-
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
- 
-
-
-
-import com.automates.automate.locations.GeocodeJSONParser;
-import com.automates.automate.locations.UserLocation;
-import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
  
 public class LocationActivity extends FragmentActivity {
  
@@ -102,7 +91,7 @@ public class LocationActivity extends FragmentActivity {
         	etName.setText(FIRSTRUN);
         }
         if (EditItem != -1) {
-        	userloc = PhoneState.getLocationsList().get(EditItem).clone();
+        	userloc = UserLocationService.getInstance().getAllUserLocations().get(EditItem).clone();
         	
         	showUserLocation(userloc, mMap, 15);
         	showRadius(userloc, mMap);
@@ -395,7 +384,7 @@ public class LocationActivity extends FragmentActivity {
                 Toast.makeText(getBaseContext(), "No Name is entered", Toast.LENGTH_SHORT).show();
                 return;
             }
-            for (UserLocation u: PhoneState.getLocationsList()) {
+            for (UserLocation u: UserLocationService.getInstance().getAllUserLocations()) {
             	Log.d("LocationActivity", u.getName() + " " + name);
             	if (u.getName().equals(name) && userloc.getId() != u.getId()) {
                     Toast.makeText(getBaseContext(), "The Name '" + name + "' is already in use", Toast.LENGTH_SHORT).show();
@@ -418,9 +407,9 @@ public class LocationActivity extends FragmentActivity {
             
             userloc.setName(name);
             if (EditItem != -1) {
-            	PhoneState.getLocationsList().set(EditItem, userloc);
+                UserLocationService.getInstance().set(EditItem, userloc);
             } else {
-            	PhoneState.getLocationsList().add(userloc);
+                UserLocationService.getInstance().add(userloc);
             }
             
             // Return to previous activity

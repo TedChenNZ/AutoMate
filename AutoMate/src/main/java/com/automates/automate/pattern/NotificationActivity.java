@@ -8,17 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import com.automates.automate.PhoneState;
+
+import com.automates.automate.PhoneService;
 import com.automates.automate.R;
 import com.automates.automate.RoutineActivity;
-import com.automates.automate.pattern.Pattern;
-import com.automates.automate.pattern.StatusCode;
 
-public class NotifyManager extends Activity {
+public class NotificationActivity extends Activity {
 
     NotificationManager mNotificationManager;
 
-    public NotifyManager(){}
+    public NotificationActivity(){}
 
     @Override
     protected void onCreate(Bundle saved) {
@@ -29,7 +28,7 @@ public class NotifyManager extends Activity {
 
     @SuppressWarnings("deprecation")
     public void notification(String subject, String body, int routineID, int patternID){
-		Context context = PhoneState.getContext();
+		Context context = PhoneService.getInstance().getContext();
 		int NOT_ID = 1;
 		int icon = R.drawable.ic_launcher;
 		CharSequence tickerText = "Automate - Routine recognised!";
@@ -38,14 +37,14 @@ public class NotifyManager extends Activity {
 		int requestID = (int) System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
 	//	Context context = getApplicationContext();
-		Pattern p = PhoneState.getPatternDb().getPattern(patternID);
+		Pattern p = PhoneService.getInstance().getPatternDb().getPattern(patternID);
 		p.setStatusCode(StatusCode.AWAITING_APPROVAL);
-		PhoneState.getPatternDb().updatePattern(p);
+		PhoneService.getInstance().getPatternDb().updatePattern(p);
 	
-		Intent notificationIntent = new Intent(PhoneState.getContext(), RoutineActivity.class);
+		Intent notificationIntent = new Intent(context, RoutineActivity.class);
 		notificationIntent.putExtra("routineID", routineID);
 		notificationIntent.putExtra("patternID", patternID);
-		PendingIntent contentIntent = PendingIntent.getActivity(PhoneState.getContext(), requestID, notificationIntent, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(context, requestID, notificationIntent, 0);
 		notificationIntent.setData((Uri.parse("mystring"+requestID)));
 		notification.setLatestEventInfo(context, subject, body, contentIntent);
 //		notification.flags += Notification.FLAG_ONGOING_EVENT;

@@ -1,32 +1,31 @@
 package com.automates.automate;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import com.automates.automate.adapter.EditMultiChoiceModeListener;
-import com.automates.automate.adapter.RoutinesArrayAdapter;
-import com.automates.automate.routines.Routine;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.automates.automate.adapter.EditMultiChoiceModeListener;
+import com.automates.automate.adapter.RoutinesArrayAdapter;
+import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RoutinesFragment extends Fragment implements PropertyChangeListener {
     //	private TextView testText;
@@ -48,7 +47,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 	View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
 
 	// Adapter
-	routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, PhoneState.getRoutineManager());
+	routinesAdapter = new RoutinesArrayAdapter(this.getActivity().getApplicationContext(), R.layout.list_item_description, RoutineService.getInstance().getAllRoutines());
 
 	// List View Initialize
 	routinesListView = (ListView) rootView.findViewById(R.id.routinesListView);
@@ -102,7 +101,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 
 	//        updateCurrentLocation();
 	// Listener
-	PhoneState.getInstance().addChangeListener(this);
+	PhoneService.getInstance().addChangeListener(this);
 
 	return rootView;
 
@@ -126,7 +125,6 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 	switch(requestCode) { 
 	case (0) : { 
 	    if (resultCode == Activity.RESULT_OK) {
-		PhoneState.getRoutineManager();
 		routinesAdapter.notifyDataSetChanged();
 		//	    	  	updateCurrentLocation();
 	    } 
@@ -170,7 +168,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
 		    Collections.reverse(selected);
 		    for (int i = 0; i < selected.size(); i++) {
 			Routine r = (Routine) adapter.getItem(selected.get(i));
-			PhoneState.getRoutineManager().remove(r);
+                RoutineService.getInstance().remove(r);
 		    }
 		    adapter.notifyDataSetChanged();
 		    mode.finish();
