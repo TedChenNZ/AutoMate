@@ -128,13 +128,13 @@ public class MainActivity extends Activity {
 //        {
 //        	// Test Notification
 //        	try {
-//        	Pattern p = PhoneState.getPatternDb().getAllPatterns().get(0);
+//        	Pattern p = PatternService.getInstance().getAllPatterns().get(0);
 //        	p.addToRoutineDB();
 //        	} catch (Exception e) {
-//        		
+//
 //        	}
 //        }
-//        
+
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
         
@@ -147,13 +147,13 @@ public class MainActivity extends Activity {
 //        }
 //        
         if (isFirstRun)
-        {          
+        {
             // Code to run once
             Log.d("MainActivity", "First Run");
             Intent intent = new Intent(this, FirstRunActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         	startActivity(intent);
-        } 
+        }
         
 
         

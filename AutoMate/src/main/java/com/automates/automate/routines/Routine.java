@@ -38,7 +38,7 @@ public class Routine {
         daysMap.put("Saturday",6);
         daysMap.put("Weekdays", 12345);
         daysMap.put("Weekends", 60);
-        daysMap.put("Everyday", 1234560);
+        daysMap.put("Every Day", 1234560);
     }
 
     public Routine() {
@@ -201,11 +201,7 @@ public class Routine {
     	//int id, String name, String event, String eventCategory, int hour, int minute,
 	    //String day, String location, String wifi, String mData, int statusCode
     	if (!day.equals("") && day != null) {
-    		if (Integer.parseInt(day) == 1234560) {
-    			s = s + "everday ";
-    		} else {
     			s = s + "on " + intToDay(Integer.parseInt(day)) + " ";
-    		}
     	}
     	if ((hour != -1) && (minute != -1)) {
     		s = s + "at " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + " ";
