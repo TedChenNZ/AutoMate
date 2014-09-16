@@ -88,17 +88,7 @@ public class PatternSimulator extends InstrumentationTestCase {
 
 	public void testPatternAmount() {
 		int amount = PatternService.getInstance().getAllPatterns().size();
-		assertEquals(18, amount);
-	}
-
-	public void testPattern0() {
-		double weight = PatternService.getInstance().getAllPatterns().get(0).getWeight();
-		assertTrue(2.0 <= weight);
-	}
-
-	public void testPattern1() {
-		double weight = PatternService.getInstance().getAllPatterns().get(1).getWeight();
-		assertTrue(2.0 >= weight);
+		assertEquals(21, amount);
 	}
 
 	public void testRoutine0Time() {
