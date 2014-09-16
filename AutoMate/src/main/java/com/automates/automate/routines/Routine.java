@@ -208,7 +208,14 @@ public class Routine {
     	}
     	if (!location.equals("") && location != null) {
     		try {
-    			s = s + "at " + UserLocationService.getInstance().getUserLocationFromID(Integer.parseInt(location)).getName() + " ";
+                int i = Integer.parseInt(location);
+                String loc = "";
+                if (i == -1) {
+                    loc = "Unknown Location";
+                } else {
+                    loc = UserLocationService.getInstance().getUserLocationFromID(i).getName();
+                }
+    			s = s + "at " + loc + " ";
     	
     		} catch (Exception e) {
     			s = s + "at UNDEFINED LOCATION " + location;
@@ -269,17 +276,21 @@ public class Routine {
     	
     	if (this.getLocation() != null && !this.getLocation().equals("")) {
     		String s = this.getLocation();
-    		try {
-    			int loc = Integer.parseInt(this.getLocation());
-    			for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
+
+            try {
+                int loc = Integer.parseInt(this.getLocation());
+                for (UserLocation ul : UserLocationService.getInstance().getAllUserLocations()) {
                     if (ul.getId() == (loc)) {
                         s = ul.getName();
                         break;
                     }
                 }
-    		} catch (NumberFormatException e) {
-    			
-    		}
+            } catch (NumberFormatException e) {
+
+            }
+            if (s == "-1") {
+                s = "Unknown";
+            }
             
     		triggerList.add(Settings.LOCATION + ": " + s);
     	}

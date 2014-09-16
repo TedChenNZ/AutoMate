@@ -465,7 +465,9 @@ public class RoutineActivity extends FragmentActivity {
             for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
                 options.add(ul.getName());
             }
-            
+
+            options.add("Unknown");
+
             Collections.reverse(options);
             int i = 0;
             for (String l: options) {
@@ -485,10 +487,14 @@ public class RoutineActivity extends FragmentActivity {
                     RadioButton b = (RadioButton) popupView.findViewById(selected);
                     try {
                     String location = (String) b.getText();
-                    for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
-                        if (ul.getName().equals(location)) {
-                            routine.setLocation("" + ul.getId());
-                            break;
+                    if (location == "Unknown") {
+                        routine.setLocation(""+-1);
+                    } else {
+                        for (UserLocation ul : UserLocationService.getInstance().getAllUserLocations()) {
+                            if (ul.getName().equals(location)) {
+                                routine.setLocation("" + ul.getId());
+                                break;
+                            }
                         }
                     }
                     } catch (NullPointerException e) {

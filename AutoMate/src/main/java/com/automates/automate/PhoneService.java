@@ -123,7 +123,7 @@ public final class PhoneService {
 			s = s.substring(0, s.length() - 1);
 			return s;
 		}
-		return "";
+		return "-1";
 	}
 
 	// Getters
