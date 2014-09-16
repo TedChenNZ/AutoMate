@@ -321,7 +321,7 @@ public class LocationActivity extends FragmentActivity {
         	loading.setVisibility(View.INVISIBLE);
             // Clears all the existing markers
             mMap.clear();
-            if (list.size() == 0) {
+            if (list == null || list.size() == 0) {
             	Toast.makeText(getBaseContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 return;
             }
