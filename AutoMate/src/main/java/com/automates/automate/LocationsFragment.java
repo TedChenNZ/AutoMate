@@ -15,11 +15,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.automates.automate.view.EditMultiChoiceModeListener;
-import com.automates.automate.view.UserLocationsArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
+import com.automates.automate.routines.Routine;
+import com.automates.automate.routines.RoutineService;
+import com.automates.automate.view.EditMultiChoiceModeListener;
+import com.automates.automate.view.UserLocationsArrayAdapter;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -157,7 +160,16 @@ public class LocationsFragment extends Fragment implements PropertyChangeListene
 						Collections.reverse(selected);
 						for (int i = 0; i < selected.size(); i++) {
 							UserLocation ul = (UserLocation) adapter.getItem(selected.get(i));
-                            UserLocationService.getInstance().remove(ul);
+                            boolean used = false;
+                            for (Routine r:RoutineService.getInstance().getAllRoutines()) {
+                                if (r.getLocation().contains(Integer.toString(ul.getId()))) {
+                                    used = true;
+                                    Toast.makeText(activity.getBaseContext(), "Cannot delete a location that is in use", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            if (used == false) {
+                                UserLocationService.getInstance().remove(ul);
+                            }
 						}
 						adapter.notifyDataSetChanged();
 						mode.finish();
