@@ -2,23 +2,21 @@ package com.automates.automate;
 
 import android.util.SparseArray;
 
-import com.automates.automate.routines.Routine;
-
-public final class Logger {
+public final class LoggerService {
 	
-	private static Logger instance = null;
+	private static LoggerService instance = null;
 	private String wifiBSSID;
 	private boolean mdata;
 	private SparseArray<Long> appliedRoutines;
 	
-	private Logger() {
+	private LoggerService() {
 		// Exists only to defeat instantiation.
 		// Set to private -> no subclassing
 		appliedRoutines = new SparseArray<Long>();
 	}
-	public static Logger getInstance() {
+	public static LoggerService getInstance() {
 		if(instance == null) {
-			instance = new Logger();
+			instance = new LoggerService();
 			
 		}
 		return instance;

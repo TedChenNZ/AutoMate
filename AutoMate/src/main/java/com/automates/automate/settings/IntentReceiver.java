@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.automates.automate.Logger;
+import com.automates.automate.LoggerService;
 import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.PatternGenerator;
 import com.automates.automate.routines.Routine;
@@ -42,8 +42,8 @@ public class IntentReceiver extends BroadcastReceiver {
 	}
 	
 	private boolean checkIntentFromRoutine(String event) {
-		SparseArray<Long> appliedRecently = Logger.getInstance().getAppliedRoutinesWithinTimeframe(System.currentTimeMillis(), TIME_FRAME);
-		Log.d(TAG, "applied: " + Logger.getInstance().getAppliedRoutines());
+		SparseArray<Long> appliedRecently = LoggerService.getInstance().getAppliedRoutinesWithinTimeframe(System.currentTimeMillis(), TIME_FRAME);
+		Log.d(TAG, "applied: " + LoggerService.getInstance().getAppliedRoutines());
 		Log.d(TAG, "appliedRecently: " + appliedRecently);
 
 		boolean fromRoutine = false;

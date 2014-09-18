@@ -12,7 +12,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.automates.automate.Logger;
+import com.automates.automate.LoggerService;
 import com.automates.automate.PhoneService;
 import com.automates.automate.pattern.StatusCode;
 import com.automates.automate.pattern.WeightManager;
@@ -30,7 +30,7 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 
 	List<Routine> routines;
 	public Context context;
-	private final static String TAG = "RoutineApplier";
+	private final static String TAG = "RoutineApplierService";
 	private final static long MIN_RECENT = WeightManager.timeDivision;
 	
     private static RoutineApplierService instance = null;
@@ -85,7 +85,7 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 
 	private void apply(Routine r) {
 		// TODO Auto-generated method stub
-		Logger.getInstance().logRoutine(r.getId());
+		LoggerService.getInstance().logRoutine(r.getId());
 		Log.d(TAG, "Actioning routine " + r.getName());
 		if(r.getEventCategory().equalsIgnoreCase(Settings.WIFI)){
 			if(r.getEvent().equalsIgnoreCase("false")){
@@ -145,13 +145,29 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 		if(r.getStatusCode() != StatusCode.IMPLEMENTED){
 			conditions = false;
 		}
+
+        if (r.getEventCategory().equals(Settings.RINGER)) {
+            if (Integer.toString(PhoneService.getInstance().getSoundProfile()).equals(r.getEvent())) {
+                conditions = false;
+            }
+        } else if (r.getEventCategory().equals(Settings.WIFI)) {
+            if (Boolean.toString(PhoneService.getInstance().isWifiEnabled()).equals(r.getEvent())) {
+                conditions = false;
+            }
+        } else if (r.getEventCategory().equals(Settings.MDATA)) {
+            if (Boolean.toString(PhoneService.getInstance().isDataEnabled()).equals(r.getEvent())) {
+                conditions = false;
+            }
+        }
 		return conditions;
 	}
 	
 	private boolean checkAppliedRecently(Routine r) {
 		boolean applied = false;
-		if (Logger.getInstance().getAppliedRoutines().get(r.getId()) != null) {
-			if ((System.currentTimeMillis() - Logger.getInstance().getAppliedRoutines().get(r.getId())) < MIN_RECENT) {
+		if (LoggerService.getInstance().getAppliedRoutines().get(r.getId()) != null) {
+            Log.d(TAG, ""+LoggerService.getInstance().getAppliedRoutines().get(r.getId()));
+
+            if ((System.currentTimeMillis() - LoggerService.getInstance().getAppliedRoutines().get(r.getId())) < MIN_RECENT) {
 				applied = true;
 			}
 		}

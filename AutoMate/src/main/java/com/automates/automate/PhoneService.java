@@ -52,7 +52,7 @@ public final class PhoneService {
             Initializer.init(context);
         }
 		// Update variables
-		Logger.getInstance().logConnectivity(wifiBSSID, dataEnabled);
+		LoggerService.getInstance().logConnectivity(wifiBSSID, dataEnabled);
 		
 		soundProfile = RingerProfiles.getMode(context);
 		wifiEnabled = Wifi.getWifiEnabled(context);
@@ -69,7 +69,7 @@ public final class PhoneService {
 	
 	public String checkConnectivityIntent() {
 //		String wifi = Logger.getWifiBSSID();
-		boolean mdata = Logger.getInstance().getMData();
+		boolean mdata = LoggerService.getInstance().getMData();
 		if (mdata != dataEnabled) {
 			return Settings.MDATA;
 

@@ -3,7 +3,7 @@ package com.automates.automate.testPatterns;
 import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
-import com.automates.automate.Logger;
+import com.automates.automate.LoggerService;
 import com.automates.automate.PhoneService;
 import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineService;
@@ -47,7 +47,7 @@ public class RoutinePatternInteractionTest extends InstrumentationTestCase {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		int size = Logger.getInstance().getAppliedRoutines().size();
+		int size = LoggerService.getInstance().getAppliedRoutines().size();
 		assertEquals(1, size);
 
 		}
