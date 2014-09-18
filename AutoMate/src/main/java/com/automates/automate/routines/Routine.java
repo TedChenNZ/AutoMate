@@ -288,7 +288,7 @@ public class Routine {
             } catch (NumberFormatException e) {
 
             }
-            if (s == "-1") {
+            if (s.equals("-1")) {
                 s = "Unknown";
             }
             

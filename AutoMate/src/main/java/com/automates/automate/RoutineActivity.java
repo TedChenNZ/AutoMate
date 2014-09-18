@@ -3,6 +3,7 @@ package com.automates.automate;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -30,8 +31,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.automates.automate.view.EditMultiChoiceModeListener;
-import com.automates.automate.view.SimpleArrayAdapter;
 import com.automates.automate.locations.UserLocation;
 import com.automates.automate.locations.UserLocationService;
 import com.automates.automate.pattern.Pattern;
@@ -41,6 +40,8 @@ import com.automates.automate.routines.Routine;
 import com.automates.automate.routines.RoutineService;
 import com.automates.automate.settings.RingerProfiles;
 import com.automates.automate.settings.Settings;
+import com.automates.automate.view.EditMultiChoiceModeListener;
+import com.automates.automate.view.SimpleArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,8 +134,8 @@ public class RoutineActivity extends FragmentActivity {
         
         // Dismiss Button
     	dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
-    	
-        if ((routine.getStatusCode() == StatusCode.AWAITING_APPROVAL)) {
+    	final Context context = this;
+        if ((routine.getStatusCode() == StatusCode.AWAITING_APPROVAL) || routine.getStatusCode() == StatusCode.IN_DEV) {
         	dismissButton.setVisibility(View.VISIBLE);
         	checkboxEnabled.setChecked(true); // Tick 'enabled'
         	dismissButton.setOnClickListener(new OnClickListener() {
@@ -148,6 +149,7 @@ public class RoutineActivity extends FragmentActivity {
         			}
                     Intent resultIntent = new Intent();
                 	setResult(Activity.RESULT_OK, resultIntent);
+                    PhoneService.getInstance().update(context);
         			finish();
         		}
         	});

@@ -109,6 +109,7 @@ public class RoutinesFragment extends Fragment implements PropertyChangeListener
     }
     @Override
     public void propertyChange(PropertyChangeEvent event) {
+        routinesAdapter.notifyDataSetChanged();
 
     }
 
