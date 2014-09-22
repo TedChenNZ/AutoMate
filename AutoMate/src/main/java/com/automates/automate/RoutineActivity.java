@@ -3,13 +3,14 @@ package com.automates.automate;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.ActionMode;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,16 +19,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -44,7 +40,7 @@ import com.automates.automate.view.EditMultiChoiceModeListener;
 import com.automates.automate.view.SimpleArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,18 +53,18 @@ public class RoutineActivity extends FragmentActivity {
     private com.beardedhen.androidbootstrap.BootstrapButton saveButton;
     private com.beardedhen.androidbootstrap.BootstrapButton dismissButton;
     private PopupWindow popupWindow;
-    
+
     private Routine routine;
     private List<String> triggers;
     private List<String> actions;
     private FragmentActivity activity;
-    
+
     private CheckBox checkboxEnabled;
 
     private RelativeLayout loading;
-    
+
     private int patternID;
-    
+
     // trigger list
     private ListView triggersListView;
     private ArrayAdapter<String> triggersAdapter;
@@ -76,7 +72,7 @@ public class RoutineActivity extends FragmentActivity {
     private ActionMode.Callback triggersActionModeCallback;
     private ActionMode triggersActionMode;
     private EditMultiChoiceModeListener triggersModeListener;
-    
+
     // action list
     private ListView actionsListView;
     private ArrayAdapter<String> actionsAdapter;
@@ -84,10 +80,10 @@ public class RoutineActivity extends FragmentActivity {
     private ActionMode.Callback actionsActionModeCallback;
     private ActionMode actionsActionMode;
     private EditMultiChoiceModeListener actionsModeListener;
-    
+
     private boolean editing;
-    
-    
+
+
     //    private Button saveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,181 +98,184 @@ public class RoutineActivity extends FragmentActivity {
         actionsListView = (ListView) findViewById(R.id.actionsList);
         loading = (RelativeLayout) findViewById(R.id.darken);
         checkboxEnabled = (CheckBox) findViewById(R.id.checkBoxEnabled);
-        
+
         editing = false;
-        
+
         routine = new Routine();
         actions = new ArrayList<String>();
-        
+
         // Intent
         Intent intent = getIntent();
         final int routineID = intent.getIntExtra("routineID", -1);
-        
+
         if (routineID != -1) {
-        	for (Routine r: RoutineService.getInstance().getAllRoutines()) {
-        		if (routineID == r.getId()) {
-        			routine = r;
-        			actions.add(r.actionsString());
-        			textName.setText(r.getName());
-        			if (r.getStatusCode() == StatusCode.IMPLEMENTED) {
-        				checkboxEnabled.setChecked(true);
-        			} else {
-        				checkboxEnabled.setChecked(false);
-        			}
-        			editing = true;
-        		}
-        	}
-        	
+            for (Routine r: RoutineService.getInstance().getAllRoutines()) {
+                if (routineID == r.getId()) {
+                    routine = r;
+                    actions.add(r.actionsString());
+                    textName.setText(r.getName());
+                    if (r.getStatusCode() == StatusCode.IMPLEMENTED) {
+                        checkboxEnabled.setChecked(true);
+                    } else {
+                        checkboxEnabled.setChecked(false);
+                    }
+                    editing = true;
+                }
+            }
+
         }
-        
+
         // Get pattern from intent if exists
         patternID = intent.getIntExtra("patternID", -1);
-        
+
         // Dismiss Button
-    	dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
-    	final Context context = this;
+        dismissButton = (com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.dismissButton);
+        final Context context = this;
         if ((routine.getStatusCode() == StatusCode.AWAITING_APPROVAL) || routine.getStatusCode() == StatusCode.IN_DEV) {
-        	dismissButton.setVisibility(View.VISIBLE);
-        	checkboxEnabled.setChecked(true); // Tick 'enabled'
-        	dismissButton.setOnClickListener(new OnClickListener() {
-        		@Override
-        		public void onClick(View v) {
+            dismissButton.setVisibility(View.VISIBLE);
+            checkboxEnabled.setChecked(true); // Tick 'enabled'
+            dismissButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     RoutineService.getInstance().remove(routine);
-        			if (patternID != -1) {
-	        			Pattern p = PatternService.getInstance().getPattern(patternID);
-	                	p.setStatusCode(StatusCode.DECLINED);
+                    if (patternID != -1) {
+                        Pattern p = PatternService.getInstance().getPattern(patternID);
+                        p.setStatusCode(StatusCode.DECLINED);
                         PatternService.getInstance().updatePattern(p);
-        			}
+                    }
                     Intent resultIntent = new Intent();
-                	setResult(Activity.RESULT_OK, resultIntent);
+                    setResult(Activity.RESULT_OK, resultIntent);
                     PhoneService.getInstance().update(context);
-        			finish();
-        		}
-        	});
+                    finish();
+                }
+            });
         } else {
-        	LayoutParams params = dismissButton.getLayoutParams();
-        	params.height = 0;
-        	dismissButton.setLayoutParams(params);
+            LayoutParams params = dismissButton.getLayoutParams();
+            params.height = 0;
+            dismissButton.setLayoutParams(params);
         }
-        
-        
+
+
         // Add Trigger Listener
         addTrigger.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                addClick(v, 0);
+                addTrigger(v);
             }
         });
-            
+
+
         // Add Action Listener
         addAction.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	if (actions.size() == 0) {
-            		addClick(v, 1);
-            	} else {
+                if (actions.size() == 0) {
+                    addAction(v);
+                } else {
                     Toast.makeText(getBaseContext(), "Only 1 Action allowed", Toast.LENGTH_SHORT).show();
-            	}
-                
+                }
+
             }
         });
-        
+
+        // Save Button Listener
         saveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	String name = (String) textName.getText().toString();
+                // Validate Inputs
+                String name = (String) textName.getText().toString();
                 if (name == null || name.length() == 0) {
                     Toast.makeText(getBaseContext(), "No Name was set", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (triggers.size() == 0) {
-                	Toast.makeText(getBaseContext(), "Must have at least 1 Trigger", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Must have at least 1 Trigger", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (actions.size() == 0) {
-                	Toast.makeText(getBaseContext(), "Must have an Action", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Must have an Action", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 routine.setName(name);
-                
 
-                
+
+
                 if (checkboxEnabled.isChecked()) {
-                	routine.setStatusCode(StatusCode.IMPLEMENTED);
+                    routine.setStatusCode(StatusCode.IMPLEMENTED);
                     if (patternID != -1) {
-                    	Pattern p = PatternService.getInstance().getPattern(patternID);
-                    	p.setStatusCode(StatusCode.IMPLEMENTED);
+                        Pattern p = PatternService.getInstance().getPattern(patternID);
+                        p.setStatusCode(StatusCode.IMPLEMENTED);
                         PatternService.getInstance().updatePattern(p);
                     }
                 } else {
-                	routine.setStatusCode(StatusCode.DECLINED);
-                	if (patternID != -1) {
-                    	Pattern p = PatternService.getInstance().getPattern(patternID);
-                    	p.setStatusCode(StatusCode.IMPLEMENTED);
+                    routine.setStatusCode(StatusCode.DECLINED);
+                    if (patternID != -1) {
+                        Pattern p = PatternService.getInstance().getPattern(patternID);
+                        p.setStatusCode(StatusCode.IMPLEMENTED);
                         PatternService.getInstance().updatePattern(p);
                     }
                 }
                 if (editing) {
-                	for (int i = 0; i < RoutineService.getInstance().getAllRoutines().size(); i++) {
-                		Routine r = RoutineService.getInstance().getAllRoutines().get(i);
-            			if (r.getId() == routineID) {
+                    for (int i = 0; i < RoutineService.getInstance().getAllRoutines().size(); i++) {
+                        Routine r = RoutineService.getInstance().getAllRoutines().get(i);
+                        if (r.getId() == routineID) {
                             RoutineService.getInstance().set(i, r);
-            				break;
-                		}
-                	}
-                	
+                            break;
+                        }
+                    }
+
                 } else {
                     RoutineService.getInstance().add(routine);
                 }
-                
 
-                
+
+                // Finish Activity with ok result
                 Intent resultIntent = new Intent();
-            	setResult(Activity.RESULT_OK, resultIntent);
+                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             }
         });
-        
+
         // Trigger List Display
         triggers = routine.activeTriggerList();
-        
+
 //        triggersAdapter = new ArrayAdapter<String>(activity,
 //                android.R.layout.simple_list_item_1, android.R.id.text1, triggers);
         triggersAdapter = new SimpleArrayAdapter(activity,
                 R.layout.list_item_description, triggers);
         triggersListView.setAdapter(triggersAdapter);
         triggersListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        
+
         // List View Mode Listener and CAB
-        
+
         triggersModeListener = new TriggersModeListener(activity, triggersSelected, triggersAdapter);
         triggersListView.setMultiChoiceModeListener(triggersModeListener);
-        
-        triggersActionModeCallback = new EditActionModeCallback(triggersListView, triggersSelected);
-        
-        
-        triggersListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-					long id) {
-				if (triggersSelected.contains(position)) {
-					triggersListView.setItemChecked(position, false);
-					if (triggersActionMode != null && triggersSelected.size() == 0) {
-						triggersActionMode.finish();
-					}
-				} else {
-					// For multiple selections
-					if (triggersActionMode == null || triggersSelected.size() == 0) {
-						triggersActionMode = activity.startActionMode(triggersActionModeCallback);
-					}
-					triggersListView.setItemChecked(position, true);
-					
-				}
 
-			}
+        triggersActionModeCallback = new EditActionModeCallback(triggersListView, triggersSelected);
+
+
+        triggersListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position,
+                                    long id) {
+                if (triggersSelected.contains(position)) {
+                    triggersListView.setItemChecked(position, false);
+                    if (triggersActionMode != null && triggersSelected.size() == 0) {
+                        triggersActionMode.finish();
+                    }
+                } else {
+                    // For multiple selections
+                    if (triggersActionMode == null || triggersSelected.size() == 0) {
+                        triggersActionMode = activity.startActionMode(triggersActionModeCallback);
+                    }
+                    triggersListView.setItemChecked(position, true);
+
+                }
+
+            }
         });
-        
-        
+
+
         // Action List Display
         // Adapter
 //        actionsAdapter = new ArrayAdapter<String>(activity,
@@ -287,37 +286,37 @@ public class RoutineActivity extends FragmentActivity {
         // List View Initialize
         actionsListView.setAdapter(actionsAdapter);
         actionsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        
+
         // List View Mode Listener and CAB
         actionsModeListener = new ActionsModeListener(this, actionsSelected, actionsAdapter);
         actionsListView.setMultiChoiceModeListener(actionsModeListener);
         actionsActionModeCallback = new EditActionModeCallback(actionsListView, actionsSelected);
         actionsListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-					long id) {
-				if (actionsSelected.contains(position)) {
-					actionsListView.setItemChecked(position, false);
-					if (actionsActionMode != null && actionsSelected.size() == 0) {
-						actionsActionMode.finish();
-					}
-				} else {
-					// For multiple selections
-					if (actionsActionMode == null || actionsSelected.size() == 0) {
-						actionsActionMode = startActionMode(actionsActionModeCallback);
-					}
-					actionsListView.setItemChecked(position, true);
-					
-				}
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position,
+                                    long id) {
+                if (actionsSelected.contains(position)) {
+                    actionsListView.setItemChecked(position, false);
+                    if (actionsActionMode != null && actionsSelected.size() == 0) {
+                        actionsActionMode.finish();
+                    }
+                } else {
+                    // For multiple selections
+                    if (actionsActionMode == null || actionsSelected.size() == 0) {
+                        actionsActionMode = startActionMode(actionsActionModeCallback);
+                    }
+                    actionsListView.setItemChecked(position, true);
 
-			}
+                }
+
+            }
         });
-        
-        
-        
+
+
+
 
     }
-    
+
     /**
      * Hides the soft keyboard
      */
@@ -327,464 +326,354 @@ public class RoutineActivity extends FragmentActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-    
+
     @Override
     public void onBackPressed() {
         if (popupWindow != null && popupWindow.isShowing()) {
-        	loading.setVisibility(View.INVISIBLE);
+            loading.setVisibility(View.INVISIBLE);
             popupWindow.dismiss();
         } else {
             super.onBackPressed();
         }
     }
-    
-    private void addClick(View v, final int type) {
-    	// types: 0 = trigger, 1 = action
-    	
-        if (popupWindow != null && popupWindow.isShowing()) {
-            return;
-        }
-        loading.setVisibility(View.VISIBLE);
-        hideSoftKeyboard();
-        
-        LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  
-        View popupView = layoutInflater.inflate(R.layout.popup_list, null);  
-        popupWindow = new PopupWindow( popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-        
-        List<String> options;
-        if (type == 0) {
-        	options = Arrays.asList(Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA);
-            
-        } else {
-        	options = Arrays.asList(Settings.WIFI, Settings.MDATA, Settings.RINGER);
-        }
-        	
-        final ListView listView = (ListView) popupView.findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new SimpleArrayAdapter(activity,
-                R.layout.list_item_simple, options);
-        listView.setAdapter(adapter);
-        // ListView Item Click Listener
-        listView.setOnItemClickListener(new OnItemClickListener() {
 
-              @Override
-              public void onItemClick(AdapterView<?> parent, View view,
-                 int position, long id) {
-               
-                   // ListView Clicked item value
-                   String itemValue = (String) listView.getItemAtPosition(position);
-                      
-                    // Show Alert 
-                   popupWindow.dismiss();
-                  if (type == 0)  {
-                	  popupTriggerOptions(view, itemValue);
-                  } else {
-                	  popupActionOptions(view, itemValue);
-                  }
-              }
+    private void addTrigger(View v) {
+        final CharSequence[] items = {
+                Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA
+        };
 
-        }); 
-        
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Add Trigger");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                addTriggerOptions((String)items[item]);
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
-    
-    private void popupTriggerOptions(View v, String s) {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            return;
-        }
-        hideSoftKeyboard();
-        
-        LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  
-        final View popupView = layoutInflater.inflate(R.layout.popup_options, null);  
-        popupWindow = new PopupWindow( popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-        
-        TextView desc = (TextView) popupView.findViewById(R.id.textDescription);
-        desc.setText("When '" + s + "' is:");
-        Button buttonOK = (Button) popupView.findViewById(R.id.buttonOK);
-        
-        final RadioGroup radioGroup = (RadioGroup) popupView.findViewById(R.id.radioGroup);
-        
-        LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
-                RadioGroup.LayoutParams.WRAP_CONTENT,
-                RadioGroup.LayoutParams.WRAP_CONTENT);
-        
-        RadioButton rb;
-        
-        if (s.equals(Settings.TIME)) {
+
+    private void addAction(View v) {
+        final CharSequence[] items = {
+                Settings.WIFI, Settings.MDATA, Settings.RINGER
+        };
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Add Action");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                addActionOptions((String)items[item]);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+
+    private void addTriggerOptions(final String item) {
+        if (item.equals(Settings.TIME)) {
             // Time
-            final TimePicker timePicker = (TimePicker) popupView.findViewById(R.id.timePicker);
-            timePicker.setVisibility(View.VISIBLE);
-            buttonOK.setOnClickListener(new OnClickListener() {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
                 @Override
-                public void onClick(View v) {
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     routine.setHour(timePicker.getCurrentHour());
                     routine.setMinute(timePicker.getCurrentMinute());
-                    
+
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
-                    
                 }
-            });
-            
-        } else if (s.equals(Settings.DAY)) {
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+
+
+        } else if (item.equals(Settings.DAY)) {
             // Day
-        	List<String> options = new ArrayList<String>();
-        	options.addAll(Routine.daysMap.keySet());
-            Collections.reverse(options);
-            int i = 0;
-            for (String l: options) {
-                rb = new RadioButton(activity);
-                rb.setText(l);
-                rb.setId(i);
-                radioGroup.addView(rb, 0, layoutParams);
-                i++;
-            }
-            radioGroup.check(i-1);
-            buttonOK.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Gets a reference to "selected" radio button
-                    int selected = radioGroup.getCheckedRadioButtonId();
-                    RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    int day = Routine.dayToInt((String) b.getText());
+            final CharSequence[] options = Routine.daysMap.keySet()
+                    .toArray(new CharSequence[Routine.daysMap.keySet().size()]);
+
+            final AlertDialog.Builder innerBuilder = new AlertDialog.Builder(activity);
+            innerBuilder.setTitle("If Day is");
+            innerBuilder.setItems(options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    int day = Routine.dayToInt((String) options[item]);
                     routine.setDay("" + day);
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
                 }
             });
-            
-            
-        } else if (s.equals(Settings.LOCATION)) {
+            AlertDialog innerAlert = innerBuilder.create();
+            innerAlert.show();
+        } else if (item.equals(Settings.LOCATION)) {
             // Location
-            List<String> options = new ArrayList<String>();
-            
+            List<String> locations = new ArrayList<String>();
             for (UserLocation ul: UserLocationService.getInstance().getAllUserLocations()) {
-                options.add(ul.getName());
+                locations.add(ul.getName());
             }
-
-            options.add("Unknown");
-
-            Collections.reverse(options);
-            int i = 0;
-            for (String l: options) {
-                rb = new RadioButton(activity);
-                rb.setText(l);
-                rb.setId(i);
-                radioGroup.addView(rb, 0, layoutParams);
-                i++;
-            }
-            radioGroup.check(i-1);
-            
-            buttonOK.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Gets a reference to "selected" radio button
-                    int selected = radioGroup.getCheckedRadioButtonId();
-                    RadioButton b = (RadioButton) popupView.findViewById(selected);
+            locations.add("Unknown");
+            final CharSequence[] options = locations.toArray(
+                    new CharSequence[locations.size()]
+            );
+            final AlertDialog.Builder innerBuilder = new AlertDialog.Builder(activity);
+            innerBuilder.setTitle("If Location is");
+            innerBuilder.setItems(options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
                     try {
-                    String location = (String) b.getText();
-                    if (location == "Unknown") {
-                        routine.setLocation(""+-1);
-                    } else {
-                        for (UserLocation ul : UserLocationService.getInstance().getAllUserLocations()) {
-                            if (ul.getName().equals(location)) {
-                                routine.setLocation("" + ul.getId());
-                                break;
+                        String location = (String)options[item];
+                        if (location.equals("Unknown")) {
+                            routine.setLocation(""+-1);
+                        } else {
+                            for (UserLocation ul : UserLocationService.getInstance().getAllUserLocations()) {
+                                if (ul.getName().equals(location)) {
+                                    routine.setLocation("" + ul.getId());
+                                    break;
+                                }
                             }
                         }
-                    }
                     } catch (NullPointerException e) {
-                    	
+
                     }
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
-                    
                 }
             });
-        } else {
-            // On/Off
-            final String string = s;
-            List<String> options = Arrays.asList("On", "Off");
-            Collections.reverse(options);
-            int i = 0;
-            for (String l: options) {
-                rb = new RadioButton(activity);
-                rb.setText(l);
-                rb.setId(i);
-                radioGroup.addView(rb, 0, layoutParams);
-                i++;
+            AlertDialog innerAlert = innerBuilder.create();
+            innerAlert.show();
+
+
+        } else if (item.equals(Settings.WIFI) || item.equals(Settings.MDATA)) {
+            // Wifi and MData
+            final CharSequence[] options = {
+                    "On", "Off"
+            };
+
+            final AlertDialog.Builder innerBuilder = new AlertDialog.Builder(activity);
+            if (item.equals(Settings.WIFI)) {
+                innerBuilder.setTitle("If Wifi is");
+            } else {
+                innerBuilder.setTitle("If Mobile Data is");
             }
-            radioGroup.check(i-1);
-            buttonOK.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Gets a reference to "selected" radio button
-                    int selected = radioGroup.getCheckedRadioButtonId();
-                    RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    String sText = (String) b.getText();
+            innerBuilder.setItems(options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int innerItem) {
+                    String sText = (String) options[innerItem];
                     String onoff = "false";
                     if (sText.equals("On")) {
                         onoff = "true";
                     }
-                    if (string.equals(Settings.WIFI)) {
+                    if (item.equals(Settings.WIFI)) {
                         routine.setWifi(onoff);
-                    } else if (string.equals(Settings.MDATA)) {
+                    } else {
                         routine.setmData(onoff);
                     }
-                    
+
                     triggers.clear();
                     triggers.addAll(routine.activeTriggerList());
                     triggersAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
                 }
             });
+            AlertDialog innerAlert = innerBuilder.create();
+            innerAlert.show();
         }
-        
-        
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
     }
-    
-    private void popupActionOptions(View v, String s) {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            return;
-        }
-        hideSoftKeyboard();
-        
-        LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  
-        final View popupView = layoutInflater.inflate(R.layout.popup_options, null);  
-        popupWindow = new PopupWindow( popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
-        
-        TextView desc = (TextView) popupView.findViewById(R.id.textDescription);
-        desc.setText("Set '" + s + "' to:");
-        Button buttonOK = (Button) popupView.findViewById(R.id.buttonOK);
-        
-        final RadioGroup radioGroup = (RadioGroup) popupView.findViewById(R.id.radioGroup);
-        
-        LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
-                RadioGroup.LayoutParams.WRAP_CONTENT,
-                RadioGroup.LayoutParams.WRAP_CONTENT);
-        
-        RadioButton rb;
-        
-        if (s.equals(Settings.RINGER)) {
-        	List<String> options = new ArrayList<String>();
-        	options.addAll(RingerProfiles.ringerMap.keySet());
-            Collections.reverse(options);
-            int i = 0;
-            for (String l: options) {
-                rb = new RadioButton(activity);
-                rb.setText(l);
-                rb.setId(i);
-                radioGroup.addView(rb, 0, layoutParams);
-                i++;
+
+    private void addActionOptions(String item) {
+        if (item.equals(Settings.WIFI) || item.equals(Settings.MDATA)) {
+            // Wifi
+            final CharSequence[] options = {
+                    "On", "Off"
+            };
+
+            final AlertDialog.Builder innerBuilder = new AlertDialog.Builder(activity);
+            if (item.equals(Settings.WIFI)) {
+                innerBuilder.setTitle("Set Wifi to");
+            } else {
+                innerBuilder.setTitle("Set Mobile Data to");
             }
-            radioGroup.check(i-1);
-            buttonOK.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Gets a reference to "selected" radio button
-                    int selected = radioGroup.getCheckedRadioButtonId();
-                    RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    int ringer = RingerProfiles.ringerToInt((String) b.getText());
-                    routine.setEventCategory(Settings.RINGER);
-                    routine.setEvent("" + ringer);
-                    
-                    actions.clear();
-                    actions.add(routine.actionsString());
-                    actionsAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
-                }
-            });
-        } else {
-            // On/Off
-        	// Wifi and mData
-            final String string = s;
-            List<String> options = Arrays.asList("On", "Off");
-            Collections.reverse(options);
-            int i = 0;
-            for (String l: options) {
-                rb = new RadioButton(activity);
-                rb.setText(l);
-                rb.setId(i);
-                radioGroup.addView(rb, 0, layoutParams);
-                i++;
-            }
-            radioGroup.check(i-1);
-            buttonOK.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Gets a reference to "selected" radio button
-                    int selected = radioGroup.getCheckedRadioButtonId();
-                    RadioButton b = (RadioButton) popupView.findViewById(selected);
-                    String sText = (String) b.getText();
+
+            innerBuilder.setItems(options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    String sText = (String) options[item];
                     String onoff = "false";
                     if (sText.equals("On")) {
                         onoff = "true";
                     }
-                    routine.setEventCategory(string);
+                    routine.setEventCategory(Settings.WIFI);
                     routine.setEvent(onoff);
-                    
-                    
+
                     actions.clear();
                     actions.add(routine.actionsString());
                     actionsAdapter.notifyDataSetChanged();
-                    loading.setVisibility(View.INVISIBLE);
-                    popupWindow.dismiss();
                 }
             });
+            AlertDialog innerAlert = innerBuilder.create();
+            innerAlert.show();
+        } else if (item.equals(Settings.RINGER)) {
+            // Ringer
+            final CharSequence[] options = RingerProfiles.ringerMap.keySet()
+                    .toArray(new CharSequence[RingerProfiles.ringerMap.keySet().size()]);
+
+            final AlertDialog.Builder innerBuilder = new AlertDialog.Builder(activity);
+            innerBuilder.setTitle("Set Ringer to");
+            innerBuilder.setItems(options, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    int ringer = RingerProfiles.ringerToInt((String)options[item]);
+                    routine.setEventCategory(Settings.RINGER);
+                    routine.setEvent("" + ringer);
+
+                    actions.clear();
+                    actions.add(routine.actionsString());
+                    actionsAdapter.notifyDataSetChanged();
+                }
+            });
+            AlertDialog innerAlert = innerBuilder.create();
+            innerAlert.show();
+
         }
-        
-        
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
     }
-    
 
 
-    
+
+
     private class TriggersModeListener extends EditMultiChoiceModeListener {
-		
-		private List<Integer> selected;
-		private ArrayAdapter<String> adapter;
-		private Activity activity;
-		
-		public TriggersModeListener(Activity activity,
-				List<Integer> selected, ArrayAdapter<String> adapter) {
-			super(selected);
-			this.activity = activity;
-			this.selected = selected;
-			this.adapter = adapter;
-		}
-		
-		
-		@Override
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			String s = "";
-			String trigger = "";
-			if (selected != null) {
-				Collections.sort(selected);
-				Collections.reverse(selected);
-				
-				
-			}
-			
-			switch (item.getItemId()) {
-				case R.id.action_edit:
-					if (selected != null && selected.size() == 1) {
-						s = (String) adapter.getItem(selected.get(0));
-						trigger = s.split(":")[0];
-//						Intent intent = new Intent(activity, RoutineActivity.class);
-//						intent.putExtra("EditItem", selected.get(0));
-//		            	activity.startActivityForResult(intent, 0);
 
-						popupTriggerOptions(activity.findViewById(android.R.id.content), trigger);
-					}
-					adapter.notifyDataSetChanged();
-					mode.finish();
-					return true;
-				case R.id.action_discard:
-					
-					if (selected != null) {
-						for (int i = 0; i < selected.size(); i++) {
-							s = (String) adapter.getItem(selected.get(i));
-							trigger = s.split(":")[0];
-							if (trigger.equals(Settings.TIME)) {
-								routine.setHour(-1);
-								routine.setMinute(-1);
-							} else if (trigger.equals(Settings.DAY)) {
-								routine.setDay("");
-							} else if (trigger.equals(Settings.LOCATION)) {
-								routine.setLocation("");
-							} else if (trigger.equals(Settings.WIFI)) {
-								routine.setWifi("");
-							} else if (trigger.equals(Settings.MDATA)) {
-								routine.setmData("");
-							}
+        private List<Integer> selected;
+        private ArrayAdapter<String> adapter;
+        private Activity activity;
 
-							adapter.remove(s);
-						}
-						adapter.notifyDataSetChanged();
-						mode.finish();
-					}
-					return true;
-				default:
-					return false;
-					
-			}
-			
-		}
-	}
-    
+        public TriggersModeListener(Activity activity,
+                                    List<Integer> selected, ArrayAdapter<String> adapter) {
+            super(selected);
+            this.activity = activity;
+            this.selected = selected;
+            this.adapter = adapter;
+        }
+
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            String s = "";
+            String trigger = "";
+            if (selected != null) {
+                Collections.sort(selected);
+                Collections.reverse(selected);
+
+
+            }
+
+            switch (item.getItemId()) {
+                case R.id.action_edit:
+                    if (selected != null && selected.size() == 1) {
+                        s = (String) adapter.getItem(selected.get(0));
+                        trigger = s.split(":")[0];
+//                      Intent intent = new Intent(activity, RoutineActivity.class);
+//                      intent.putExtra("EditItem", selected.get(0));
+//                      activity.startActivityForResult(intent, 0);
+
+                        addTriggerOptions(trigger);
+                    }
+                    adapter.notifyDataSetChanged();
+                    mode.finish();
+                    return true;
+                case R.id.action_discard:
+
+                    if (selected != null) {
+                        for (int i = 0; i < selected.size(); i++) {
+                            s = (String) adapter.getItem(selected.get(i));
+                            trigger = s.split(":")[0];
+                            if (trigger.equals(Settings.TIME)) {
+                                routine.setHour(-1);
+                                routine.setMinute(-1);
+                            } else if (trigger.equals(Settings.DAY)) {
+                                routine.setDay("");
+                            } else if (trigger.equals(Settings.LOCATION)) {
+                                routine.setLocation("");
+                            } else if (trigger.equals(Settings.WIFI)) {
+                                routine.setWifi("");
+                            } else if (trigger.equals(Settings.MDATA)) {
+                                routine.setmData("");
+                            }
+
+                            adapter.remove(s);
+                        }
+                        adapter.notifyDataSetChanged();
+                        mode.finish();
+                    }
+                    return true;
+                default:
+                    return false;
+
+            }
+
+        }
+    }
+
     private class ActionsModeListener extends EditMultiChoiceModeListener {
-		
-		private List<Integer> selected;
-		private ArrayAdapter<String> adapter;
-		private Activity activity;
-		
-		public ActionsModeListener(Activity activity,
-				List<Integer> selected, ArrayAdapter<String> adapter) {
-			super(selected);
-			this.activity = activity;
-			this.selected = selected;
-			this.adapter = adapter;
-		}
-		
-		
-		@Override
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			String s = "";
-			String action = "";
-			if (selected != null) {
-				Collections.sort(selected);
-				Collections.reverse(selected);
-			}
-			
-			switch (item.getItemId()) {
-				case R.id.action_edit:
-					if (selected != null && selected.size() == 1) {
-						if (selected != null && selected.size() == 1) {
-							s = (String) adapter.getItem(selected.get(0));
-							action = s.split(":")[0];
 
-							popupActionOptions(activity.findViewById(android.R.id.content), action);
-						}
-					}
-					adapter.notifyDataSetChanged();
-					mode.finish();
-					return true;
-				case R.id.action_discard:
-					
-					if (selected != null) {
-						for (int i = 0; i < selected.size(); i++) {
-							s = (String) adapter.getItem(selected.get(i));
-							action = s.split(":")[0];
-							
-							routine.setEvent("");
-							routine.setEventCategory("");
-							adapter.remove(s);
-						}
-						adapter.notifyDataSetChanged();
-						mode.finish();
-					}
-					return true;
-				default:
-					return false;
-					
-			}
-			
-		}
-	}
-    
+        private List<Integer> selected;
+        private ArrayAdapter<String> adapter;
+        private Activity activity;
+
+        public ActionsModeListener(Activity activity,
+                                   List<Integer> selected, ArrayAdapter<String> adapter) {
+            super(selected);
+            this.activity = activity;
+            this.selected = selected;
+            this.adapter = adapter;
+        }
+
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            String s = "";
+            String action = "";
+            if (selected != null) {
+                Collections.sort(selected);
+                Collections.reverse(selected);
+            }
+
+            switch (item.getItemId()) {
+                case R.id.action_edit:
+                    if (selected != null && selected.size() == 1) {
+                        if (selected != null && selected.size() == 1) {
+                            s = (String) adapter.getItem(selected.get(0));
+                            action = s.split(":")[0];
+
+                            addActionOptions(action);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                    mode.finish();
+                    return true;
+                case R.id.action_discard:
+
+                    if (selected != null) {
+                        for (int i = 0; i < selected.size(); i++) {
+                            s = (String) adapter.getItem(selected.get(i));
+                            action = s.split(":")[0];
+
+                            routine.setEvent("");
+                            routine.setEventCategory("");
+                            adapter.remove(s);
+                        }
+                        adapter.notifyDataSetChanged();
+                        mode.finish();
+                    }
+                    return true;
+                default:
+                    return false;
+
+            }
+
+        }
+    }
+
 }
