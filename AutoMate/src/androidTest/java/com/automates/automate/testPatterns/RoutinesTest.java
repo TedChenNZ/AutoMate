@@ -2,9 +2,9 @@ package com.automates.automate.testPatterns;
 
 import android.text.format.Time;
 
-import com.automates.automate.services.PhoneService;
+import com.automates.automate.service.PhoneService;
 import com.automates.automate.model.Pattern;
-import com.automates.automate.services.pattern.StatusCode;
+import com.automates.automate.service.pattern.StatusCode;
 import com.automates.automate.model.Routine;
 
 import junit.framework.TestCase;

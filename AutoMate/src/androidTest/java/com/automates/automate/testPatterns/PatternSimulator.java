@@ -2,11 +2,11 @@ package com.automates.automate.testPatterns;
 import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
-import com.automates.automate.services.PhoneService;
+import com.automates.automate.service.PhoneService;
 import com.automates.automate.model.Pattern;
-import com.automates.automate.services.pattern.PatternGenerator;
-import com.automates.automate.services.pattern.PatternService;
-import com.automates.automate.services.routines.RoutineService;
+import com.automates.automate.service.pattern.PatternGenerator;
+import com.automates.automate.service.pattern.PatternService;
+import com.automates.automate.service.routine.RoutineService;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 import com.automates.automate.sqlite.UserLocationDB;

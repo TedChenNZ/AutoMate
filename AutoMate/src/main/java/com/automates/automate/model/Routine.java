@@ -1,8 +1,8 @@
 package com.automates.automate.model;
 
-import com.automates.automate.services.locations.UserLocationService;
-import com.automates.automate.services.settings.RingerProfiles;
-import com.automates.automate.services.settings.Settings;
+import com.automates.automate.service.location.UserLocationService;
+import com.automates.automate.service.settings.RingerProfiles;
+import com.automates.automate.service.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

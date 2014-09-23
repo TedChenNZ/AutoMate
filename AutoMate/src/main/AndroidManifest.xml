@@ -42,7 +42,7 @@
             android:value="AIzaSyDFjDSrHrcKtyfJmQgTLrWUOQMF3fug8cA" />
 
         <activity
-            android:name=".view.activities.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,23 +51,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activities.LocationActivity"
+            android:name=".view.activity.LocationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".view.activities.RoutineActivity"
+            android:name=".view.activity.RoutineActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".services.pattern.NotificationActivity"
+            android:name=".service.pattern.NotificationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".view.activities.FirstRunActivity"
+            android:name=".view.activity.FirstRunActivity"
             android:label="@string/app_name" >
         </activity>
 
-        <receiver android:name=".services.settings.IntentReceiver" >
+        <receiver android:name=".service.settings.IntentReceiver" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -76,12 +76,12 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".services.routines.TimelyChecker"
+            android:name=".service.routine.TimelyChecker"
             android:exported="false" >
         </receiver>
 
         <service
-            android:name=".services.locations.LocationTrackerService"
+            android:name=".service.location.LocationTrackerService"
             android:enabled="true"
             android:exported="false"
             android:label="GPSTrackerService" />

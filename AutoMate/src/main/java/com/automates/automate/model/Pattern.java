@@ -1,9 +1,9 @@
 package com.automates.automate.model;
 
-import com.automates.automate.services.pattern.NotificationActivity;
-import com.automates.automate.services.pattern.StatusCode;
-import com.automates.automate.services.pattern.WeightManager;
-import com.automates.automate.services.routines.RoutineService;
+import com.automates.automate.service.pattern.NotificationActivity;
+import com.automates.automate.service.pattern.StatusCode;
+import com.automates.automate.service.pattern.WeightManager;
+import com.automates.automate.service.routine.RoutineService;
 
 import java.util.Calendar;
 
