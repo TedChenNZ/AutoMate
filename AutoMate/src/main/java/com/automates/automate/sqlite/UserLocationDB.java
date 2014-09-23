@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.automates.automate.locations.UserLocation;
+import com.automates.automate.model.UserLocation;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class UserLocationDB extends SQLiteOpenHelper implements UserLocationsMan
     //---------------------------------------------------------------------
     
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.UserLocationsManager#add(com.automates.automate.locations.UserLocation)
+     * @see com.automates.automate.sqlite.UserLocationsManager#add(com.automates.automate.model.UserLocation)
      */
 
     
@@ -153,7 +153,7 @@ public class UserLocationDB extends SQLiteOpenHelper implements UserLocationsMan
  
      // Updating single object
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.UserLocationsManager#update(com.automates.automate.locations.UserLocation)
+     * @see com.automates.automate.sqlite.UserLocationsManager#update(com.automates.automate.model.UserLocation)
      */
     @Override
     public int update(UserLocation ul) {
@@ -180,7 +180,7 @@ public class UserLocationDB extends SQLiteOpenHelper implements UserLocationsMan
  
     // Deleting single UL
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.UserLocationsManager#remove(com.automates.automate.locations.UserLocation)
+     * @see com.automates.automate.sqlite.UserLocationsManager#remove(com.automates.automate.model.UserLocation)
      */
     @Override
     public void remove(UserLocation ul) {

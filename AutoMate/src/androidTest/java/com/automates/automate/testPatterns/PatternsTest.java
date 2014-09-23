@@ -1,7 +1,7 @@
 package com.automates.automate.testPatterns;
 
 import junit.framework.TestCase;
-import com.automates.automate.pattern.Pattern;
+import com.automates.automate.model.Pattern;
 
 public class PatternsTest extends TestCase {
 

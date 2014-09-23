@@ -3,11 +3,12 @@ package com.automates.automate.testPatterns;
 import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
-import com.automates.automate.LoggerService;
-import com.automates.automate.PhoneService;
-import com.automates.automate.routines.Routine;
-import com.automates.automate.routines.RoutineService;
-import com.automates.automate.settings.Wifi;
+import com.automates.automate.services.routines.LoggerService;
+import com.automates.automate.services.PhoneService;
+import com.automates.automate.model.Routine;
+import com.automates.automate.services.routines.RoutineService;
+import com.automates.automate.services.settings.Settings;
+import com.automates.automate.services.settings.Wifi;
 import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 import com.automates.automate.sqlite.UserLocationDB;
@@ -33,7 +34,7 @@ public class RoutinePatternInteractionTest extends InstrumentationTestCase {
 		
 		
 		Routine r = new Routine();
-		r.setEventCategory(com.automates.automate.settings.Settings.WIFI);
+		r.setEventCategory(Settings.WIFI);
 		r.setEvent("true");
 		r.setWifi("false");
 		RoutineService.getInstance().add(r);

@@ -1,6 +1,6 @@
 package com.automates.automate.sqlite;
 
-import com.automates.automate.pattern.Pattern;
+import com.automates.automate.model.Pattern;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.automates.automate.sqlite;
 
 import java.util.List;
 
-import com.automates.automate.locations.UserLocation;
+import com.automates.automate.model.UserLocation;
 
 public interface UserLocationsManager {
 

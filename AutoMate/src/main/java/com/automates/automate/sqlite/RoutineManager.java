@@ -2,7 +2,7 @@ package com.automates.automate.sqlite;
 
 import java.util.List;
 
-import com.automates.automate.routines.Routine;
+import com.automates.automate.model.Routine;
 
 public interface RoutineManager {
 

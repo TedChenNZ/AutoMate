@@ -1,6 +1,6 @@
 package com.automates.automate.test;
 
-import com.automates.automate.MainActivity;
+import com.automates.automate.view.activities.MainActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
 

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.automates.automate.pattern.Pattern;
+import com.automates.automate.model.Pattern;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.automates.automate.routines.Routine;
+import com.automates.automate.model.Routine;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
     private static final String[] COLUMNS = {KEY_ID,KEY_NAME, KEY_EVENTCATEGORY,KEY_EVENT,KEY_HOUR,KEY_MINUTE,KEY_DAY,KEY_LOCATION,KEY_WIFI,KEY_DATA,KEY_STATUSCODE};
  
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.RoutineManager#addRoutine(com.automates.automate.routines.Routine)
+     * @see com.automates.automate.sqlite.RoutineManager#addRoutine(com.automates.automate.model.Routine)
      */
     @Override
     public Routine addRoutine(Routine routine){
@@ -208,7 +208,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
      // Updating single routine
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.RoutineManager#updateRoutine(com.automates.automate.routines.Routine)
+     * @see com.automates.automate.sqlite.RoutineManager#updateRoutine(com.automates.automate.model.Routine)
      */
     @Override
     public int updateRoutine(Routine routine) {
@@ -245,7 +245,7 @@ public class RoutineDB extends SQLiteOpenHelper implements RoutineManager{
  
     // Deleting single routine
     /* (non-Javadoc)
-     * @see com.automates.automate.sqlite.RoutineManager#deleteRoutine(com.automates.automate.routines.Routine)
+     * @see com.automates.automate.sqlite.RoutineManager#deleteRoutine(com.automates.automate.model.Routine)
      */
     @Override
     public void deleteRoutine(Routine routine) {
