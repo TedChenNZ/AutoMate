@@ -6,7 +6,7 @@ import android.test.RenamingDelegatingContext;
 import com.automates.automate.service.routine.LoggerService;
 import com.automates.automate.service.PhoneService;
 import com.automates.automate.model.Routine;
-import com.automates.automate.service.routine.RoutineService;
+import com.automates.automate.service.model.RoutineService;
 import com.automates.automate.service.settings.Settings;
 import com.automates.automate.service.settings.Wifi;
 import com.automates.automate.sqlite.PatternDB;

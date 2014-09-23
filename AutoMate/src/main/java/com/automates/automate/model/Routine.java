@@ -1,6 +1,6 @@
 package com.automates.automate.model;
 
-import com.automates.automate.service.location.UserLocationService;
+import com.automates.automate.service.model.UserLocationService;
 import com.automates.automate.service.settings.RingerProfiles;
 import com.automates.automate.service.settings.Settings;
 

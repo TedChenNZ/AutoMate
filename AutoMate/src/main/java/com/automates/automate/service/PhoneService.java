@@ -7,7 +7,7 @@ import android.util.Log;
 import com.automates.automate.service.routine.LoggerService;
 import com.automates.automate.service.location.LocationTrackerService;
 import com.automates.automate.model.UserLocation;
-import com.automates.automate.service.location.UserLocationService;
+import com.automates.automate.service.model.UserLocationService;
 import com.automates.automate.service.settings.Data;
 import com.automates.automate.service.settings.Initializer;
 import com.automates.automate.service.settings.RingerProfiles;

@@ -1,4 +1,4 @@
-package com.automates.automate.service.pattern;
+package com.automates.automate.service.model;
 
 import android.content.Context;
 

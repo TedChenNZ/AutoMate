@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.automates.automate.R;
 import com.automates.automate.service.location.GeocodeJSONParser;
 import com.automates.automate.model.UserLocation;
-import com.automates.automate.service.location.UserLocationService;
+import com.automates.automate.service.model.UserLocationService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

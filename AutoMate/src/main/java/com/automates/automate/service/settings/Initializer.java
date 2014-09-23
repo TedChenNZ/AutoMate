@@ -3,10 +3,10 @@ package com.automates.automate.service.settings;
 import android.content.Context;
 
 import com.automates.automate.service.location.LocationTrackerService;
-import com.automates.automate.service.location.UserLocationService;
-import com.automates.automate.service.pattern.PatternService;
+import com.automates.automate.service.model.UserLocationService;
+import com.automates.automate.service.model.PatternService;
 import com.automates.automate.service.routine.RoutineApplierService;
-import com.automates.automate.service.routine.RoutineService;
+import com.automates.automate.service.model.RoutineService;
 
 /**
  * Initializer is used to initialize services

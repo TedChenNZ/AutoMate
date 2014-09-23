@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.automates.automate.R;
 import com.automates.automate.model.Routine;
-import com.automates.automate.service.routine.RoutineService;
+import com.automates.automate.service.model.RoutineService;
 import com.automates.automate.service.settings.Settings;
 
 public class FirstRunActivity extends Activity {

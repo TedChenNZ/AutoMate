@@ -4,6 +4,7 @@ import android.text.format.Time;
 
 import com.automates.automate.service.PhoneService;
 import com.automates.automate.model.Pattern;
+import com.automates.automate.service.model.PatternService;
 import com.automates.automate.service.settings.Settings;
 
 import java.util.Date;

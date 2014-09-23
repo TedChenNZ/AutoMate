@@ -12,7 +12,7 @@ import com.automates.automate.service.routine.LoggerService;
 import com.automates.automate.service.PhoneService;
 import com.automates.automate.service.pattern.PatternGenerator;
 import com.automates.automate.model.Routine;
-import com.automates.automate.service.routine.RoutineService;
+import com.automates.automate.service.model.RoutineService;
 
 public class IntentReceiver extends BroadcastReceiver {	
 	private final static String TAG = "IntentReceiver";

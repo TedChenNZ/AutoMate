@@ -1,4 +1,4 @@
-package com.automates.automate.service.location;
+package com.automates.automate.service.model;
 
 import android.content.Context;
 import android.location.Location;

@@ -23,7 +23,7 @@ import com.automates.automate.view.list.EditActionModeCallback;
 import com.automates.automate.view.list.EditMultiChoiceModeListener;
 import com.automates.automate.view.list.RoutinesArrayAdapter;
 import com.automates.automate.model.Routine;
-import com.automates.automate.service.routine.RoutineService;
+import com.automates.automate.service.model.RoutineService;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.automates.automate.service.PhoneService;
 import com.automates.automate.R;
 import com.automates.automate.model.UserLocation;
-import com.automates.automate.service.location.UserLocationService;
+import com.automates.automate.service.model.UserLocationService;
 
 import java.util.List;
 

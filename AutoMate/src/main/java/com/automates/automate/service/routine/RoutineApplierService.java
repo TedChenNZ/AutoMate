@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.automates.automate.service.PhoneService;
 import com.automates.automate.model.Routine;
+import com.automates.automate.service.model.RoutineService;
 import com.automates.automate.service.pattern.StatusCode;
 import com.automates.automate.service.pattern.WeightManager;
 import com.automates.automate.service.settings.Data;
