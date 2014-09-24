@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * This class defines the structure for a routine to be entered into the database.
+ * @author Dhanish
+ *
+ */
+
+
 public class Routine {
 
 			
@@ -249,7 +256,8 @@ public class Routine {
     		return "On";
     	}
     }
-    
+
+    //Actions as a string
     public String actionsString() {
     	if (eventCategory == null || event == null) {
     		return null;
@@ -261,7 +269,8 @@ public class Routine {
     	}
     	return null;
     }
-    
+
+    //Triggers as a string
     public List<String> activeTriggerList() {
     	List<String> triggerList = new ArrayList<String>();
     	//Settings.TIME, Settings.DAY, Settings.LOCATION, Settings.WIFI, Settings.MDATA

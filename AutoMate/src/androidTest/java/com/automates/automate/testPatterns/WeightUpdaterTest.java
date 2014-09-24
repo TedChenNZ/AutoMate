@@ -2,6 +2,11 @@ package com.automates.automate.testPatterns;
 
 import junit.framework.TestCase;
 
+/**
+ * This class tests the weight updating algorithm. Tests needs to be refactored to work with updated source code.
+ * @author Dhanish
+ */
+
 //_______________________________________________________________________
 //IMPORTANT
 //COMMENT OUT oldPset(id); in WeightUpdater's constructor to run this test properly.

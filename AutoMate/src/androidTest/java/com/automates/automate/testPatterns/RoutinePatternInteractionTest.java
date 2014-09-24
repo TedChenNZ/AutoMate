@@ -13,6 +13,10 @@ import com.automates.automate.sqlite.PatternDB;
 import com.automates.automate.sqlite.RoutineDB;
 import com.automates.automate.sqlite.UserLocationDB;
 
+/**
+ * This class tests whether the routine database works as intended.
+ */
+
 public class RoutinePatternInteractionTest extends InstrumentationTestCase {
 
 	private static final String TAG = "PatternSimulator";

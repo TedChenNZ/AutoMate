@@ -45,6 +45,8 @@ public class Pattern {
 	nullTransform();
     }
 
+
+    //Transforms any empty strings to nulls
     private void nullTransform() {
 	this.event = stringToNull(this.event);
 	this.eventCategory = stringToNull(this.eventCategory);
@@ -78,6 +80,7 @@ public class Pattern {
     }
 
 
+    //Creates a routine to be added into the database
     public void addToRoutineDB() {
 	    Routine r = new Routine();
 	    r.setName("Routine " + this.id);
@@ -87,8 +90,9 @@ public class Pattern {
 	    c.setTimeInMillis(this.actualTime);
 	    r.setHour(c.get(Calendar.HOUR_OF_DAY));
 	    r.setMinute(round((c.get(Calendar.MINUTE)), 5));
-	    
-        r.setDay(Integer.toString(1234560));
+
+
+        r.setDay(Integer.toString(1234560)); //everyday
 //	    r.setDay("" + this.day);
 	    r.setLocation(this.location);
 //	    r.setmData(this.mData);
@@ -102,6 +106,8 @@ public class Pattern {
     	return (int) (Math.round(i/v)*v);
     	
     }
+
+    //Called when pattern is recognised.
     public void activate(Routine r) {
 	// TODO Auto-generated method stub
 	//ask user if location/wifi/data are conditions NOTIFICATION
@@ -202,6 +208,7 @@ public class Pattern {
 	this.weight = input;
     }
 
+    //Used to check if pattern can be recognised.
     public boolean checkThresholdAndStatusCode(){
 	if (this.weight >= WeightManager.suggestedWeight && this.statusCode == StatusCode.IN_DEV){
 	    return true;

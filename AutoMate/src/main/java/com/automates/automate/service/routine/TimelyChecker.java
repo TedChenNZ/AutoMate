@@ -13,6 +13,10 @@ import com.automates.automate.service.PhoneService;
  * @author Dhanish
  */
 
+/**
+ * @see com.automates.automate.service.routine.RoutineApplierService#startRoutineChecking(android.content.Context)
+ */
+
 public class TimelyChecker extends BroadcastReceiver{
 
     @Override
