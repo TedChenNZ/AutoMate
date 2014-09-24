@@ -26,6 +26,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+/**
+ * Service that applies Routines
+ */
 public class RoutineApplierService extends Service implements PropertyChangeListener{
     private static boolean instantiated = false;
 
@@ -62,6 +65,10 @@ public class RoutineApplierService extends Service implements PropertyChangeList
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),30000,pendingIntent);
     }
 
+    /**
+     * Check routines if the phone has had a change of state
+     * @param event
+     */
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -71,6 +78,9 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 		};
 	}
 
+    /**
+     * Check if a routine should be applied
+     */
 	public void checkRoutines(){
 		routines = RoutineService.getInstance().getAllRoutines();
 		if (routines != null) {
@@ -84,6 +94,10 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 
 	}
 
+    /**
+     * Apply a routine
+     * @param r
+     */
 	private void apply(Routine r) {
 		// TODO Auto-generated method stub
 		LoggerService.getInstance().logRoutine(r.getId());
@@ -127,6 +141,11 @@ public class RoutineApplierService extends Service implements PropertyChangeList
 		return null;
 	}
 
+    /**
+     * Check if the conditions of the phone state match the triggers of a Routine
+     * @param r
+     * @return
+     */
 	private boolean checkPhoneConditions(Routine r){
 		boolean conditions = true;
 
@@ -162,7 +181,12 @@ public class RoutineApplierService extends Service implements PropertyChangeList
         }
 		return conditions;
 	}
-	
+
+    /**
+     * Check if a routine has been applied recently
+     * @param r
+     * @return
+     */
 	private boolean checkAppliedRecently(Routine r) {
 		boolean applied = false;
 		if (LoggerService.getInstance().getAppliedRoutines().get(r.getId()) != null) {

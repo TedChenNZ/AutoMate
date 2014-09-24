@@ -1,7 +1,5 @@
 package com.automates.automate.view.list;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,9 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.automates.automate.R;
-import com.automates.automate.service.pattern.StatusCode;
 import com.automates.automate.model.Routine;
+import com.automates.automate.service.pattern.StatusCode;
 
+import java.util.List;
+
+/**
+ * Adapter for Routine List
+ */
 public class RoutinesArrayAdapter extends ArrayAdapter<Routine> {
 	private List<Routine> objects;
 	private View v;

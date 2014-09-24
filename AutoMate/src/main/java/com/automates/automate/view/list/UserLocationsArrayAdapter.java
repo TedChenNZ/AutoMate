@@ -15,6 +15,9 @@ import com.automates.automate.service.model.UserLocationService;
 
 import java.util.List;
 
+/**
+ * A list adapter for UserLocations
+ */
 public class UserLocationsArrayAdapter extends ArrayAdapter<UserLocation> {
 
 	private List<UserLocation> objects;

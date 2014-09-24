@@ -29,6 +29,9 @@ import com.automates.automate.view.list.NavDrawerListAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * The main activity which houses the fragments
+ */
 public class MainActivity extends Activity {
 //	private static final String TAG = "MainActivity";
 

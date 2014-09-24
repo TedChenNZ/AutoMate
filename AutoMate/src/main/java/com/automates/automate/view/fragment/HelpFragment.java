@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import com.automates.automate.R;
 
+/**
+ * Fragment which displays help
+ */
 public class HelpFragment extends Fragment {
 
     public HelpFragment(){}

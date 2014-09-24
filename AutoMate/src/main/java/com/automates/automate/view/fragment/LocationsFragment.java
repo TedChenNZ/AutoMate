@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Displays list of UserLocations
+ */
 public class LocationsFragment extends Fragment implements PropertyChangeListener {
 //	private static final String TAG = "LocationsFragment";
 	private ListView locationsListView;

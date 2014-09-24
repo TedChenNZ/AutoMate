@@ -9,13 +9,13 @@ import com.automates.automate.sqlite.UserLocationsManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * An intermediary service between the database and the application.
+ * Saves data in memory to reduce database calls.
+ *
+ * Created by Ted on 1/09/2014.
+ */
 public class UserLocationService {
-	/**
-	 * 
-	 */
-
-
 	private static UserLocationsManager locationsDB;
 	private static List<UserLocation> currentULList;
     private static List<UserLocation> userLocationList;
@@ -25,14 +25,20 @@ public class UserLocationService {
 	private UserLocationService() {
         currentULList = new ArrayList<UserLocation>();
 	}
-
+    /**
+     * Singleton getter
+     * @return
+     */
     public static UserLocationService getInstance() {
         if(instance == null) {
             instance = new UserLocationService();
         }
         return instance;
     }
-
+    /**
+     * Initialize singleton with context
+     * @param context
+     */
     public static void init(Context context) {
         locationsDB = new UserLocationDB(context);
         userLocationList = new ArrayList<UserLocation>();

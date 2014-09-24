@@ -1,5 +1,8 @@
 package com.automates.automate.service.settings;
 
+/**
+ * Constants
+ */
 public final class Settings {
 	public static final String TIME = "Time";
 	public static final String DAY = "Day";

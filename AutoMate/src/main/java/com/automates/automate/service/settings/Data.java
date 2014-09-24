@@ -1,10 +1,13 @@
 package com.automates.automate.service.settings;
 
-import java.lang.reflect.Method;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import java.lang.reflect.Method;
+
+/**
+ * Gets and sets the mobile data
+ */
 public class Data {
 	public Data() {}
 	

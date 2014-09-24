@@ -1,13 +1,11 @@
 package com.automates.automate.service;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
-import android.util.Log;
 
-import com.automates.automate.service.routine.LoggerService;
-import com.automates.automate.service.location.LocationTrackerService;
 import com.automates.automate.model.UserLocation;
+import com.automates.automate.service.location.LocationTrackerService;
 import com.automates.automate.service.model.UserLocationService;
+import com.automates.automate.service.routine.LoggerService;
 import com.automates.automate.service.settings.Data;
 import com.automates.automate.service.settings.Initializer;
 import com.automates.automate.service.settings.RingerProfiles;
@@ -19,14 +17,15 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-// Singleton
+/**
+ * Service which tracks phone settings and initializes services
+ */
 public final class PhoneService {
 	private final String TAG = "PhoneService";
 	private Location location;
 	private boolean dataEnabled;
 	private boolean wifiEnabled;
 	private int soundProfile;
-
 
 	private Context phoneContext;
 
@@ -45,7 +44,10 @@ public final class PhoneService {
 	}
 
 
-
+    /**
+     * Update the saved state of the phone
+     * @param context
+     */
 	public void update(Context context) {
 		// Initialize variables if they are not already initialized
 	    phoneContext = context;
@@ -67,50 +69,15 @@ public final class PhoneService {
 	}
 
 
-	
-	public String checkConnectivityIntent() {
-//		String wifi = Logger.getWifiBSSID();
-		boolean mdata = LoggerService.getInstance().getMData();
-		if (mdata != dataEnabled) {
-			return Settings.MDATA;
-
-		} else {
-//			if (!wifi.equals(wifiBSSID)) {
-//				return Settings.WIFI;
-//			}
-		}
-		return null;
-	}
-
-	public String getEventCategory(Intent intent) {
-		String event = "";
-		if (intent.getAction().equals("android.media.RINGER_MODE_CHANGED")) {
-			event = Settings.RINGER;
-		} else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-			event = Settings.BOOT;
-		} else if (intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED")) {
-			event = Settings.WIFI;
-		} else if (intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-			event = checkConnectivityIntent();
-		}
-		Log.d(TAG, "Event: " + event);
-		return event;
-	}
-
-	public String getEventAction(String event) {
-		String action = "";
-		if (event.equals(Settings.WIFI)) {
-			action = String.valueOf(wifiBSSID);
-		} else if (event.equals(Settings.MDATA)) {
-			action = String.valueOf(dataEnabled);
-		} else if (event.equals(Settings.RINGER)) {
-			action = String.valueOf(soundProfile);
-//			action = "Changed";
-		}
-		return action;
-	}
 
 
+
+
+
+    /**
+     * Get the current UserLocation
+     * @return
+     */
 	public String getSetLocation() {
 		if (location == null) {
 			return null;

@@ -1,7 +1,5 @@
 package com.automates.automate.view.list;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +10,11 @@ import android.widget.TextView;
 
 import com.automates.automate.R;
 
+import java.util.List;
+
+/**
+ * A simple list adapter
+ */
 public class SimpleArrayAdapter extends ArrayAdapter<String> {
 	private List<String> Strings;
 	private View v;

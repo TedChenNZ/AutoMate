@@ -6,6 +6,9 @@ import android.view.Menu;
 
 import com.automates.automate.R;
 
+/**
+ * Displays settings
+ */
 public class SettingsFragment extends PreferenceFragment  {
 
 	public SettingsFragment(){}

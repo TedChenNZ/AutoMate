@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * An intermediary service between the database and the application.
+ * Saves data in memory to reduce database calls.
+ *
  * Created by Ted on 1/09/2014.
  */
 public class PatternService {
@@ -19,6 +22,10 @@ public class PatternService {
 
     private PatternService() {}
 
+    /**
+     * Singleton getter
+     * @return
+     */
     public static PatternService getInstance() {
         if (instance == null) {
             instance = new PatternService();
@@ -26,6 +33,10 @@ public class PatternService {
         return instance;
     }
 
+    /**
+     * Initialize singleton with context
+     * @param context
+     */
     public static void init(Context context) {
         patternDB = new PatternDB(context);
         patternList = new ArrayList<Pattern>();

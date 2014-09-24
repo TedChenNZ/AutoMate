@@ -47,6 +47,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Activity for adding or modifying a Routine
+ */
 @SuppressLint("InflateParams")
 public class RoutineActivity extends FragmentActivity {
     private EditText textName;

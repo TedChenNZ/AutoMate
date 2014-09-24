@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Displays list of Routines
+ */
 public class RoutinesFragment extends Fragment implements PropertyChangeListener {
     //	private TextView testText;
 

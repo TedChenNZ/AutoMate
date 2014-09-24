@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+/**
+ * Getter and setter for wifi settings
+ */
 public class Wifi {
 	
 	public Wifi() {}

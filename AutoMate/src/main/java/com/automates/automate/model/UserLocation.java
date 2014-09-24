@@ -17,13 +17,23 @@ public class UserLocation {
 	private String locationName;
 //	private String wifi_ssid;
 //	private String wifi_bssid;
-	
+
+    /**
+     * Constructor
+     */
 	public UserLocation() {
 		locationName = "";
 //		wifi_ssid = "";
 //		wifi_bssid = "";
 	}
-	
+
+    /**
+     * Constructor
+     * @param name
+     * @param location
+     * @param radius
+     * @param locationName
+     */
 	public UserLocation(String name, LatLng location, Integer radius, String locationName) {
 		this.name = name;
 		this.location = location;
@@ -32,15 +42,6 @@ public class UserLocation {
 //		wifi_ssid = "";
 //		wifi_bssid = "";
 	}
-	
-//	public UserLocation(String name, LatLng location, Integer radius, String locationName, String wifi_ssid, String wifi_bssid) {
-//		this.name = name;
-//		this.location = location;
-//		this.radius = radius;
-//		this.locationName = locationName;
-//		this.wifi_ssid = wifi_ssid;
-//		this.wifi_bssid = wifi_bssid;
-//	}
 	
 	/**
 	 * Check if a given location is within the radius of this UserLocation
@@ -65,7 +66,12 @@ public class UserLocation {
 		
 		return isWithinRadius;
 	}
-	
+
+    /**
+     * Checks if a location is within the radius of this UserLocation
+     * @param loc
+     * @return
+     */
 	public boolean withinRadius(Location loc) {
 		if (loc == null) {
 			return false;
@@ -106,7 +112,11 @@ public class UserLocation {
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
 	}
-	
+
+    /**
+     * Converts UserLocation to a readable string
+     * @return
+     */
 	@Override
 	public String toString() {
 		return "UserLocation [id=" + id + ", name=" + name + ", location=" + location + ", radius=" + radius + ", locationName=" + locationName +"]";
@@ -135,6 +145,11 @@ public class UserLocation {
 //	public String getWifiBSSID() {
 //		return this.wifi_bssid;
 //	}
+
+    /**
+     * Clones the UserLocation object
+     * @return A clone of the UserLocation object
+     */
 	public UserLocation clone() {
 		UserLocation userloc = new UserLocation();
     	userloc.setId(this.getId());

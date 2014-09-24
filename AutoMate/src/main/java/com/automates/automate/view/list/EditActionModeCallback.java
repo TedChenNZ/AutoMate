@@ -1,7 +1,5 @@
 package com.automates.automate.view.list;
 
-import java.util.List;
-
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,7 +8,11 @@ import android.widget.ListView;
 
 import com.automates.automate.R;
 
+import java.util.List;
 
+/**
+ * Allows for editing data in RoutineActivity
+ */
 public class EditActionModeCallback implements ActionMode.Callback {
 	
 	private ListView lv;

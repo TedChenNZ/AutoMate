@@ -2,8 +2,6 @@ package com.automates.automate.view.list;
 
 
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +13,11 @@ import android.widget.TextView;
 
 import com.automates.automate.R;
 
+import java.util.ArrayList;
+
+/**
+ * Adapter for navigation drawer
+ */
 public class NavDrawerListAdapter extends BaseAdapter {
      
     private Context context;

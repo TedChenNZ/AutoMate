@@ -1,14 +1,17 @@
 package com.automates.automate.service.settings;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+/**
+ * Getter and setting for ringer profile settings
+ */
 public class RingerProfiles {
     public static final int SILENT_NO_VIBRATE = 0;
     public static final int SILENT_VIBRATE = 1;

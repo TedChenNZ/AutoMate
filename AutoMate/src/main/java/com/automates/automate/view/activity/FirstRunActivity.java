@@ -19,6 +19,9 @@ import com.automates.automate.model.Routine;
 import com.automates.automate.service.model.RoutineService;
 import com.automates.automate.service.settings.Settings;
 
+/**
+ * Activity for the start up set up
+ */
 public class FirstRunActivity extends Activity {
 	private TextView welcome;
 	private Animation animFadein;

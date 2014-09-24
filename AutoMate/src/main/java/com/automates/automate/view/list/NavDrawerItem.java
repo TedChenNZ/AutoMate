@@ -1,5 +1,8 @@
 package com.automates.automate.view.list;
 
+/**
+ * Item in the navigation drawer
+ */
 public class NavDrawerItem {
     
     private String title;

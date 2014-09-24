@@ -16,6 +16,10 @@ import android.util.Log;
 import com.automates.automate.service.PhoneService;
 
 // Based on http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
+
+/**
+ * Service to track the location of the device
+ */
 public class LocationTrackerService extends Service implements LocationListener {
 	private final static String TAG = "GPSTracker";
     private static boolean instantiated = false;
@@ -48,6 +52,10 @@ public class LocationTrackerService extends Service implements LocationListener 
     private LocationTrackerService() {
     }
 
+    /**
+     * Singleton getter
+     * @return
+     */
     public static LocationTrackerService getInstance() {
         if (instance == null) {
             instance = new LocationTrackerService();
@@ -55,6 +63,10 @@ public class LocationTrackerService extends Service implements LocationListener 
         return instance;
     }
 
+    /**
+     * Initialize the service with a context
+     * @param context
+     */
     public static void init(Context context) {
         mContext = context;
         locationManager = (LocationManager) mContext
@@ -62,17 +74,24 @@ public class LocationTrackerService extends Service implements LocationListener 
         instantiated = true;
     }
 
+    /**
+     * Check if this service is already isntantiated
+     * @return
+     */
     public static boolean isInstantiated() {
         return instantiated;
     }
 
+    /**
+     * Get current location using the network provider
+     * @return
+     */
     private Location getLocationNetworkProvider() {
     	try {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     MIN_TIME_BW_UPDATES,
                     MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-            Log.d(TAG, "getLocationNetworkProvider");
             if (locationManager != null) {
                 lastLocation = locationManager
                         .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -86,7 +105,11 @@ public class LocationTrackerService extends Service implements LocationListener 
     	}
     	return lastLocation;
     }
-    
+
+    /**
+     * Get current location using GPS
+     * @return
+     */
     private Location getLocationGPS() {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
@@ -103,11 +126,13 @@ public class LocationTrackerService extends Service implements LocationListener 
         }
         return lastLocation;
     }
-    
+
+    /**
+     * Get the current location
+     * @return
+     */
     public Location getLocation() {
         try {
-
- 
             // getting GPS status
             isGPSEnabled = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -213,16 +238,14 @@ public class LocationTrackerService extends Service implements LocationListener 
         // Showing Alert Message
         alertDialog.show();
     }
- 
+
+    /**
+     * Update PhoneService on location change
+     * @param location
+     */
     @Override
     public void onLocationChanged(Location location) {
-//    	String l = "Latitude: " + getLatitude() + " | Longitude: " + getLongitude();
-//    	Log.d(TAG, l);
-//    	Toast.makeText(getApplicationContext(), l,
-//    			   Toast.LENGTH_LONG).show();
     	PhoneService.getInstance().update(mContext);
-//    	PhoneState.logLocation();
-    	
     }
  
     @Override

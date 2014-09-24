@@ -38,7 +38,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
- 
+
+/**
+ * Activity for adding or modifying a UserLocation
+ */
 public class LocationActivity extends FragmentActivity {
  
     private com.beardedhen.androidbootstrap.BootstrapButton mBtnFind;

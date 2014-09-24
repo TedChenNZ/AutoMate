@@ -8,7 +8,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
- 
+
+/**
+ * Parses JSON, used for getting addresses
+ */
 public class GeocodeJSONParser {
  
     /** Receives a JSONObject and returns a list */

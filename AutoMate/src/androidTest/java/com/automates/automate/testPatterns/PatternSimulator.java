@@ -18,6 +18,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Testing class to simulate usage of the application. Used to determine the accuracy of learning.
+ */
 public class PatternSimulator extends InstrumentationTestCase {
 	private static final String TAG = "PatternSimulator";
 	private static final String TEST_FILE_PREFIX = "test_";
@@ -28,7 +31,10 @@ public class PatternSimulator extends InstrumentationTestCase {
 	}
 
 
-
+    /**
+     * Setup the testing by creating or emptying test databases
+     * @throws Exception
+     */
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -45,6 +51,11 @@ public class PatternSimulator extends InstrumentationTestCase {
 			pg.updateDatabase();
 		}
 	}
+
+    /**
+     * Reads the simulation file
+     * @return Returns the simulation file as a string
+     */
 	private String readFile() {
 		String s = "";
 		
@@ -59,6 +70,12 @@ public class PatternSimulator extends InstrumentationTestCase {
 	    }
 		return s;
 	}
+
+    /**
+     * Create a list of patterns to be inputted into the simulator
+     * @return List of patterns
+     * @throws ParseException
+     */
 	private List<Pattern> getPatternSimulation() throws ParseException {
 		String file[] = readFile().split("\n");
 		//		String text = "04/07/2014 09:00:00 Wifi false Home";
@@ -81,19 +98,20 @@ public class PatternSimulator extends InstrumentationTestCase {
 		return list;
 	}
 
+    /**
+     * Test the amount of Routines
+     */
 	public void testRoutineAmount() {
 		int amount = RoutineService.getInstance().getAllRoutines().size();
 		assertEquals(8, amount);
 	}
 
+    /**
+     * Test the amount of Patterns
+     */
 	public void testPatternAmount() {
 		int amount = PatternService.getInstance().getAllPatterns().size();
 		assertEquals(21, amount);
-	}
-
-	public void testRoutine0Time() {
-		int h = RoutineService.getInstance().getAllRoutines().get(0).getHour();
-		assertEquals(9, h);
 	}
 
 }

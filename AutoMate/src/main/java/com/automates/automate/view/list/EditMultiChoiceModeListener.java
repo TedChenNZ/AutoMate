@@ -1,15 +1,18 @@
 package com.automates.automate.view.list;
 
-import java.util.List;
-
-import com.automates.automate.R;
-
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AbsListView.MultiChoiceModeListener;
 
+import com.automates.automate.R;
+
+import java.util.List;
+
+/**
+ * Allows for editing data in RoutineActivity
+ */
 public class EditMultiChoiceModeListener implements MultiChoiceModeListener {
 
 	private List<Integer> selected;
