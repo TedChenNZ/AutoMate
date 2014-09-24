@@ -2,6 +2,10 @@ package com.automates.automate.service.pattern;
 
 import com.automates.automate.model.Pattern;
 
+/**
+ * This class updates the weighting of a pattern using the AutoMate algorithhm.
+ */
+
 public class WeightUpdater implements WeightManager {
 
 	private Pattern p;
@@ -26,6 +30,7 @@ public class WeightUpdater implements WeightManager {
 		oldPset();
 	}
 
+    //this sets the values of the old pattern for comparison and calculation
 	private void oldPset(){
 //		oldP = PhoneState.getPatternDb().getPattern(id);
 		oldWeight = oldP.getWeight();
@@ -34,6 +39,8 @@ public class WeightUpdater implements WeightManager {
 		this.p.setStatusCode(oldP.getStatusCode());
 	}
 
+    // this method updates the weighting. It uses the formula 1/t for number of days or weeks passed
+    // since the pattern was last triggered.If it's on the same weekday, the weekly calculation is used.
 	public Pattern updatePattern() {
 		double newWeight, newWeekWeight;
 		int weeksPast, daysPast;

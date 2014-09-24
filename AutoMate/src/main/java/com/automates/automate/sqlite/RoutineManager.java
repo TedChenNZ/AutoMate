@@ -1,8 +1,12 @@
 package com.automates.automate.sqlite;
 
+import com.automates.automate.model.Routine;
+
 import java.util.List;
 
-import com.automates.automate.model.Routine;
+/**
+ * This interface defines the CRUD operations for the routine database.
+ */
 
 public interface RoutineManager {
 

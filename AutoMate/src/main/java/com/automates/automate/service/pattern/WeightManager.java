@@ -2,6 +2,11 @@ package com.automates.automate.service.pattern;
 
 import com.automates.automate.model.Pattern;
 
+/**
+ * This set of variables manages the thresholds and parameters for the learning algorithm.
+ * @author Dhanish
+ */
+
 public interface WeightManager {
 
     public final static double initialZeroWeight = 0;

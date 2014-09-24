@@ -8,6 +8,11 @@ import android.util.Log;
 
 import com.automates.automate.service.PhoneService;
 
+/**
+ * This class checks routines at set time intervals.
+ * @author Dhanish
+ */
+
 public class TimelyChecker extends BroadcastReceiver{
 
     @Override

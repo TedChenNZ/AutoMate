@@ -10,6 +10,11 @@ import com.automates.automate.service.settings.Settings;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This class creates a pattern based off an event that has occurred.
+ * @author Dhanish
+ */
+
 public class PatternGenerator {
 	private Pattern p = new Pattern();
     private long time = 0;
@@ -46,7 +51,6 @@ public class PatternGenerator {
 		}
 
 		timeSet();
-		//TODO weight and status code checking
 		p.setWeekWeight(WeightManager.initialZeroWeight);
 		p.setWeight(WeightManager.initialWeight);
 		p.setStatusCode(StatusCode.IN_DEV);
@@ -62,6 +66,7 @@ public class PatternGenerator {
 		return p;
 	}
 
+    //Sets the time field to the current time.
 	private void timeSet(){
 		Time t = new Time();
         t.set(time);
@@ -71,12 +76,12 @@ public class PatternGenerator {
 	}
 
 	@SuppressWarnings("deprecation")
+    //Sets the time to the appropriate interval in the day, e.g. 0 for midnight.
 	private void timeTransform(){
 		Date d = new Date(time);
 		d.setSeconds(0);
 		d.setMinutes(0);
 		d.setHours(0);
-		//int day = d.getDay();
 
 		long startOfDay = d.getTime();
 
@@ -90,24 +95,21 @@ public class PatternGenerator {
 	 * @see com.automates.automate.data.PatternControl#updateDatabase()
 	 */
 
+    //Checks if pattern exists in the database and updates it, if not, adds it.
 	public void updateDatabase() {
 		int id = getInstanceFromDB();
 		if(id != -1){
 			
 			Pattern oldP = PatternService.getInstance().getPattern(id);
 			Pattern newP = new WeightUpdater(p, oldP).updatePattern();
-//			Pattern newP = new WeightUpdater(p, id).updatePattern();
 			boolean threshold = newP.checkThresholdAndStatusCode();
 			if(threshold){
 				newP.setStatusCode(StatusCode.AWAITING_APPROVAL);
 				newP.addToRoutineDB();
 			}
             PatternService.getInstance().updatePattern(newP);
-//			Log.d(TAG, "time: " + newP.getActualTime());
-//			Log.d(TAG, "updating pattern: " + newP.getWeight());
 		}
 		else{
-//			Log.d(TAG, "adding pattern");
             PatternService.getInstance().addPattern(p);
 		}
 	}
@@ -120,7 +122,6 @@ public class PatternGenerator {
 				id = pList.getId();
 			}
 		}
-//		Log.d(TAG, "id is: " + id);
 		return id;
 	}
 

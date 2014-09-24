@@ -13,6 +13,11 @@ import com.automates.automate.service.PhoneService;
 import com.automates.automate.R;
 import com.automates.automate.view.activity.RoutineActivity;
 
+/**
+ * This class creates the notification when a pattern is recognised. It passes the routine and pattern IDs through for use/
+ * @author Dhanish
+ */
+
 public class NotificationActivity extends Activity {
 
     NotificationManager mNotificationManager;

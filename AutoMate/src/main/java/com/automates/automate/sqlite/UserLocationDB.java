@@ -13,6 +13,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class manages the CRUD operations for the SQLite Database stored on the phone, it's a specific implementation for these locations.
+ */
+
 public class UserLocationDB extends SQLiteOpenHelper implements UserLocationsManager {
 	// Database Version
     private static final int DATABASE_VERSION = 1;

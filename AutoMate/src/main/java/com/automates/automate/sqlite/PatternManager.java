@@ -4,6 +4,10 @@ import com.automates.automate.model.Pattern;
 
 import java.util.List;
 
+/**
+ * This interface defines the CRUD operations for the pattern database.
+ */
+
 public interface PatternManager {
 
     //CRUD operations

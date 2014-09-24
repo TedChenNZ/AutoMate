@@ -1,7 +1,13 @@
 package com.automates.automate.testPatterns;
 
-import junit.framework.TestCase;
 import com.automates.automate.model.Pattern;
+
+import junit.framework.TestCase;
+
+/**
+ * This class tests the ability of patterns to be compared to one another to ensure that the primary key is working as intended.
+ * @author Dhanish
+ */
 
 public class PatternsTest extends TestCase {
 
