@@ -9,6 +9,8 @@ To install and use:
     a) Download from https://developer.android.com/sdk/installing/studio.html
     b) File -> Import Project -> AutoMate
   
+2) Install the required API 19, Google Play Services and Google Repository packages from the Android SDK Manager.
+
 2) Compile and run the application under AutoMate / src / main / java / com / automates / automate
 
 3) The .apk file generated in the bin can be used to install to your phone or the application can be run through Android's emulator.
