@@ -2,34 +2,34 @@
 <pre-dex-items>
 
     <item
-        dex="X:\Documents\AutoMate1\autoMate\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-a67c31df459900f3e0e134663537106dafd7ea9c.jar"
-        jar="X:\Documents\My Projects\Root Flash stuff\adt-bundle-windows-x86_64-20131030\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
-    <item
-        dex="X:\Documents\AutoMate1\autoMate\build\intermediates\pre-dexed\debug\classes-6672c1e97a45f41f3ccc8a550db110dd38a1e398.jar"
-        jar="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
-        dex="X:\Documents\AutoMate1\autoMate\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-0a08cfa2b5e926b86ab66fe74adbffe318d9c6a1.jar"
-        jar="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        dex="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-731b7797e22877c6f5ead038c02359ee2819158b.jar"
+        jar="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
     <item
-        dex="X:\Documents\AutoMate1\autoMate\build\intermediates\pre-dexed\debug\classes-f1e915aa3598ea7d5d9761e55d074022e81e8847.jar"
-        jar="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.2.08\classes.jar"
+        dex="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\pre-dexed\debug\classes-d7151c914678114261bca3abfb8a9a4521e8acd2.jar"
+        jar="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.89\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="1ed7a7a05185651f9af41ad93711cb96b66f331c"/>
+        sha1="d71573c9c5ea98a8db47ad6ff993a63d492b3bfa"/>
     <item
-        dex="X:\Documents\AutoMate1\autoMate\build\intermediates\pre-dexed\debug\classes-99b883ff34da0b669f2b1185c98cfa9d5a878606.jar"
-        jar="X:\Documents\AutoMate1\autoMate\build\intermediates\exploded-aar\AutoMate1\androidBootstrap\unspecified\classes.jar"
+        dex="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\pre-dexed\debug\classes-17d34d4d39bc5a8bfbc5060ff9679802885ad13f.jar"
+        jar="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="09739dd0845589b6c96e17390b46b28d520cc110"/>
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\pre-dexed\debug\classes-a819c8bf725fc322ea20ff9063b0d3ac5d134555.jar"
+        jar="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\exploded-aar\AutoMate\androidBootstrap\unspecified\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="de863c88a904f3cfda0ac5fd4de42a303ec3597e"/>
+    <item
+        dex="C:\Users\Dhanish\Documents\GitHub\AutoMate\AutoMate\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-94e94b23f2c4f4ded7899db4a90921df545c8375.jar"
+        jar="C:\Users\Dhanish\Documents\Java\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
 
 </pre-dex-items>
